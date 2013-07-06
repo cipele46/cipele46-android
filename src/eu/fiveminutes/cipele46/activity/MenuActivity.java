@@ -37,7 +37,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 			Log.d("FM_TEMPLATE", "No Action Bar Present");
 		} else {
 			supportActionBar.setDisplayHomeAsUpEnabled(true);
-			// supportActionBar.setIcon(R.drawable.ic_drawer);
+			 supportActionBar.setIcon(R.drawable.ic_drawer);
 		}
 	}
 
