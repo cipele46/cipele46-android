@@ -102,7 +102,7 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 		title.setText(item.getTitle());
 		description.setText(item.getDescription());
 		category.setText(" " + CipeleAPI.get().getCategoryNameForID(item.getCategoryID()) + "");
-		county.setText(" " + item.getCityID() + "");
+		county.setText(" " + CipeleAPI.get().getDistrictNameForID(item.getDistrictID()) + "");
 		time.setText(" " + "21 dan");
 		call.setText(item.getPhone());
 

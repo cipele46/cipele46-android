@@ -279,6 +279,25 @@ public class CipeleAPI {
 		return newAd;
 	}
 	
+	public String getDistrictNameForID(Long districtID) {
+		
+		if (districtID == -1) {
+			return "Sve županije";
+		}
+		
+		if (cachedListOfDistricts == null) {
+			return "err0";
+		}
+		
+		for (District cat : cachedListOfDistricts) {
+			if (cat.getId().longValue() == districtID.longValue()) {
+				return cat.getName();
+			}
+		}
+		
+		return "err1";
+	}
+	
 	public String getCategoryNameForID(Long categoryID) {
 		
 		if (categoryID == -1) {
