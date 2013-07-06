@@ -14,6 +14,7 @@ import eu.fiveminutes.cipele46.fragment.LoginFragment;
 import eu.fiveminutes.cipele46.fragment.RegisterFragment;
 import eu.fiveminutes.cipele46.fragment.ResetPasswordFragment;
 import eu.fiveminutes.cipele46.fragment.UserDetailsFragment;
+import eu.fiveminutes.cipele46.model.User;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -109,8 +110,9 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		
 		if(item != null && item.getItemId() == R.id.action_logout) {
-			//Odlogiraj korisnika
-			startActivity(UserSettingsActivity.buildIntent(this, UserSettingsScreen.LOGIN));
+			User.deactivateUser(this);
+			//startActivity(UserSettingsActivity.buildIntent(this, UserSettingsScreen.LOGIN));
+			finish();
 		}
 		
 		return true;
@@ -140,7 +142,13 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 		if(screen == UserSettingsScreen.LOGIN) {
 			return new LoginFragment();
 		} else if(screen == UserSettingsScreen.USER_DETAILS) {
-			return new UserDetailsFragment();
+			User currentUser = User.getActiveUser(this);
+			if(currentUser != null) {
+				return new UserDetailsFragment();
+			} else {
+				return new LoginFragment();
+			}
+			
 		} else if(screen == UserSettingsScreen.EDIT_USER) {
 			return new EditUserFragment();
 		} else if(screen == UserSettingsScreen.CHANGE_PASSWORD) {
