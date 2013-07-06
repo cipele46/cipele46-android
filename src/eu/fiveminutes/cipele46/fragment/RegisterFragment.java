@@ -53,8 +53,18 @@ public class RegisterFragment extends SherlockFragment{
 					}
 					
 					final User user = collectUserData();
+					String[] firstLastName = user.getName().split(" ");
+					String firstName = "";
+					String lastName = "";
+					if(firstLastName.length > 0) {
+						firstName = firstLastName[0];
+					}
 					
-					CipeleAPI.get().registerUser(user.getName(), user.getEmail(), user.getPhone(), password, 
+					if(firstLastName.length > 1) {
+						lastName = firstLastName[1];
+					}
+					
+					CipeleAPI.get().registerUser(firstName, lastName, user.getEmail(), user.getPhone(), password, 
 							new UserRegistrationListener() {
 								
 								@Override
