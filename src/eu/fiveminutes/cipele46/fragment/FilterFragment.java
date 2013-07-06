@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
@@ -62,7 +63,7 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			
 			@Override
 			public void onFailure(Throwable t) {
-				//TODO handle error
+				Toast.makeText(getActivity(), R.string.error_get_cat, Toast.LENGTH_LONG).show();
 			}
 		});
 		
@@ -76,8 +77,7 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			
 			@Override
 			public void onFailure(Throwable t) {
-				//TODO handle error
-				
+				Toast.makeText(getActivity(), R.string.error_get_dist, Toast.LENGTH_LONG).show();
 			}
 		});
 		
