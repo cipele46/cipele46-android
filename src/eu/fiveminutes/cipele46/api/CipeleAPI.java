@@ -1,6 +1,7 @@
 package eu.fiveminutes.cipele46.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,6 +19,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdStatus;
+import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 
 public class CipeleAPI {
@@ -38,7 +41,15 @@ public class CipeleAPI {
 		return cipele;
 	}
 	
-	public void getAds(final AdsListener adsListener) {
+	/**
+	 * 
+	 * @param type Ad type. Required.
+	 * @param categoryID If null, all categories implied.
+	 * @param districtID If null, all districts implied.
+	 * @param adsListener
+	 */
+	public void getAds(final AdType type, final Long categoryID, 
+			final Long districtID, final AdsListener adsListener) {
 		
 		ErrorListener errorListener = new ErrorListener() {
 
@@ -71,6 +82,37 @@ public class CipeleAPI {
 						newAd.setCategoryID(obj.getLong("categoryID"));
 						newAd.setDistrictID(obj.getLong("districtID"));
 						
+						int statusNumber = obj.getInt("status");
+						AdStatus status = AdStatus.ACTIVE;
+						switch (statusNumber) {
+							case 1:
+								status = AdStatus.PENDING;
+								break;
+							case 2:
+								status = AdStatus.ACTIVE;
+								break;
+							case 3:
+								status = AdStatus.CLOSED;
+								break;
+							default:
+								throw new IllegalArgumentException("Invalid ad status for ad " + newAd.getTitle());
+						}
+						newAd.setStatus(status);
+						
+						int typeNumber = obj.getInt("type");
+						AdType type = AdType.SUPPLY;
+						switch (typeNumber) {
+							case 1:
+								type = AdType.SUPPLY;
+								break;
+							case 2:
+								type = AdType.DEMAND;
+								break;
+							default:
+								throw new IllegalArgumentException("Invalid ad type for ad " + newAd.getTitle());
+						}
+						newAd.setType(type);
+						
 						adList.add(newAd);
 					}
 				} catch (JSONException e) {
@@ -93,7 +135,30 @@ public class CipeleAPI {
 			@Override
 			public void onResponse(JSONArray response) {
 				Log.i(TAG, response.toString());
-				cl.onSuccess(parseJSONArray(response), null);
+				
+				List<Category> listofCategory = Collections.<Category>emptyList();
+				
+				for (int i  =0; i < response.length(); i++) {
+					
+					if (listofCategory.isEmpty()) {
+						listofCategory = new ArrayList<Category>();
+					}
+					
+					JSONObject jsonObject;
+					try {
+						
+						jsonObject = response.getJSONObject(i);
+						Category category = new Category();
+						category.setId(jsonObject.getString("id"));
+						category.setName(jsonObject.getString("name"));
+						listofCategory.add(category);
+						
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				cl.onSuccess(listofCategory);
 				
 			}
 		}, new ErrorListener() {
@@ -109,11 +174,5 @@ public class CipeleAPI {
 		reqQueue.add(jsonArrayRequest);
 		
 	}
-	
-	private List<Category> parseJSONArray(JSONArray jsonArray) {
 
-		//TODO
-		return null;
-
-	}
 }
