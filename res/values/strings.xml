@@ -31,6 +31,7 @@
     <string name="active_ads">Aktivni oglasi</string>
     <string name="closed_ads">Zatvoreni oglasi</string>
     <string name="favorite_ads">Favoriti</string>
+    <string name="edit">Uredi</string>
     
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
@@ -73,6 +74,8 @@
     <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
-    <string name="filter_city">Grad</string>
+	<string name="filter_city">Grad</string>
+	<string name="filter_supply">Ponuda</string>
+	<string name="filter_demand">Potražnja</string>
 
 </resources>

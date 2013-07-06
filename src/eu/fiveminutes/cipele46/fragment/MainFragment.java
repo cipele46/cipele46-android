@@ -26,6 +26,7 @@ import eu.fiveminutes.cipele46.activity.NewAdActivity;
 import eu.fiveminutes.cipele46.adapter.AdsAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
+import eu.fiveminutes.cipele46.app.Filters;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.utils.Util;
@@ -34,6 +35,10 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	private TextView filterTxt;
 	private ListView list;
 	private AdsAdapter adapter;
+	
+	private AdType activeAdType;
+	private Long activeDistrict;
+	private Long activeCategory;
 
 	private AdsListener adsListener = new AdsListener() {
 
@@ -62,6 +67,15 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		View v = inflater.inflate(R.layout.ads, container, false);
 		return v;
 	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		activeAdType = Filters.getAdTypeFilter(getActivity());
+		activeCategory = Filters.getCategoryFilter(getActivity());
+		activeDistrict = Filters.getDistrictFilter(getActivity());
+		getData();
+	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -69,7 +83,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		filterTxt.setOnClickListener(this);
 		list = (ListView) view.findViewById(R.id.ads_list);
 		list.setOnItemClickListener(this);
-		getData();
+//		getData();
 	}
 
 	@Override
@@ -97,7 +111,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	private void getData() {
 		if (Util.isOnline(getActivity())){
 		showDialog();
-		CipeleAPI.get().getAds(AdType.DEMAND,null, null,adsListener);
+		CipeleAPI.get().getAds(activeAdType,activeCategory, activeDistrict,adsListener);
 		}else{
 			Toast.makeText(getActivity(), R.string.error_no_internet_connection, Toast.LENGTH_LONG).show();
 		}
