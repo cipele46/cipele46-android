@@ -159,6 +159,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				Log.e(TAG, "", error);
 				adsListener.onFailure(error);
 			}
 		};
@@ -172,6 +173,7 @@ public class CipeleAPI {
 					List<Ad> adList = parseAdList(response);
 					adsListener.onSuccess(adList);
 				} catch (JSONException e) {
+					Log.e(TAG, "", e);
 					adsListener.onFailure(e);
 				}
 			}
@@ -234,10 +236,10 @@ public class CipeleAPI {
 		newAd.setDescription(obj.getString("description"));
 		newAd.setEmail(obj.getString("email"));
 		newAd.setPhone(obj.getString("phone"));
-		newAd.setImageURLString(obj.getString("imageUrl"));
-		newAd.setCityID(obj.getLong("cityID"));
-		newAd.setCategoryID(obj.getLong("categoryID"));
-		newAd.setDistrictID(obj.getLong("districtID"));
+		//newAd.setImageURLString(obj.optString("imageUrl"));
+		newAd.setCityID(obj.getLong("city_id"));
+		newAd.setCategoryID(obj.getLong("category_id"));
+		newAd.setDistrictID(obj.optLong("district_id", -1));
 		
 		int statusNumber = obj.getInt("status");
 		AdStatus status = AdStatus.ACTIVE;
@@ -256,7 +258,7 @@ public class CipeleAPI {
 		}
 		newAd.setStatus(status);
 		
-		int typeNumber = obj.getInt("type");
+		int typeNumber = obj.getInt("ad_type");
 		AdType type = AdType.SUPPLY;
 		switch (typeNumber) {
 			case 1:
