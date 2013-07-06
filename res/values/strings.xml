@@ -4,16 +4,20 @@
     <string name="app_name">Cipele46</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    
-    <string name="oglasi">Oglasi</string>
+    <string name="ads">Oglasi</string>
     <string name="filter">Filter</string>
     <string name="filter_ads">Filter oglasa</string>
-    
     <string name="filter_type">Tip oglasa</string>
     <string name="filter_county">Županija</string>
     <string name="filter_category">Kategorija</string>
-    
     <string name="search">Traži</string>
     <string name="new_ad">Novi oglas</string>
+    <string name="my_ads">Moji oglasi</string>
+    <string name="active">Aktivni</string>
+    <string name="favorites">Favoriti</string>
+    <string name="closed">Zatvoreni</string>
+    <string name="settings">Postavke</string>
+    <!-- Error msgs -->
+    <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 
 </resources>

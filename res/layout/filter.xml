@@ -36,8 +36,28 @@
 
     <ImageView
         android:id="@+id/image1"
-        android:src="@drawable/ic_launcher"
         android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher" />
+
+    <RadioGroup
+      
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Ponuda" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Potraznja" />
+    </RadioGroup>
 
 </LinearLayout>

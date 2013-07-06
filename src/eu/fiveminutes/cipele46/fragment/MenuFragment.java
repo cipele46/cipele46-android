@@ -14,6 +14,7 @@ public class MenuFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.menu, container, false);
+		v.bringToFront();
 		return v;
 	}
 

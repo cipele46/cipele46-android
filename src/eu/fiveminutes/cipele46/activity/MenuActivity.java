@@ -16,16 +16,13 @@ import eu.fiveminutes.cipele46.fragment.MenuFragment;
 
 public abstract class MenuActivity extends SherlockFragmentActivity {
 
-	public static final int MENU_ADS= 0;
+	public static final int MENU_ADS = 0;
 	public static final int MENU_ACTIVE_ADS = 1;
 	public static final int MENU_FAVORITE_ADS = 2;
 	public static final int MENU_CLOSED_ADS = 3;
 	public static final int MENU_SETTINGS = 4;
 
-
 	DrawerLayout mDrawerLayout;
-
-	MenuFragment menuFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,8 +33,8 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		if (supportActionBar == null) {
 			Log.d("FM_TEMPLATE", "No Action Bar Present");
 		} else {
-			supportActionBar.setDisplayHomeAsUpEnabled(true);
-			 supportActionBar.setIcon(R.drawable.ic_drawer);
+			supportActionBar.setHomeButtonEnabled(true);
+			supportActionBar.setIcon(R.drawable.ic_drawer);
 		}
 	}
 
