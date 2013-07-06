@@ -73,7 +73,7 @@ public class AdsAdapter extends BaseAdapter {
 
 		holder.title.setText(item.getTitle());
 		holder.category.setText("" + CipeleAPI.get().getCategoryNameForID(item.getCategoryID()));
-		holder.county.setText("" + item.getCityID());
+		holder.county.setText("" + CipeleAPI.get().getDistrictNameForID(item.getDistrictID()));
 		holder.timeText.setText("21 dan");
 		if (item.getType() == AdType.SUPPLY) {
 			holder.categoryImage.setImageResource(R.drawable.category_icon_blue);
