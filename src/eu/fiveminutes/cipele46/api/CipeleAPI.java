@@ -280,7 +280,7 @@ public class CipeleAPI {
 	
 	public void getCategories(final CategoriesListener categoriesListener) {
 		
-		String url = "http://dev.fiveminutes.eu/cipele/api/categories";
+		String url = "http://cipele46.org/categories.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
 
 			@Override
@@ -330,6 +330,7 @@ public class CipeleAPI {
 		
 		if (cachedListOfDistricts != null) {
 			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
+			Log.d(TAG, "Using cachedListOfDistricts");
 			return;
 		}
 		
@@ -376,6 +377,7 @@ public class CipeleAPI {
 						
 						district.setCities(listOfCities);
 						listOfDistricts.add(district);
+						cachedListOfDistricts = listOfDistricts;
 					}
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
