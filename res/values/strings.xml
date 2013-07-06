@@ -63,5 +63,7 @@
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
 	<string name="filter_city">Grad</string>
+	<string name="filter_supply">Ponuda</string>
+	<string name="filter_demand">Potražnja</string>
 
 </resources>
