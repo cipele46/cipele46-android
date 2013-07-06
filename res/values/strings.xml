@@ -12,5 +12,8 @@
     <string name="filter_type">Tip oglasa</string>
     <string name="filter_county">Županija</string>
     <string name="filter_category">Kategorija</string>
+    
+    <string name="search">Traži</string>
+    <string name="new_ad">Novi oglas</string>
 
 </resources>

@@ -9,12 +9,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.FilterActivity;
+import eu.fiveminutes.cipele46.activity.NewAdActivity;
 
 public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView filterTxt;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,9 +41,23 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		if (v == filterTxt) {
-			Intent i = new Intent(getActivity(),FilterActivity.class);
+			Intent i = new Intent(getActivity(), FilterActivity.class);
 			startActivity(i);
 		}
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.main, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_new_add){
+			Intent i = new Intent(getActivity(), NewAdActivity.class);
+			startActivity(i);
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }
