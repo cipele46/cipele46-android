@@ -95,6 +95,7 @@ public abstract class UserAdsFragment extends SherlockFragment implements OnItem
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		Intent i = new Intent(getActivity(), AdDetailsActivity.class);
 		i.putExtra("adItem", (Ad) adapter.getItem(position));
+		i.putExtra("section", getSection().name());
 		startActivity(i);
 	}
 

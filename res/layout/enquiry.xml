@@ -26,8 +26,8 @@
             android:maxLines="1" />
         <EditText
             android:id="@+id/enquiry_text"
-            android:inputType="text"
             android:paddingTop="10dp"
+            android:inputType="textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

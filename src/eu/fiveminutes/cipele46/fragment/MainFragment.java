@@ -71,10 +71,18 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	@Override
 	public void onResume() {
 		super.onResume();
-		activeAdType = Filters.getAdTypeFilter(getActivity());
-		activeCategory = Filters.getCategoryFilter(getActivity());
-		activeDistrict = Filters.getDistrictFilter(getActivity());
-		getData();
+		AdType newAdType= Filters.getAdTypeFilter(getActivity());
+		Long newCategory= Filters.getCategoryFilter(getActivity());
+		Long newDistrict= Filters.getDistrictFilter(getActivity());
+		
+		if (!newAdType.equals(activeAdType) || !newCategory.equals(activeCategory) || !newDistrict.equals(activeDistrict)){
+
+			activeAdType = newAdType;
+			activeCategory = newCategory;
+			activeDistrict = newDistrict;
+			getData();
+		}
+		filterTxt.setText(activeAdType.name() + ", " + activeCategory + ", " + activeDistrict);
 	}
 
 	@Override
