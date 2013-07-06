@@ -55,11 +55,12 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
+            android:layout_gravity="center_horizontal"
             android:id="@+id/new_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/new_ad_picture"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/action_bar_icon"></ImageView>
 
         <Spinner
             android:id="@+id/filter_county"
