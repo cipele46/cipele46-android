@@ -72,7 +72,7 @@ public class AdsAdapter extends BaseAdapter {
 		holder.category.setText("" + item.getCategoryID());
 		holder.county.setText("" + item.getCityID());
 		holder.timeText.setText("21 dan");
-		if (item.getType() == AdType.DEMAND) {
+		if (item.getType() == AdType.SUPPLY) {
 			holder.categoryImage.setImageResource(R.drawable.category_icon_blue);
 			holder.countyImage.setImageResource(R.drawable.place_icon_blue);
 			holder.timeImage.setImageResource(R.drawable.time_icon_blue);

@@ -31,6 +31,7 @@
     <string name="active_ads">Aktivni oglasi</string>
     <string name="closed_ads">Zatvoreni oglasi</string>
     <string name="favorite_ads">Favoriti</string>
+    <string name="edit">Uredi</string>
     
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
