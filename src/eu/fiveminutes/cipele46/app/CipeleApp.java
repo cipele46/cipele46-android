@@ -23,6 +23,8 @@ public class CipeleApp extends Application {
 		CipeleAPI.get().init(this);
 		RequestManager.init(this);
 		createImageCache();
+		
+		Filters.firstTimeInitIfNeeded(this);
 	}
 	
 	private void createImageCache(){

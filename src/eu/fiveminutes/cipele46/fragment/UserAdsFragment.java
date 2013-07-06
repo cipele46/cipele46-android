@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,16 +20,18 @@ import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.AdDetailsActivity;
-import eu.fiveminutes.cipele46.activity.FilterActivity;
 import eu.fiveminutes.cipele46.activity.NewAdActivity;
 import eu.fiveminutes.cipele46.adapter.AdsAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
+import eu.fiveminutes.cipele46.api.CipeleAPI.UserAdSection;
 import eu.fiveminutes.cipele46.model.Ad;
-import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.utils.Util;
 
-public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
+public abstract class UserAdsFragment extends SherlockFragment implements OnItemClickListener {
+
+	public abstract UserAdSection getSection();
+
 	private TextView filterTxt;
 	private ListView list;
 	private AdsAdapter adapter;
@@ -66,18 +67,10 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		filterTxt = (TextView) view.findViewById(R.id.ads_filter_txt);
-		filterTxt.setOnClickListener(this);
+		filterTxt.setVisibility(View.GONE);
 		list = (ListView) view.findViewById(R.id.ads_list);
 		list.setOnItemClickListener(this);
 		getData();
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (v == filterTxt) {
-			Intent i = new Intent(getActivity(), FilterActivity.class);
-			startActivity(i);
-		}
 	}
 
 	@Override
@@ -95,10 +88,10 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
-		if (Util.isOnline(getActivity())){
-		showDialog();
-		CipeleAPI.get().getAds(AdType.DEMAND,null, null,adsListener);
-		}else{
+		if (Util.isOnline(getActivity())) {
+			showDialog();
+			CipeleAPI.get().getUserAds(getSection(), adsListener);
+		} else {
 			Toast.makeText(getActivity(), R.string.error_no_internet_connection, Toast.LENGTH_LONG).show();
 		}
 	}
