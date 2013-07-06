@@ -29,9 +29,11 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 	private Button call;
 	private Button sendMail;
 
-	// public AdDetailsFragment(Ad item){
-	// this.item = item;
-	// }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.item = getArguments().getParcelable("adItem");
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +58,9 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 		category.setText(item.getCategoryID() + "");
 		county.setText(item.getCityID() + "");
 		call.setText(getString(R.string.call) + " (" + item.getPhone() + ")");
+		
+		call.setOnClickListener(this);
+		sendMail.setOnClickListener(this);
 	}
 
 	@Override

@@ -21,6 +21,8 @@
     <string name="awaiting_approval">Čeka odobrenje administratora</string>
     <string name="call">Nazovi</string>
     <string name="send_mail">Pošalji upit</string>
+    <string name="please_wait">Molimo pričekajte...</string>
+
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 

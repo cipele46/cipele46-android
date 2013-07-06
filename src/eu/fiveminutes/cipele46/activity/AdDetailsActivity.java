@@ -15,6 +15,7 @@ public class AdDetailsActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		AdDetailsFragment adf = new AdDetailsFragment();
+		adf.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, adf).commit();
 
 		ActionBar ab = getSupportActionBar();

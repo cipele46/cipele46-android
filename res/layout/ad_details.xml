@@ -73,7 +73,8 @@
         <Button
             android:id="@+id/ad_details_send_mail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" 
+            android:text="@string/send_mail"/>
     </LinearLayout>
 
 </ScrollView>
