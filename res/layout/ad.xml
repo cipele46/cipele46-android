@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/ad_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/ad_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ad_image"
+        android:layout_toRightOf="@id/ad_image"
+        android:hint="title"
+        android:padding="10dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ad_image"
+        android:layout_toRightOf="@id/ad_image" >
+
+        <ImageView
+            android:id="@+id/ad_category_image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@android:drawable/ic_dialog_info" />
+
+        <TextView
+            android:id="@+id/ad_category_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ad_category_image"
+            android:layout_toRightOf="@id/ad_category_image"
+            android:hint="category" />
+        
+         <ImageView
+            android:id="@+id/ad_county_image"
+            android:layout_width="20dp"
+            android:layout_below="@id/ad_category_image"
+            android:layout_height="20dp"
+            android:src="@android:drawable/ic_dialog_info" />
+
+        <TextView
+            android:id="@+id/ad_county_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/ad_county_image"
+            android:layout_toRightOf="@id/ad_county_image"
+            android:hint="county" />
+    </RelativeLayout>
+
+</RelativeLayout>

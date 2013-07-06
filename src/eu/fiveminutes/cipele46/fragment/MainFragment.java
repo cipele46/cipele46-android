@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -19,6 +21,8 @@ import eu.fiveminutes.cipele46.activity.NewAdActivity;
 
 public class MainFragment extends SherlockFragment implements OnClickListener {
 	private TextView filterTxt;
+	private ListView list;
+	private Adapter adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,5 +63,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 
 }
