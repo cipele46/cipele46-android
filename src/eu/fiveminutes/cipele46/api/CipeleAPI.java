@@ -280,7 +280,7 @@ public class CipeleAPI {
 	
 	public void getCategories(final CategoriesListener categoriesListener) {
 		
-		String url = "http://dev.fiveminutes.eu/cipele/api/categories";
+		String url = "http://cipele46.org/categories.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
 
 			@Override
