@@ -83,7 +83,7 @@ public class LoginFragment extends SherlockFragment{
 		mLoginStatusView = view.findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) view.findViewById(R.id.login_status_message);
 
-		view.findViewById(R.id.sign_in_button).setOnClickListener(
+		view.findViewById(R.id.btn_login).setOnClickListener(
 			new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {

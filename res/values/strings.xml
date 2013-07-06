@@ -43,15 +43,18 @@
     <string name="title_activity_registration">Registracija</string>
     <string name="title_activity_password_forgoten">Zaboravljena lozinka</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in_register"><b>Sign in</b> or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="action_forgot_password">Recover lost password</string>
-    <string name="login_progress_signing_in">Signing in&#8230;</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="prompt_password">Lozinka</string>
+    <string name="action_sign_in">Prijavi se</string>
+    <string name="btn_register_title">Registriraj se</string>
+    <string name="btn_forgot_password_title">Zaboravio sam lozinku</string>
+    <string name="btn_fb_login_title">Prijava putem Facebooka</string>
+    <string name="action_sign_in_short">Prijavi se</string>
+    <string name="action_forgot_password">Vrati zaboravljenu lozinku</string>
+    <string name="login_progress_signing_in">Prijava u tijeku...&#8230;</string>
+    <string name="error_invalid_email">Email je netočan</string>
+    <string name="error_invalid_password">Lozinka je prekratka</string>
+    <string name="error_incorrect_password">Lozinka je netočna</string>
+    <string name="error_field_required">Ovo polje je obavezno</string>
 
     <string name="new_ad_offer">Ponuda</string>
     <string name="new_ad_request">Potražnja</string>
