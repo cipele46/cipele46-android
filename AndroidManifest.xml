@@ -37,6 +37,11 @@
         <activity
             android:name="eu.fiveminutes.cipele46.activity.AdDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.UserSettingsActivity"
+            android:label="@string/title_activity_user_settings"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
 
 </manifest>
