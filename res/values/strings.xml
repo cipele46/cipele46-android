@@ -25,7 +25,9 @@
     <string name="add_to_favorites">Dodaj u favorite</string>
     <string name="send_mail">Pošalji upit</string>
     <string name="please_wait">Molimo pričekajte...</string>
-
+    <string name="enquiry">Upit na oglas</string>
+    <string name="send">Pošalji</string>
+     <string name="email">E-mail</string>
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 
