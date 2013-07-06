@@ -27,6 +27,7 @@ import eu.fiveminutes.cipele46.adapter.AdsAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdType;
 
 public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
 	private TextView filterTxt;
@@ -92,7 +93,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
-		CipeleAPI.get().getAds(adsListener);
+		CipeleAPI.get().getAds(AdType.DEMAND, adsListener);
 	}
 
 	@Override
