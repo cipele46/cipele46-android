@@ -12,6 +12,9 @@ public class Ad {
 	private Long districtID;
 	private Long cityID;
 	private Long categoryID;
+	
+	private AdType type;
+	private AdStatus status;
 
 	public Long getId() {
 		return id;
@@ -66,6 +69,18 @@ public class Ad {
 	}
 	public void setCategoryID(Long categoryID) {
 		this.categoryID = categoryID;
+	}
+	public AdType getType() {
+		return type;
+	}
+	public void setType(AdType type) {
+		this.type = type;
+	}
+	public AdStatus getStatus() {
+		return status;
+	}
+	public void setStatus(AdStatus status) {
+		this.status = status;
 	}
 
 	

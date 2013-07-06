@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdStatus;
 import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 
@@ -80,6 +81,37 @@ public class CipeleAPI {
 						newAd.setCityID(obj.getLong("cityID"));
 						newAd.setCategoryID(obj.getLong("categoryID"));
 						newAd.setDistrictID(obj.getLong("districtID"));
+						
+						int statusNumber = obj.getInt("status");
+						AdStatus status = AdStatus.ACTIVE;
+						switch (statusNumber) {
+							case 1:
+								status = AdStatus.PENDING;
+								break;
+							case 2:
+								status = AdStatus.ACTIVE;
+								break;
+							case 3:
+								status = AdStatus.CLOSED;
+								break;
+							default:
+								throw new IllegalArgumentException("Invalid ad status for ad " + newAd.getTitle());
+						}
+						newAd.setStatus(status);
+						
+						int typeNumber = obj.getInt("type");
+						AdType type = AdType.SUPPLY;
+						switch (typeNumber) {
+							case 1:
+								type = AdType.SUPPLY;
+								break;
+							case 2:
+								type = AdType.DEMAND;
+								break;
+							default:
+								throw new IllegalArgumentException("Invalid ad type for ad " + newAd.getTitle());
+						}
+						newAd.setType(type);
 						
 						adList.add(newAd);
 					}
