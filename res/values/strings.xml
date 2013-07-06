@@ -36,6 +36,7 @@
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
     <string name="error_screen_id_not_provided">Screen id not provided</string>
     <string name="error_screen_not_defined">Screen not defined</string>
+    <string name="error_no_internet_connection">Internet veza nije dostupna!</string>
     
 
     <!-- Strings related to user settings -->
