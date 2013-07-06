@@ -22,12 +22,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.adapter.AdTypeAdapter;
 import eu.fiveminutes.cipele46.adapter.CategoryAdapter;
 import eu.fiveminutes.cipele46.adapter.CityAdapter;
 import eu.fiveminutes.cipele46.adapter.DistrictAdapter;
 import eu.fiveminutes.cipele46.api.CategoriesListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.api.DistrictWithCitiesListener;
+import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 import eu.fiveminutes.cipele46.model.City;
 import eu.fiveminutes.cipele46.model.District;
@@ -46,10 +48,12 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 	private Spinner citySpinner;
 	private Spinner categorySpinner;
 	private Spinner districtSpinner;
+	private Spinner typeSpinner;
 
 	private City activeCity;
 	private District activeDistrict;
 	private Category activeCategory;
+	private AdType activeAdType;
 
 	private CityAdapter cityAdapter;
 	private DistrictAdapter districtAdapter;
@@ -80,10 +84,18 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 		citySpinner = (Spinner) view.findViewById(R.id.filter_city);
 		districtSpinner = (Spinner) view.findViewById(R.id.filter_county);
 		categorySpinner = (Spinner) view.findViewById(R.id.filter_category);
+		typeSpinner = (Spinner) view.findViewById(R.id.filter_type);
 
 		categorySpinner.setOnItemSelectedListener(this);
 		districtSpinner.setOnItemSelectedListener(this);
 		citySpinner.setOnItemSelectedListener(this);
+		typeSpinner.setOnItemSelectedListener(this);
+
+		List<String> adTypes = new ArrayList<String>();
+		adTypes.add(getString(R.string.filter_supply));
+		adTypes.add(getString(R.string.filter_demand));
+
+		typeSpinner.setAdapter(new AdTypeAdapter(getActivity(), adTypes));
 
 		publishButton = (Button) view.findViewById(R.id.publish_ad);
 		publishButton.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +200,12 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 			activeCategory = (Category) categoryAdapter.getItem(position);
 		} else if (adapterView == districtSpinner) {
 			activeDistrict = (District) districtAdapter.getItem(position);
+		} else if (adapterView == typeSpinner) {
+			if (position == 0) {
+				activeAdType = AdType.SUPPLY;
+			} else {
+				activeAdType = AdType.DEMAND;
+			}
 		}
 
 	}
