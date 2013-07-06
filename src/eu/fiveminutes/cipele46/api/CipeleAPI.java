@@ -15,11 +15,13 @@ import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
@@ -63,6 +65,7 @@ public class CipeleAPI {
 	public void registerUser(String name, String email, String phone, String password, final UserRegistrationListener url) {
 		
 		
+
 		ErrorListener errorListener = new ErrorListener() {
 
 			@Override
@@ -70,19 +73,39 @@ public class CipeleAPI {
 				url.onFailure(error);
 			}
 		};
-		
-		Map<String, String> headers = new HashMap<String, String>();
-		
-		Listener<User> userListener = new Listener<User>() {
+	
+		Listener<JSONObject> userListener = new Listener<JSONObject>() {
 
 			@Override
-			public void onResponse(User response) {
-				// TODO Auto-generated method stub
+			public void onResponse(JSONObject response) {
+				System.out.println(response);
+				url.onSuccess();
 				
 			}
 		};
 		
-		reqQueue.add(new GsonRequest<User>("http://cipele46.org/users/show.json", User.class, headers, userListener, errorListener));
+		JSONObject userObj = new JSONObject();
+		JSONObject requestObj = new JSONObject();
+		
+		try {
+			userObj.put("first_name", "moje ime");
+			userObj.put("last_name", "moje prezime");
+			userObj.put("email", "tes222@email.com");
+			userObj.put("password", "lozinka1");
+			userObj.put("password_confirmation", "lozinka2");
+
+			requestObj.put("user", userObj);
+			
+		} catch (JSONException e) {
+			url.onFailure(e);
+			return;
+		}
+
+		
+		JsonObjectRequest jsonReq = new JsonObjectRequest(Method.POST, "http://cipele46.org/users.json", requestObj, userListener, errorListener);
+		
+		reqQueue.add(jsonReq);
+
 		
 	}
 
@@ -155,7 +178,7 @@ public class CipeleAPI {
 		};
 		
 		reqQueue.add(
-				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+				new JsonArrayRequest("http://cipele46.org/ads.json", arrayListener, errorListener));
 	}
 	
 	/**
