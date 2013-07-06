@@ -9,23 +9,11 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <RadioGroup
-            android:layout_width="fill_parent"
+        <Spinner
+            android:id="@+id/filter_type"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:paddingTop="10dp" >
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/new_ad_offer" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/new_ad_request" />
-        </RadioGroup>
+            android:prompt="@string/filter_type" />
 
         <EditText
             android:id="@+id/Title"
@@ -55,12 +43,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
-            android:layout_gravity="center_horizontal"
             android:id="@+id/new_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
             android:contentDescription="@string/new_ad_picture"
-            android:src="@drawable/action_bar_icon"></ImageView>
+            android:src="@drawable/action_bar_icon" >
+        </ImageView>
 
         <Spinner
             android:id="@+id/filter_county"
