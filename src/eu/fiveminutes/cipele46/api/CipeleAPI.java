@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 
 public class CipeleAPI {
@@ -39,7 +40,7 @@ public class CipeleAPI {
 		return cipele;
 	}
 	
-	public void getAds(final AdsListener adsListener) {
+	public void getAds(final AdType type, final AdsListener adsListener) {
 		
 		ErrorListener errorListener = new ErrorListener() {
 
