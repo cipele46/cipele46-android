@@ -1,5 +1,6 @@
 package eu.fiveminutes.cipele46.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import eu.fiveminutes.cipele46.activity.FavoriteAdsActivity;
 import eu.fiveminutes.cipele46.activity.MainActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
+import eu.fiveminutes.cipele46.model.User;
 
 public class MenuFragment extends SherlockFragment implements OnClickListener {
 
@@ -61,17 +63,46 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 		closed_ads.setOnClickListener(this);
 		settings.setOnClickListener(this);
 	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == UserSettingsActivity.REQUEST_LOGIN && resultCode == Activity.RESULT_OK) {
+			//Do your stuff
+		}
+	};
 
 	@Override
 	public void onClick(View v) {
+		User currentUser = User.getActiveUser(getActivity());
 		if (v == ads && !(getActivity() instanceof MainActivity)) {
 			startActivity(new Intent(getActivity(), MainActivity.class));
 		} else if (v == active_ads && !(getActivity() instanceof ActiveAdsActivity)) {
-			startActivity(new Intent(getActivity(), ActiveAdsActivity.class));
+			if(currentUser == null) {
+				startActivityForResult(
+						UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN), 
+						UserSettingsActivity.REQUEST_LOGIN);
+				
+			} else {
+				startActivity(new Intent(getActivity(), ActiveAdsActivity.class));
+			}
 		} else if (v == favorite_ads && !(getActivity() instanceof FavoriteAdsActivity)) {
-			startActivity(new Intent(getActivity(), FavoriteAdsActivity.class));
+			if(currentUser == null) {
+				startActivityForResult(
+						UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN), 
+						UserSettingsActivity.REQUEST_LOGIN);
+				
+			} else {
+				startActivity(new Intent(getActivity(), FavoriteAdsActivity.class));
+			}
 		} else if (v == closed_ads && !(getActivity() instanceof ClosedAdsActivity)) {
-			startActivity(new Intent(getActivity(), ClosedAdsActivity.class));
+			if(currentUser == null) {
+				startActivityForResult(
+						UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN), 
+						UserSettingsActivity.REQUEST_LOGIN);
+				
+			} else {
+				startActivity(new Intent(getActivity(), ClosedAdsActivity.class));
+			}
 		} else if (v == settings && !(getActivity() instanceof UserSettingsActivity)) {
 			startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
 		}

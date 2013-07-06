@@ -3,6 +3,7 @@ package eu.fiveminutes.cipele46.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,7 +72,16 @@ public class LoginFragment extends SherlockFragment{
 								@Override
 								public void onSuccess(User user) {
 									User.setUserAsActive(getActivity(), user);
-									startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+									if(getActivity().getCallingActivity() != null) {
+										//Called for result
+										Activity activity = getActivity();
+										activity.setResult(Activity.RESULT_OK);
+										activity.finish();
+										
+									} else {
+										startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));	
+									}
+									
 								}
 								
 								@Override

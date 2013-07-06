@@ -27,6 +27,8 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 	
 	public static final String SCREEN_ID_EXTRA = "screen_id_extra";
 	
+	public static final int REQUEST_LOGIN = 1;
+	
 	private UserSettingsScreen mCurrentScreen;
 	
 	public enum UserSettingsScreen {
@@ -75,7 +77,7 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 		if(intent.hasExtra(SCREEN_ID_EXTRA) == false) {
 			throw new RuntimeException(getString(R.string.error_screen_id_not_provided));
 		}
-		
+				
 		mCurrentScreen = UserSettingsScreen.valueOf(intent.getIntExtra(SCREEN_ID_EXTRA, 
 				UserSettingsScreen.UNKNOWN.getScreenId()));
 		if(mCurrentScreen == UserSettingsScreen.UNKNOWN) {
