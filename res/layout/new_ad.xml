@@ -129,7 +129,7 @@
             android:id="@+id/publish_ad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_ad_publish" />
+            android:text="@string/new_ad_publish_demand" />
     </LinearLayout>
 
 </ScrollView>
