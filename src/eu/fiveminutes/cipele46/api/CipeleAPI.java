@@ -141,7 +141,7 @@ public class CipeleAPI {
 			@Override
 			public void onResponse(User user) {
 				
-				url.onSuccess();
+				url.onSuccess(user);
 			}
 		};
 		
@@ -309,9 +309,9 @@ public class CipeleAPI {
 		}
 		
 		for (Category cat : categories) {
-			if (cat.getId().longValue() == categoryID.longValue()) {
-				return cat.getName();
-			}
+			//if (cat.getId().longValue() == categoryID.longValue()) {
+				//return cat.getName();
+			//}
 		}
 		
 		return "ne znam";
@@ -344,7 +344,7 @@ public class CipeleAPI {
 						
 						jsonObject = response.getJSONObject(i);
 						Category category = new Category();
-						category.setId(jsonObject.getLong("id"));
+						//category.setId(jsonObject.getLong("id"));
 						category.setName(jsonObject.getString("name"));
 						listofCategory.add(category);
 						

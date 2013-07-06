@@ -58,7 +58,16 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			@Override
 			public void onSuccess(List<Category> categories) {
 				CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories);
+				
+				int idx = 0;
+				for (Category c : categories) {
+					if (c.getId().longValue() == Filters.getCategoryFilter(getActivity())) {
+						break;
+					}
+					idx++;
+				}
 				categorySpinner.setAdapter(categoryAdapter);
+				categorySpinner.setSelection(idx);
 			}
 			
 			@Override
@@ -72,7 +81,17 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			@Override
 			public void onSuccess(List<District> districts) {
 				DistrictAdapter districtAdapter = new DistrictAdapter(getActivity(), districts);
+				
+				int idx = 0;
+				for (District d : districts) {
+					if (d.getId().longValue() == Filters.getDistrictFilter(getActivity())) {
+						break;
+					}
+					idx++;
+				}
+				
 				districtSpinner.setAdapter(districtAdapter);
+				districtSpinner.setSelection(idx);
 			}
 			
 			@Override
@@ -86,6 +105,11 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 		adTypes.add(getString(R.string.filter_demand));
 		AdTypeAdapter adTypeAdapter = new AdTypeAdapter(getActivity(), adTypes);
 		typeSpinner.setAdapter(adTypeAdapter);
+		if (Filters.getAdTypeFilter(getActivity()).equals(AdType.SUPPLY)) {
+			typeSpinner.setSelection(0);
+		} else {
+			typeSpinner.setSelection(1);
+		}
 	}
 
 	@Override
