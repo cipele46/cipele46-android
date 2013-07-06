@@ -93,7 +93,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
-		CipeleAPI.get().getAds(AdType.DEMAND, adsListener);
+		CipeleAPI.get().getAds(AdType.DEMAND, null, null, adsListener);
 	}
 
 	@Override

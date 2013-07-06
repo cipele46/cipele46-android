@@ -40,7 +40,15 @@ public class CipeleAPI {
 		return cipele;
 	}
 	
-	public void getAds(final AdType type, final AdsListener adsListener) {
+	/**
+	 * 
+	 * @param type Ad type. Required.
+	 * @param categoryID If null, all categories implied.
+	 * @param districtID If null, all districts implied.
+	 * @param adsListener
+	 */
+	public void getAds(final AdType type, final Long categoryID, 
+			final Long districtID, final AdsListener adsListener) {
 		
 		ErrorListener errorListener = new ErrorListener() {
 
