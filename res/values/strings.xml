@@ -17,5 +17,7 @@
     <string name="favorites">Favoriti</string>
     <string name="closed">Zatvoreni</string>
     <string name="settings">Postavke</string>
+    <!-- Error msgs -->
+    <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 
 </resources>

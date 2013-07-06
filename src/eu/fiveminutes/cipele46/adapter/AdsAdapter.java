@@ -61,8 +61,8 @@ public class AdsAdapter extends BaseAdapter {
 		holder.image.setDefaultImageResId(R.drawable.ic_launcher);
 		holder.image.setImageUrl(item.getImageURLString(), ImageCacheManager.getInstance().getImageLoader());
 		holder.title.setText(item.getTitle());
-		holder.category.setText(item.getCategoryID());
-		holder.county.setText(item.getCityID());
+		holder.category.setText("" + item.getCategoryID());
+		holder.county.setText("" + item.getCityID());
 		return v;
 	}
 
