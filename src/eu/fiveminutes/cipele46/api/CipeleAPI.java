@@ -428,7 +428,7 @@ public class CipeleAPI {
 
 					}
 					
-					listOfDistricts.add(0, new District(-1L, "Sve županije"));
+					listOfDistricts.add(0, new District(-1L, "Sve Å¾upanije"));
 					cachedListOfDistricts = listOfDistricts;
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
