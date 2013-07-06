@@ -42,6 +42,8 @@ public class CipeleAPI {
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
+	private User currentUser;
+	
 	private String TAG = this.getClass().getSimpleName();
 	
 	public void init(Context c) {
@@ -97,6 +99,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				currentUser = null;
 				url.onFailure(error);
 			}
 		};
@@ -107,14 +110,13 @@ public class CipeleAPI {
 		Listener<User> userListener = new Listener<User>() {
 
 			@Override
-			public void onResponse(User response) {
-				Log.d("", "Received user response " + response.toString());
-				
+			public void onResponse(User user) {
+				currentUser = user;
+				url.onSuccess();
 			}
 		};
 		
 		reqQueue.add(new GsonRequest<User>("http://cipele46.org/users/show.json", User.class, headers, userListener, errorListener));
-		
 	}
 	
 	
