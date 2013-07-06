@@ -1,7 +1,6 @@
 package eu.fiveminutes.cipele46.activity;
 
 import android.os.Bundle;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -13,7 +12,7 @@ public class NewAdActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
-
+		
 		super.onCreate(arg0);
 		NewAdFragment naf = new NewAdFragment();
 		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, naf).commit();
@@ -23,7 +22,7 @@ public class NewAdActivity extends SherlockFragmentActivity {
 			ab.setDisplayHomeAsUpEnabled(true);
 		}
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
