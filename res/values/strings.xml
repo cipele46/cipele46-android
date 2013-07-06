@@ -36,6 +36,7 @@
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
     <string name="error_screen_id_not_provided">Screen id not provided</string>
     <string name="error_screen_not_defined">Screen not defined</string>
+    <string name="error_no_internet_connection">Internet veza nije dostupna!</string>
     
 
     <!-- Strings related to user settings -->
@@ -57,6 +58,7 @@
     <string name="error_invalid_password">Lozinka je prekratka</string>
     <string name="error_incorrect_password">Lozinka je netočna</string>
     <string name="error_field_required">Ovo polje je obavezno</string>
+    <string name="logout">Odjava</string>
 
     <string name="new_ad_offer">Ponuda</string>
     <string name="new_ad_request">Potražnja</string>
@@ -71,6 +73,8 @@
     <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
-    <string name="filter_city">Grad</string>
+	<string name="filter_city">Grad</string>
+	<string name="filter_supply">Ponuda</string>
+	<string name="filter_demand">Potražnja</string>
 
 </resources>

@@ -48,6 +48,8 @@ public class CipeleAPI {
 	
 	private String TAG = this.getClass().getSimpleName();
 	
+	private List<District> cachedListOfDistricts;
+	
 	public void init(Context c) {
 		reqQueue = Volley.newRequestQueue(c);
 	}
@@ -320,6 +322,11 @@ public class CipeleAPI {
 	}
 	
 	public void getDistrictWithCities(final DistrictWithCitiesListener districtWithCitiesListener) {
+		
+		if (cachedListOfDistricts != null) {
+			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
+			return;
+		}
 		
 		String url = "http://www.cipele46.org/regions.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {

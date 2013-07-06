@@ -30,7 +30,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
-    <!-- Login form -->
 
     <ScrollView
         android:id="@+id/login_form"
@@ -41,36 +40,60 @@
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
+            <TextView 
+                android:id="@+id/lblPersonalData"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
+                android:text="Osobni podaci"
+                android:textSize="22sp"/>
+            
+            <View 
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"/>
+            
+            <TextView 
+                android:id="@+id/txtName"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:text="Pero Perić"/>
+            
+            <TextView 
+                android:id="@+id/txtEmail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="pero@cipele.org"/>
+            
+            <TextView 
+                android:id="@+id/txtPhone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="12345678"/>
 
             <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_edit_data"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_sign_in" />
+                android:text="Promijeni podatke" />
+            
+            <View 
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"/>
+            
+            <Button
+                android:id="@+id/btn_change_password"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:text="Promijeni lozinku" />
         </LinearLayout>
     </ScrollView>
 

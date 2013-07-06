@@ -28,6 +28,7 @@ import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdType;
+import eu.fiveminutes.cipele46.utils.Util;
 
 public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
 	private TextView filterTxt;
@@ -94,8 +95,12 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
+		if (Util.isOnline(getActivity())){
 		showDialog();
 		CipeleAPI.get().getAds(AdType.DEMAND,null, null,adsListener);
+		}else{
+			Toast.makeText(getActivity(), R.string.error_no_internet_connection, Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
