@@ -72,7 +72,7 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 			startActivity(new Intent(getActivity(), FavoriteAdsActivity.class));
 		} else if (v == closed_ads && !(getActivity() instanceof ClosedAdsActivity)) {
 			startActivity(new Intent(getActivity(), ClosedAdsActivity.class));
-		} else if (v == settings && !(getActivity() instanceof MainActivity)) {
+		} else if (v == settings && !(getActivity() instanceof UserSettingsActivity)) {
 			startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN));
 		}
 	}
