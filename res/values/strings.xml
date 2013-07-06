@@ -59,6 +59,7 @@
     <string name="error_invalid_password">Lozinka je prekratka</string>
     <string name="error_incorrect_password">Lozinka je netočna</string>
     <string name="error_field_required">Ovo polje je obavezno</string>
+    <string name="logout">Odjava</string>
 
     <string name="new_ad_offer">Ponuda</string>
     <string name="new_ad_request">Potražnja</string>
@@ -73,6 +74,8 @@
     <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
-    <string name="filter_city">Grad</string>
+	<string name="filter_city">Grad</string>
+	<string name="filter_supply">Ponuda</string>
+	<string name="filter_demand">Potražnja</string>
 
 </resources>
