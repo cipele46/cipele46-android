@@ -14,6 +14,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.MainActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
+import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
 
 public class MenuFragment extends SherlockFragment implements OnClickListener {
 
@@ -69,7 +70,7 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 		} else if (v == closed_ads) {
 
 		} else if (v == settings) {
-			startActivity(new Intent(getActivity(), UserSettingsActivity.class));
+			startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN));
 		}
 	}
 }
