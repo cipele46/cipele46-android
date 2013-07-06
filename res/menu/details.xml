@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/details_favorites"
+        android:icon="@drawable/ic_menu_star"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/add_to_favorites"/>
+    <item
+        android:id="@+id/details_close"
+        android:orderInCategory="101"
+        android:showAsAction="never"
+        android:title="@string/close"/>
+    <item
+        android:id="@+id/details_delete"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:title="@string/delete"/>
+
+</menu>

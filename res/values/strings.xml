@@ -20,6 +20,9 @@
     <string name="ad_details">Detalji oglasa</string>
     <string name="awaiting_approval">Čeka odobrenje administratora</string>
     <string name="call">Nazovi</string>
+    <string name="close">Zatvori</string>
+    <string name="delete">Obriši</string>
+    <string name="add_to_favorites">Dodaj u favorite</string>
     <string name="send_mail">Pošalji upit</string>
     <string name="please_wait">Molimo pričekajte...</string>
 
