@@ -57,6 +57,7 @@
     <string name="error_invalid_password">Lozinka je prekratka</string>
     <string name="error_incorrect_password">Lozinka je netočna</string>
     <string name="error_field_required">Ovo polje je obavezno</string>
+    <string name="logout">Odjava</string>
 
     <string name="new_ad_offer">Ponuda</string>
     <string name="new_ad_request">Potražnja</string>

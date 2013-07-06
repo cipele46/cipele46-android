@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
+import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
 
 public class LoginFragment extends SherlockFragment{
 	
@@ -88,6 +90,7 @@ public class LoginFragment extends SherlockFragment{
 				@Override
 				public void onClick(View view) {
 					attemptLogin();
+					startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
 				}
 			});
 	}

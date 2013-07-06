@@ -3,6 +3,8 @@ package eu.fiveminutes.cipele46.activity;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
@@ -23,6 +25,8 @@ import android.os.Bundle;
 public class UserSettingsActivity extends SherlockFragmentActivity {
 	
 	public static final String SCREEN_ID_EXTRA = "screen_id_extra";
+	
+	private UserSettingsScreen mCurrentScreen;
 	
 	public enum UserSettingsScreen {
 		UNKNOWN(0),
@@ -71,14 +75,14 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 			throw new RuntimeException(getString(R.string.error_screen_id_not_provided));
 		}
 		
-		UserSettingsScreen screen = UserSettingsScreen.valueOf(intent.getIntExtra(SCREEN_ID_EXTRA, 
+		mCurrentScreen = UserSettingsScreen.valueOf(intent.getIntExtra(SCREEN_ID_EXTRA, 
 				UserSettingsScreen.UNKNOWN.getScreenId()));
-		if(screen == UserSettingsScreen.UNKNOWN) {
+		if(mCurrentScreen == UserSettingsScreen.UNKNOWN) {
 			throw new RuntimeException(getString(R.string.error_screen_not_defined));
 		}
 		
-		SherlockFragment fragment = getScreenFragment(screen); 
-		int activityTitleResource = getActivityTitleResource(screen);
+		SherlockFragment fragment = getScreenFragment(mCurrentScreen); 
+		int activityTitleResource = getActivityTitleResource(mCurrentScreen);
 		
 		if(fragment != null) {
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, fragment).commit();	
@@ -90,6 +94,27 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 			ab.setDisplayHomeAsUpEnabled(true);
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		if(mCurrentScreen == UserSettingsScreen.USER_DETAILS) {
+			MenuInflater inflater = getSupportMenuInflater();
+		    inflater.inflate(R.menu.user_details, menu);
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		
+		if(item != null && item.getItemId() == R.id.action_logout) {
+			//Odlogiraj korisnika
+			startActivity(UserSettingsActivity.buildIntent(this, UserSettingsScreen.LOGIN));
+		}
+		
+		return true;
+	};
 
 	private int getActivityTitleResource(UserSettingsScreen screen) {
 		

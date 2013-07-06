@@ -51,7 +51,7 @@ public class ResetPasswordFragment extends SherlockFragment{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.login, container, false);
+		View v = inflater.inflate(R.layout.reset_password, container, false);
 		return v;
 	}
 	
