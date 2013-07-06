@@ -24,18 +24,25 @@ import eu.fiveminutes.cipele46.activity.AdDetailsActivity;
 import eu.fiveminutes.cipele46.activity.FilterActivity;
 import eu.fiveminutes.cipele46.activity.NewAdActivity;
 import eu.fiveminutes.cipele46.adapter.AdsAdapter;
+import eu.fiveminutes.cipele46.adapter.CategoryAdapter;
+import eu.fiveminutes.cipele46.adapter.DistrictAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
+import eu.fiveminutes.cipele46.api.CategoriesListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
+import eu.fiveminutes.cipele46.api.DistrictWithCitiesListener;
 import eu.fiveminutes.cipele46.app.Filters;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdType;
+import eu.fiveminutes.cipele46.model.Category;
+import eu.fiveminutes.cipele46.model.District;
 import eu.fiveminutes.cipele46.utils.Util;
 
-public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
+public class MainFragment extends SherlockFragment implements OnClickListener,
+		OnItemClickListener {
 	private TextView filterTxt;
 	private ListView list;
 	private AdsAdapter adapter;
-	
+
 	private AdType activeAdType;
 	private Long activeDistrict;
 	private Long activeCategory;
@@ -52,7 +59,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		@Override
 		public void onFailure(Throwable t) {
 			hideDialog();
-			Toast.makeText(getActivity(), R.string.error_get_ads, Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_get_ads,
+					Toast.LENGTH_LONG).show();
 		}
 	};
 
@@ -63,19 +71,22 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.ads, container, false);
 		return v;
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		AdType newAdType= Filters.getAdTypeFilter(getActivity());
-		Long newCategory= Filters.getCategoryFilter(getActivity());
-		Long newDistrict= Filters.getDistrictFilter(getActivity());
-		
-		if (!newAdType.equals(activeAdType) || !newCategory.equals(activeCategory) || !newDistrict.equals(activeDistrict)){
+		AdType newAdType = Filters.getAdTypeFilter(getActivity());
+		Long newCategory = Filters.getCategoryFilter(getActivity());
+		Long newDistrict = Filters.getDistrictFilter(getActivity());
+
+		if (!newAdType.equals(activeAdType)
+				|| !newCategory.equals(activeCategory)
+				|| !newDistrict.equals(activeDistrict)) {
 
 			activeAdType = newAdType;
 			activeCategory = newCategory;
@@ -91,7 +102,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		filterTxt.setOnClickListener(this);
 		list = (ListView) view.findViewById(R.id.ads_list);
 		list.setOnItemClickListener(this);
-//		getData();
+		// getData();
 	}
 
 	@Override
@@ -117,16 +128,50 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
-		if (Util.isOnline(getActivity())){
-		showDialog();
-		CipeleAPI.get().getAds(activeAdType,activeCategory, activeDistrict,adsListener);
-		}else{
-			Toast.makeText(getActivity(), R.string.error_no_internet_connection, Toast.LENGTH_LONG).show();
+		if (Util.isOnline(getActivity())) {
+			showDialog();
+
+			CipeleAPI.get().getCategories(new CategoriesListener() {
+
+				@Override
+				public void onSuccess(List<Category> categories) {
+
+					CipeleAPI.get().getDistrictWithCities(
+							new DistrictWithCitiesListener() {
+
+								@Override
+								public void onSuccess(List<District> districts) {
+									CipeleAPI.get().getAds(activeAdType,
+											activeCategory, activeDistrict,
+											adsListener);
+								}
+
+								@Override
+								public void onFailure(Throwable t) {
+									Toast.makeText(getActivity(),
+											R.string.error_get_dist,
+											Toast.LENGTH_LONG).show();
+								}
+							});
+				}
+
+				@Override
+				public void onFailure(Throwable t) {
+					Toast.makeText(getActivity(), R.string.error_get_cat,
+							Toast.LENGTH_LONG).show();
+				}
+			});
+
+		} else {
+			Toast.makeText(getActivity(),
+					R.string.error_no_internet_connection, Toast.LENGTH_LONG)
+					.show();
 		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> adapterView, View view,
+			int position, long id) {
 		Intent i = new Intent(getActivity(), AdDetailsActivity.class);
 		i.putExtra("adItem", (Ad) adapter.getItem(position));
 		startActivity(i);
@@ -138,20 +183,24 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void hideDialog() {
-		ProgressDialogFragment pdf = (ProgressDialogFragment) getFragmentManager().findFragmentByTag("pdf");
+		ProgressDialogFragment pdf = (ProgressDialogFragment) getFragmentManager()
+				.findFragmentByTag("pdf");
 		if (pdf != null) {
 			pdf.dismiss();
 		}
 	}
-	
-	private void generateFilterText(){
+
+	private void generateFilterText() {
 		String title = "";
-		if (activeAdType == AdType.DEMAND){
+		if (activeAdType == AdType.DEMAND) {
 			title += getString(R.string.filter_demand);
-		}else{
+		} else {
 			title += getString(R.string.filter_supply);
 		}
-		
+
+		title += ", " + Filters.getCategoryFilterName(this.getActivity())
+				+ ", " + Filters.getDistrictFilterName(this.getActivity());
+
 		filterTxt.setText(title);
 	}
 

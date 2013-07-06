@@ -279,6 +279,25 @@ public class CipeleAPI {
 		return newAd;
 	}
 	
+	public String getDistrictNameForID(Long districtID) {
+		
+		if (districtID == -1) {
+			return "Sve županije";
+		}
+		
+		if (cachedListOfDistricts == null) {
+			return "err0";
+		}
+		
+		for (District cat : cachedListOfDistricts) {
+			if (cat.getId().longValue() == districtID.longValue()) {
+				return cat.getName();
+			}
+		}
+		
+		return "err1";
+	}
+	
 	public String getCategoryNameForID(Long categoryID) {
 		
 		if (categoryID == -1) {
@@ -286,7 +305,7 @@ public class CipeleAPI {
 		}
 		
 		if (categories == null) {
-			return "Kategorije null";
+			return "Kategorije nisu učitane";
 		}
 		
 		for (Category cat : categories) {
@@ -333,6 +352,8 @@ public class CipeleAPI {
 						categoriesListener.onFailure(e);
 					}
 				}
+				
+				listofCategory.add(0, new Category(-1L, "Sve kategorije"));
 				
 				categories = listofCategory;
 				
@@ -382,7 +403,7 @@ public class CipeleAPI {
 
 						jsonObject = response.getJSONObject(i);
 						District district = new District();
-						district.setId(jsonObject.getString("id"));
+						district.setId(jsonObject.getLong("id"));
 						district.setName(jsonObject.getString("name"));
 						
 						JSONArray cities = jsonObject.getJSONArray("cities");
@@ -404,8 +425,11 @@ public class CipeleAPI {
 						
 						district.setCities(listOfCities);
 						listOfDistricts.add(district);
-						cachedListOfDistricts = listOfDistricts;
+
 					}
+					
+					listOfDistricts.add(0, new District(-1L, "Sve �upanije"));
+					cachedListOfDistricts = listOfDistricts;
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
 				

@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.utils.ImageCacheManager;
@@ -71,8 +72,8 @@ public class AdsAdapter extends BaseAdapter {
 		holder.image.setImageUrl("http://aaa.jpg", ImageCacheManager.getInstance().getImageLoader());
 
 		holder.title.setText(item.getTitle());
-		holder.category.setText("" + item.getCategoryID());
-		holder.county.setText("" + item.getCityID());
+		holder.category.setText("" + CipeleAPI.get().getCategoryNameForID(item.getCategoryID()));
+		holder.county.setText("" + CipeleAPI.get().getDistrictNameForID(item.getDistrictID()));
 		holder.timeText.setText("21 dan");
 		if (item.getType() == AdType.SUPPLY) {
 			holder.categoryImage.setImageResource(R.drawable.category_icon_blue);

@@ -33,7 +33,7 @@ public class CategoryAdapter extends BaseAdapter implements SpinnerAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return categories != null ? Long.parseLong(categories.get(position).getId()) : 0;
+		return categories != null ? categories.get(position).getId() : 0;
 	}
 
 	@Override

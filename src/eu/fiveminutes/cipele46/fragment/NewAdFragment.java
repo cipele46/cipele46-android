@@ -46,11 +46,11 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 	private Spinner citySpinner;
 	private Spinner categorySpinner;
 	private Spinner districtSpinner;
-	
+
 	private City activeCity;
 	private District activeDistrict;
 	private Category activeCategory;
-	
+
 	private CityAdapter cityAdapter;
 	private DistrictAdapter districtAdapter;
 	private CategoryAdapter categoryAdapter;
@@ -142,7 +142,7 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 
 			@Override
 			public void onSuccess(List<Category> categories) {
-				
+
 				categoryAdapter = new CategoryAdapter(getActivity(), categories);
 				categorySpinner.setAdapter(categoryAdapter);
 			}
@@ -159,15 +159,16 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 			public void onSuccess(List<District> districts) {
 				districtAdapter = new DistrictAdapter(getActivity(), districts);
 				districtSpinner.setAdapter(districtAdapter);
-				
 
 				List<City> cities = new ArrayList<City>();
-				for (District d :districts){
-					for (City city : d.getCities()){
-						cities.add(city);
+				for (District d : districts) {
+					if (d.getCities() != null) {
+						for (City city : d.getCities()) {
+							cities.add(city);
+						}
 					}
 				}
-				
+
 				cityAdapter = new CityAdapter(getActivity(), cities);
 				citySpinner.setAdapter(cityAdapter);
 			}
@@ -181,11 +182,11 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 
 	@Override
 	public void onItemSelected(AdapterView<?> adapterView, View v, int position, long id) {
-		if (adapterView == citySpinner){
+		if (adapterView == citySpinner) {
 			activeCity = (City) cityAdapter.getItem(position);
-		}else if (adapterView == categorySpinner){
+		} else if (adapterView == categorySpinner) {
 			activeCategory = (Category) categoryAdapter.getItem(position);
-		}else if (adapterView == districtSpinner){
+		} else if (adapterView == districtSpinner) {
 			activeDistrict = (District) districtAdapter.getItem(position);
 		}
 
