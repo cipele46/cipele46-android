@@ -44,7 +44,8 @@ public class CipeleAPI {
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
-	private User currentUser;
+	// Cached categories. Live during the app session.
+	private List<Category> categories;
 	
 	private String TAG = this.getClass().getSimpleName();
 	
@@ -127,7 +128,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				currentUser = null;
+				
 				url.onFailure(error);
 			}
 		};
@@ -139,7 +140,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onResponse(User user) {
-				currentUser = user;
+				
 				url.onSuccess();
 			}
 		};
@@ -216,7 +217,7 @@ public class CipeleAPI {
 		};
 		
 		reqQueue.add(
-				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+				new JsonArrayRequest("http://cipele46.org/ads.json", arrayListener, errorListener));
 	}
 	
 	private static List<Ad> parseAdList(JSONArray array) throws JSONException {
@@ -278,7 +279,31 @@ public class CipeleAPI {
 		return newAd;
 	}
 	
+	public String getCategoryNameForID(Long categoryID) {
+		
+		if (categoryID == -1) {
+			return "Sve kategorije";
+		}
+		
+		if (categories == null) {
+			return "Kategorije null";
+		}
+		
+		for (Category cat : categories) {
+			if (cat.getId().longValue() == categoryID.longValue()) {
+				return cat.getName();
+			}
+		}
+		
+		return "ne znam";
+	}
+	
 	public void getCategories(final CategoriesListener categoriesListener) {
+		
+		if (categories != null) {
+			categoriesListener.onSuccess(categories);
+			return;
+		}
 		
 		String url = "http://cipele46.org/categories.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
@@ -300,7 +325,7 @@ public class CipeleAPI {
 						
 						jsonObject = response.getJSONObject(i);
 						Category category = new Category();
-						category.setId(jsonObject.getString("id"));
+						category.setId(jsonObject.getLong("id"));
 						category.setName(jsonObject.getString("name"));
 						listofCategory.add(category);
 						
@@ -308,6 +333,8 @@ public class CipeleAPI {
 						categoriesListener.onFailure(e);
 					}
 				}
+				
+				categories = listofCategory;
 				
 				categoriesListener.onSuccess(listofCategory);
 				
