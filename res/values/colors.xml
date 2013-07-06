@@ -10,5 +10,8 @@
     
     <color name="blue_divider">#17C1C7</color>
     <color name="red_divider">#F4715B</color>
+    
+    <color name="blue_text">#00C1C8</color>
+    <color name="red_text">#F6755A</color>
 
 </resources>

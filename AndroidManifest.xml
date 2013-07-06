@@ -40,9 +40,21 @@
         <activity
             android:name="eu.fiveminutes.cipele46.activity.UserSettingsActivity"
             android:label="@string/title_activity_user_settings"
-            android:windowSoftInputMode="adjustResize|stateVisible"  />
+            android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name="eu.fiveminutes.cipele46.activity.SendEnquiryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.FavoriteAdsActivity"
+            android:label="@string/favorite_ads"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.ActiveAdsActivity"
+            android:label="@string/active_ads"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.ClosedAdsActivity"
+            android:label="@string/closed_ads"
             android:screenOrientation="portrait" />
     </application>
 
