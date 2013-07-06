@@ -76,7 +76,7 @@
                 android:singleLine="true" />
             
             <EditText
-                android:id="@+id/txtPasswordAgain"
+                android:id="@+id/txtPasswordRepeated"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Lozinka ponovo"
