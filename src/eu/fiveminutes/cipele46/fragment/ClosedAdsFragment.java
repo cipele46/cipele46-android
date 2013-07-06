@@ -14,6 +14,7 @@ public class ClosedAdsFragment extends UserAdsFragment{
 	}
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.details, menu);
 		if (!isAdMine()){
 			menu.findItem(R.id.details_favorites).setVisible(false);
 			menu.findItem(R.id.details_close).setVisible(false);
