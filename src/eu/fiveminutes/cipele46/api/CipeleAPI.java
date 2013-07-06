@@ -286,7 +286,7 @@ public class CipeleAPI {
 		}
 		
 		if (categories == null) {
-			return "Kategorije null";
+			return "Kategorije nisu učitane";
 		}
 		
 		for (Category cat : categories) {
