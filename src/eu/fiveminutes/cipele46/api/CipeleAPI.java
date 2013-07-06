@@ -1,8 +1,11 @@
 package eu.fiveminutes.cipele46.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.Category;
 
 public class CipeleAPI {
@@ -34,8 +38,51 @@ public class CipeleAPI {
 		return cipele;
 	}
 	
-	public void getAds(AdsListener adsListener) {
+	public void getAds(final AdsListener adsListener) {
 		
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				adsListener.onFailure(error);
+			}
+		};
+		
+		Listener<JSONArray> arrayListener = new Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				
+				List<Ad> adList = new ArrayList<Ad>();
+				
+				try {
+					JSONObject obj;
+					for (int i = 0; i < response.length(); i++) {
+						obj = response.getJSONObject(i);
+						
+						Ad newAd = new Ad();
+						newAd.setId(obj.getLong("id"));
+						newAd.setTitle(obj.getString("title"));
+						newAd.setDescription(obj.getString("description"));
+						newAd.setEmail(obj.getString("email"));
+						newAd.setPhone(obj.getString("phone"));
+						newAd.setImageURLString(obj.getString("imageURL"));
+						newAd.setCityID(obj.getLong("cityID"));
+						newAd.setCategoryID(obj.getLong("categoryID"));
+						newAd.setDistrictID(obj.getLong("districtID"));
+						
+						adList.add(newAd);
+					}
+				} catch (JSONException e) {
+					adsListener.onFailure(e);
+				}
+				
+				adsListener.onSuccess(adList);
+			}
+		};
+		
+		reqQueue.add(
+				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
 	}
 	
 	public void getCategories(final CategoriesListener cl) {
