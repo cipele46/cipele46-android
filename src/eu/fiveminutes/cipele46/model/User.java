@@ -26,4 +26,8 @@ public class User {
 	}
 
 	
+	public String toString() {
+		return name + ", " + email + ", " + phone;
+	}
+	
 }

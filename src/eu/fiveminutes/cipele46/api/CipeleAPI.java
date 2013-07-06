@@ -1,14 +1,18 @@
 package eu.fiveminutes.cipele46.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
@@ -24,6 +28,7 @@ import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 import eu.fiveminutes.cipele46.model.City;
 import eu.fiveminutes.cipele46.model.District;
+import eu.fiveminutes.cipele46.model.User;
 
 public class CipeleAPI {
 
@@ -37,6 +42,8 @@ public class CipeleAPI {
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
+	private User currentUser;
+	
 	private String TAG = this.getClass().getSimpleName();
 	
 	public void init(Context c) {
@@ -48,6 +55,68 @@ public class CipeleAPI {
 			cipele = new CipeleAPI();
 		}
 		return cipele;
+	}
+	
+	
+	public void registerUser(String name, String email, String phone, String password, final UserRegistrationListener url) {
+		
+		
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				url.onFailure(error);
+			}
+		};
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		
+		Listener<User> userListener = new Listener<User>() {
+
+			@Override
+			public void onResponse(User response) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		reqQueue.add(new GsonRequest<User>("http://cipele46.org/users/show.json", User.class, headers, userListener, errorListener));
+		
+	}
+
+	private static String basicAuthHeaderValue(String username, String password) {
+		String x = username + ":" + password;
+		try {
+			return "Basic " + Base64.encodeToString(x.getBytes("UTF-8"), Base64.DEFAULT);
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
+	}
+	
+	public void loginUser(String email, String password, final UserLoginListener url) {
+
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				currentUser = null;
+				url.onFailure(error);
+			}
+		};
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Authorization", basicAuthHeaderValue(email, password));
+		
+		Listener<User> userListener = new Listener<User>() {
+
+			@Override
+			public void onResponse(User user) {
+				currentUser = user;
+				url.onSuccess();
+			}
+		};
+		
+		reqQueue.add(new GsonRequest<User>("http://cipele46.org/users/show.json", User.class, headers, userListener, errorListener));
 	}
 	
 	
