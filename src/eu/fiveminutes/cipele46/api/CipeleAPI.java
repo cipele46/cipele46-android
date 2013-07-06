@@ -126,7 +126,7 @@ public class CipeleAPI {
 					}
 				}
 				
-				cl.onSuccess(listofCategory, null);
+				cl.onSuccess(listofCategory);
 				
 			}
 		}, new ErrorListener() {
