@@ -10,9 +10,6 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
-import eu.fiveminutes.cipele46.R.id;
-import eu.fiveminutes.cipele46.R.layout;
-import eu.fiveminutes.cipele46.fragment.MenuFragment;
 
 public abstract class MenuActivity extends SherlockFragmentActivity {
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/ad_details_awaining_approval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="5dp"
+            android:text="@string/awaiting_approval"
+            android:textColor="@color/red" />
+
+        <TextView
+            android:id="@+id/ad_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:hint="Poklanjam namjestaj koji je jos jako dobar ali nemam kud s njime tralalalala"
+            android:padding="5dp"
+            android:textColor="@color/black" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/ad_details_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <TextView
+            android:id="@+id/ad_details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:hint="Poklanjam namjestaj koji je jos jako dobar ali nemam kud s njime tralalalala"
+            android:padding="5dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ad_details_county"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_dialog_info"
+            android:gravity="center_vertical"
+            android:hint="zagreb, zagreb"
+            android:padding="5dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/ad_details_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@android:drawable/ic_dialog_info"
+            android:gravity="center_vertical"
+            android:hint="namjestaj"
+            android:padding="5dp"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/ad_details_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/ad_details_send_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</ScrollView>

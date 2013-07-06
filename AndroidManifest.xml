@@ -8,6 +8,9 @@
         android:minSdkVersion="9"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name="eu.fiveminutes.cipele46.app.CipeleApp"
         android:allowBackup="true"
@@ -30,8 +33,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="eu.fiveminutes.cipele46.activity.NewAdActivity"
-            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.AdDetailsActivity"
             android:screenOrientation="portrait" />
     </application>
-	<uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
