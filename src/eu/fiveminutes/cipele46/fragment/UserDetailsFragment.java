@@ -12,20 +12,9 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
+import eu.fiveminutes.cipele46.model.User;
 
 public class UserDetailsFragment extends SherlockFragment{
-	
-
-	// Values for email and password at the time of the login attempt.
-	private String mEmail;
-	private String mPassword;
-
-	// UI references.
-	private EditText mEmailView;
-	private EditText mPasswordView;
-	private View mLoginFormView;
-	private View mLoginStatusView;
-	private TextView mLoginStatusMessageView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,6 +26,13 @@ public class UserDetailsFragment extends SherlockFragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		
+		User user = User.getActiveUser(getActivity());
+		if(user != null) {
+			((TextView)view.findViewById(R.id.txtName)).setText(user.getName());
+			((TextView)view.findViewById(R.id.txtEmail)).setText(user.getEmail());
+			((TextView)view.findViewById(R.id.txtPhone)).setText(user.getPhone());
+		}
 		
 		view.findViewById(R.id.btn_edit_data).setOnClickListener(
 				new View.OnClickListener() {

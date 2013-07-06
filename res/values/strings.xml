@@ -11,7 +11,7 @@
     <string name="filter_county">Županija</string>
     <string name="filter_category">Kategorija</string>
     <string name="search">Traži</string>
-    <string name="new_ad">Novi oglas</string>
+    <string name="new_ad">Dodaj oglas</string>
     <string name="my_ads">Moji oglasi</string>
     <string name="active">Aktivni</string>
     <string name="favorites">Favoriti</string>
@@ -63,8 +63,8 @@
     <string name="error_field_required">Ovo polje je obavezno</string>
     <string name="logout">Odjava</string>
 
-    <string name="new_ad_offer">Ponuda</string>
-    <string name="new_ad_request">Potražnja</string>
+    <string name="new_ad_offer">Poklanjamo</string>
+    <string name="new_ad_request">Trebamo</string>
     <string name="new_ad_title">Naslov</string>
     <string name="new_ad_description">Opis</string>
     <string name="new_ad_picture">Slika</string>
@@ -77,7 +77,7 @@
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
 	<string name="filter_city">Grad</string>
-	<string name="filter_supply">Ponuda</string>
-	<string name="filter_demand">Potražnja</string>
+	<string name="filter_supply">Poklanjamo</string>
+	<string name="filter_demand">Trebamo</string>
 
 </resources>
