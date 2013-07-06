@@ -66,8 +66,10 @@ public class AdsAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		holder.image.setDefaultImageResId(R.drawable.ic_launcher);
-		holder.image.setImageUrl(item.getImageURLString(), ImageCacheManager.getInstance().getImageLoader());
+		holder.image.setDefaultImageResId(R.drawable.action_bar_icon);
+//		holder.image.setImageUrl(item.getImageURLString(), ImageCacheManager.getInstance().getImageLoader());
+		holder.image.setImageUrl("http://aaa.jpg", ImageCacheManager.getInstance().getImageLoader());
+
 		holder.title.setText(item.getTitle());
 		holder.category.setText("" + item.getCategoryID());
 		holder.county.setText("" + item.getCityID());

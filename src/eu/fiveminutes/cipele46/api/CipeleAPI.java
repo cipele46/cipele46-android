@@ -62,7 +62,7 @@ public class CipeleAPI {
 	}
 	
 	
-	public void registerUser(String name, String email, String phone, String password, final UserRegistrationListener url) {
+	public void registerUser(String firstName, String lastName, String email, String phone, String password, final UserRegistrationListener url) {
 		
 		
 
@@ -70,6 +70,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				Log.e(TAG, "Registration failed", error);
 				url.onFailure(error);
 			}
 		};
@@ -78,7 +79,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onResponse(JSONObject response) {
-				System.out.println(response);
+				Log.d(TAG, "Registration succeded" + response);
 				url.onSuccess();
 				
 			}
@@ -88,11 +89,11 @@ public class CipeleAPI {
 		JSONObject requestObj = new JSONObject();
 		
 		try {
-			userObj.put("first_name", "moje ime");
-			userObj.put("last_name", "moje prezime");
-			userObj.put("email", "tes222@email.com");
-			userObj.put("password", "lozinka1");
-			userObj.put("password_confirmation", "lozinka2");
+			userObj.put("first_name", firstName);
+			userObj.put("last_name", lastName);
+			userObj.put("email", email);
+			userObj.put("password", password);
+			userObj.put("password_confirmation", password);
 
 			requestObj.put("user", userObj);
 			
@@ -101,8 +102,10 @@ public class CipeleAPI {
 			return;
 		}
 
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Content-Type", "application/json");
 		
-		JsonObjectRequest jsonReq = new JsonObjectRequest(Method.POST, "http://cipele46.org/users.json", requestObj, userListener, errorListener);
+		RegistrationRequest jsonReq = new RegistrationRequest(Method.POST, "http://cipele46.org/users.json", requestObj, headers, userListener, errorListener);
 		
 		reqQueue.add(jsonReq);
 
@@ -277,7 +280,7 @@ public class CipeleAPI {
 	
 	public void getCategories(final CategoriesListener categoriesListener) {
 		
-		String url = "http://dev.fiveminutes.eu/cipele/api/categories";
+		String url = "http://cipele46.org/categories.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
 
 			@Override
@@ -327,6 +330,7 @@ public class CipeleAPI {
 		
 		if (cachedListOfDistricts != null) {
 			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
+			Log.d(TAG, "Using cachedListOfDistricts");
 			return;
 		}
 		
@@ -373,6 +377,7 @@ public class CipeleAPI {
 						
 						district.setCities(listOfCities);
 						listOfDistricts.add(district);
+						cachedListOfDistricts = listOfDistricts;
 					}
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);

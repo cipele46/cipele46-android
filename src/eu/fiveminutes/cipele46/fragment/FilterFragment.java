@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 
@@ -20,6 +22,8 @@ import eu.fiveminutes.cipele46.adapter.DistrictAdapter;
 import eu.fiveminutes.cipele46.api.CategoriesListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.api.DistrictWithCitiesListener;
+import eu.fiveminutes.cipele46.app.Filters;
+import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 import eu.fiveminutes.cipele46.model.District;
 
@@ -59,7 +63,7 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			
 			@Override
 			public void onFailure(Throwable t) {
-				//TODO handle error
+				Toast.makeText(getActivity(), R.string.error_get_cat, Toast.LENGTH_LONG).show();
 			}
 		});
 		
@@ -73,15 +77,13 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			
 			@Override
 			public void onFailure(Throwable t) {
-				//TODO handle error
-				
+				Toast.makeText(getActivity(), R.string.error_get_dist, Toast.LENGTH_LONG).show();
 			}
 		});
 		
 		List<String> adTypes = new ArrayList<String>();
 		adTypes.add(getString(R.string.filter_supply));
 		adTypes.add(getString(R.string.filter_demand));
-		adTypes.add("Potražnja");
 		AdTypeAdapter adTypeAdapter = new AdTypeAdapter(getActivity(), adTypes);
 		typeSpinner.setAdapter(adTypeAdapter);
 	}
@@ -89,14 +91,23 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
-		// TODO
 		
+		if (arg0.getAdapter() instanceof CategoryAdapter) {
+			Filters.setCategoryFilter(getActivity(), arg0.getAdapter().getItemId(arg2));
+			Log.d(this.getClass().getSimpleName(), "Category adapter");
+		} else if (arg0.getAdapter() instanceof DistrictAdapter) {
+			Filters.setDistrictFilter(getActivity(), arg0.getAdapter().getItemId(arg2));
+			Log.d(this.getClass().getSimpleName(), "DistrictAdapter adapter");
+		} else if (arg0.getAdapter() instanceof AdTypeAdapter) {
+			Filters.setAdTypeFilter(getActivity(), AdType.values()[(int)arg0.getAdapter().getItemId(arg2)]);
+			Log.d(this.getClass().getSimpleName(), "AdTypeAdapter adapter");
+		} else {
+			Log.d(this.getClass().getSimpleName(), "Not recognized adapter");
+		}
 	}
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO
-		
 	}
 	
 }

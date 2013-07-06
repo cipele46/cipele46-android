@@ -89,29 +89,25 @@
             android:padding="5dp"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <Button
+            android:id="@+id/ad_details_call"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_menu_call"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/ad_details_call"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:drawableLeft="@drawable/ic_menu_call"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/ad_details_send_mail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:drawableLeft="@drawable/ic_menu_compose"
-                android:text="@string/send_mail"
-                android:textColor="@color/white" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/ad_details_send_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/ic_menu_compose"
+            android:text="@string/send_mail"
+            android:textStyle="bold" >
+        </Button>
     </LinearLayout>
 
 </ScrollView>
