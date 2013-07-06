@@ -330,6 +330,7 @@ public class CipeleAPI {
 		
 		if (cachedListOfDistricts != null) {
 			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
+			Log.d(TAG, "Using cachedListOfDistricts");
 			return;
 		}
 		
@@ -376,6 +377,7 @@ public class CipeleAPI {
 						
 						district.setCities(listOfCities);
 						listOfDistricts.add(district);
+						cachedListOfDistricts = listOfDistricts;
 					}
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
