@@ -81,7 +81,6 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 		List<String> adTypes = new ArrayList<String>();
 		adTypes.add(getString(R.string.filter_supply));
 		adTypes.add(getString(R.string.filter_demand));
-		adTypes.add("Potražnja");
 		AdTypeAdapter adTypeAdapter = new AdTypeAdapter(getActivity(), adTypes);
 		typeSpinner.setAdapter(adTypeAdapter);
 	}

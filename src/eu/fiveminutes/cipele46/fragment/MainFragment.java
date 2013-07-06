@@ -82,7 +82,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 			activeDistrict = newDistrict;
 			getData();
 		}
-		filterTxt.setText(activeAdType.name() + ", " + activeCategory + ", " + activeDistrict);
+		generateFilterText();
 	}
 
 	@Override
@@ -142,6 +142,17 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		if (pdf != null) {
 			pdf.dismiss();
 		}
+	}
+	
+	private void generateFilterText(){
+		String title = "";
+		if (activeAdType == AdType.DEMAND){
+			title += getString(R.string.filter_demand);
+		}else{
+			title += getString(R.string.filter_supply);
+		}
+		
+		filterTxt.setText(title);
 	}
 
 }
