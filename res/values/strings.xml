@@ -6,5 +6,11 @@
     <string name="hello_world">Hello world!</string>
     
     <string name="oglasi">Oglasi</string>
+    <string name="filter">Filter</string>
+    <string name="filter_ads">Filter oglasa</string>
+    
+    <string name="filter_type">Tip oglasa</string>
+    <string name="filter_county">Županija</string>
+    <string name="filter_category">Kategorija</string>
 
 </resources>
