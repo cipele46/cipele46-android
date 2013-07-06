@@ -27,6 +27,7 @@ import eu.fiveminutes.cipele46.adapter.AdsAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdType;
 
 public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
 	private TextView filterTxt;
@@ -65,7 +66,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		filterTxt = (TextView) view.findViewById(R.id.ads_filter_txt);
 		filterTxt.setOnClickListener(this);
-		list = (ListView)view.findViewById(R.id.ads_list);
+		list = (ListView) view.findViewById(R.id.ads_list);
 		list.setOnItemClickListener(this);
 		getData();
 	}
@@ -94,21 +95,22 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 
 	private void getData() {
 		showDialog();
-		CipeleAPI.get().getAds(adsListener);
+		CipeleAPI.get().getAds(AdType.DEMAND,null, null,adsListener);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 		Intent i = new Intent(getActivity(), AdDetailsActivity.class);
-		i.putExtra("adItem", (Ad)adapter.getItem(position));
+		i.putExtra("adItem", (Ad) adapter.getItem(position));
 		startActivity(i);
 	}
-	
-	private void showDialog(){
+
+	private void showDialog() {
 		ProgressDialogFragment pdf = new ProgressDialogFragment();
 		pdf.show(getFragmentManager(), "pdf");
 	}
-	private void hideDialog(){
+
+	private void hideDialog() {
 		ProgressDialogFragment pdf = (ProgressDialogFragment) getFragmentManager().findFragmentByTag("pdf");
 		if (pdf != null) {
 			pdf.dismiss();

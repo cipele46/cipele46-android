@@ -16,7 +16,9 @@ public class Ad implements Parcelable {
 	private String email;
 	private String phone;
 
-	
+	private AdType type;
+	private AdStatus status;
+
 
 	public Long getId() {
 		return id;
@@ -89,6 +91,20 @@ public class Ad implements Parcelable {
 	public void setCategoryID(Long categoryID) {
 		this.categoryID = categoryID;
 	}
+	
+	public AdType getType() {
+		return type;
+	}
+	public void setType(AdType type) {
+		this.type = type;
+	}
+	public AdStatus getStatus() {
+		return status;
+	}
+	public void setStatus(AdStatus status) {
+		this.status = status;
+	}
+
 
 	/* Parcelable stuff starts here */
 
@@ -96,7 +112,7 @@ public class Ad implements Parcelable {
 	}
 
 	public Ad(Parcel in) {
-		String[] data = new String[9];
+		String[] data = new String[11];
 		in.readStringArray(data);
 		this.id = Long.parseLong(data[0]);
 		this.districtID = Long.parseLong(data[1]);
@@ -107,6 +123,8 @@ public class Ad implements Parcelable {
 		this.imageURLString = data[6];
 		this.email = data[7];	
 		this.phone = data[8];
+		this.type = AdType.valueOf(data[9]);
+		this.status = AdStatus.valueOf(data[10]);
 	}
 
 	@Override
@@ -125,7 +143,9 @@ public class Ad implements Parcelable {
 				description,
 				imageURLString,
 				email,
-				phone});
+				phone,
+				type.name(),
+				status.name()});
 
 	}
 	
