@@ -17,6 +17,10 @@
     <string name="favorites">Favoriti</string>
     <string name="closed">Zatvoreni</string>
     <string name="settings">Postavke</string>
+    <string name="ad_details">Detalji oglasa</string>
+    <string name="awaiting_approval">Čeka odobrenje administratora</string>
+    <string name="call">Nazovi</string>
+    <string name="send_mail">Pošalji upit</string>
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 
