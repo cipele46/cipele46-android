@@ -31,26 +31,6 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.activity_main);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.home_drawer);
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
-		R.string.app_name, /* "open drawer" description */
-		R.string.app_name /* "close drawer" description */
-		) {
-
-			/** Called when a drawer has settled in a completely closed state. */
-			public void onDrawerClosed(View view) {
-				// getActionBar().setTitle(mTitle);
-			}
-
-			/** Called when a drawer has settled in a completely open state. */
-			public void onDrawerOpened(View drawerView) {
-				// getActionBar().setTitle(mDrawerTitle);
-			}
-		};
-
-		// Set the drawer toggle as the DrawerListener
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		ActionBar supportActionBar = getSupportActionBar();
 		if (supportActionBar == null) {
@@ -58,7 +38,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		} else {
 			supportActionBar.setHomeButtonEnabled(true);
 			supportActionBar.setDisplayHomeAsUpEnabled(true);
-			// supportActionBar.setIcon(R.drawable.action_bar_icon);
+			 supportActionBar.setIcon(R.drawable.action_bar_icon);
 		}
 	}
 

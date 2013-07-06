@@ -82,7 +82,7 @@
                 android:layout_height="16dp"
                 android:layout_alignTop="@id/ad_category_txt"
                 android:layout_toRightOf="@id/ad_category_txt"
-                android:paddingLeft="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@android:drawable/ic_dialog_info" />
 
             <TextView
