@@ -17,17 +17,59 @@
             android:gravity="center_vertical|center_horizontal"
             android:padding="5dp"
             android:text="@string/awaiting_approval"
-            android:textColor="@color/red" 
-            android:visibility="gone"/>
+            android:textColor="@color/red"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/ad_details_title"
             android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="Poklanjam namjestaj koji je jos jako dobar ali nemam kud s njime tralalalala"
-            android:padding="5dp"
-            android:textColor="@color/black" />
+            android:padding="5dp" />
+
+        <View
+            android:id="@+id/ad_details_top_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/ad_details_county"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="zagreb, zagreb"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/ad_details_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center_vertical"
+                android:hint="namjestaj"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/ad_details_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="center_vertical"
+                android:hint="21 dan"
+                android:padding="5dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/ad_details_bottom_border"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ad_details_image"
@@ -47,36 +89,26 @@
             android:padding="5dp"
             android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/ad_details_county"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_dialog_info"
-            android:gravity="center_vertical"
-            android:hint="zagreb, zagreb"
-            android:padding="5dp"
-            android:textColor="@color/black" />
 
-        <TextView
-            android:id="@+id/ad_details_category"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_dialog_info"
-            android:gravity="center_vertical"
-            android:hint="namjestaj"
-            android:padding="5dp"
-            android:textColor="@color/black" />
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/ad_details_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/ad_details_call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:drawableLeft="@android:drawable/ic_menu_call"
+                android:layout_weight="1"/>
 
-        <Button
-            android:id="@+id/ad_details_send_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:text="@string/send_mail"/>
+            <Button
+                android:id="@+id/ad_details_send_mail"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_menu_compose"
+                android:text="@string/send_mail" />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

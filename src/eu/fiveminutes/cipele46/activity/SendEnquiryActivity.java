@@ -19,6 +19,7 @@ public class SendEnquiryActivity extends SherlockFragmentActivity {
 		ActionBar ab = getSupportActionBar();
 		if (ab != null){
 			ab.setTitle(R.string.enquiry);
+			ab.setDisplayHomeAsUpEnabled(true);
 		}
 	}
 

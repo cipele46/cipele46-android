@@ -14,7 +14,7 @@
     <application
         android:name="eu.fiveminutes.cipele46.app.CipeleApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/action_bar_icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light" >
         <activity
