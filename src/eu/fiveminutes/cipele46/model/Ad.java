@@ -2,21 +2,21 @@ package eu.fiveminutes.cipele46.model;
 
 public class Ad {
 
-	private String id;
+	private Long id;
 	private String title;
 	private String description;
 	private String imageURLString;
 	private String email;
 	private String phone;
 	
-	private String districtID;
-	private String cityID;
-	private String categoryID;
+	private Long districtID;
+	private Long cityID;
+	private Long categoryID;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getTitle() {
@@ -49,22 +49,22 @@ public class Ad {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getDistrictID() {
+	public Long getDistrictID() {
 		return districtID;
 	}
-	public void setDistrictID(String districtID) {
+	public void setDistrictID(Long districtID) {
 		this.districtID = districtID;
 	}
-	public String getCityID() {
+	public Long getCityID() {
 		return cityID;
 	}
-	public void setCityID(String cityID) {
+	public void setCityID(Long cityID) {
 		this.cityID = cityID;
 	}
-	public String getCategoryID() {
+	public Long getCategoryID() {
 		return categoryID;
 	}
-	public void setCategoryID(String categoryID) {
+	public void setCategoryID(Long categoryID) {
 		this.categoryID = categoryID;
 	}
 
