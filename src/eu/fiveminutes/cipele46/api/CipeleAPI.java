@@ -25,6 +25,13 @@ import eu.fiveminutes.cipele46.model.Category;
 
 public class CipeleAPI {
 
+	public enum UserAdSection {
+		ACTIVE_ADS,
+		FAVORITE_ADS,
+		CLOSED_ADS
+	}
+
+	
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
@@ -40,6 +47,7 @@ public class CipeleAPI {
 		}
 		return cipele;
 	}
+	
 	
 	/**
 	 * 
@@ -64,67 +72,109 @@ public class CipeleAPI {
 			@Override
 			public void onResponse(JSONArray response) {
 				
-				List<Ad> adList = new ArrayList<Ad>();
-				
 				try {
-					JSONObject obj;
-					for (int i = 0; i < response.length(); i++) {
-						obj = response.getJSONObject(i);
-						
-						Ad newAd = new Ad();
-						newAd.setId(obj.getLong("id"));
-						newAd.setTitle(obj.getString("title"));
-						newAd.setDescription(obj.getString("description"));
-						newAd.setEmail(obj.getString("email"));
-						newAd.setPhone(obj.getString("phone"));
-						newAd.setImageURLString(obj.getString("imageUrl"));
-						newAd.setCityID(obj.getLong("cityID"));
-						newAd.setCategoryID(obj.getLong("categoryID"));
-						newAd.setDistrictID(obj.getLong("districtID"));
-						
-						int statusNumber = obj.getInt("status");
-						AdStatus status = AdStatus.ACTIVE;
-						switch (statusNumber) {
-							case 1:
-								status = AdStatus.PENDING;
-								break;
-							case 2:
-								status = AdStatus.ACTIVE;
-								break;
-							case 3:
-								status = AdStatus.CLOSED;
-								break;
-							default:
-								throw new IllegalArgumentException("Invalid ad status for ad " + newAd.getTitle());
-						}
-						newAd.setStatus(status);
-						
-						int typeNumber = obj.getInt("type");
-						AdType type = AdType.SUPPLY;
-						switch (typeNumber) {
-							case 1:
-								type = AdType.SUPPLY;
-								break;
-							case 2:
-								type = AdType.DEMAND;
-								break;
-							default:
-								throw new IllegalArgumentException("Invalid ad type for ad " + newAd.getTitle());
-						}
-						newAd.setType(type);
-						
-						adList.add(newAd);
-					}
+					List<Ad> adList = parseAdList(response);
+					adsListener.onSuccess(adList);
 				} catch (JSONException e) {
 					adsListener.onFailure(e);
 				}
-				
-				adsListener.onSuccess(adList);
 			}
 		};
 		
 		reqQueue.add(
 				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+	}
+	
+	/**
+	 * 
+	 * @param user ad section, required.
+	 * @param adsListener
+	 */
+	public void getUserAds(UserAdSection userAdSection, final AdsListener adsListener) {
+		
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				adsListener.onFailure(error);
+			}
+		};
+		
+		Listener<JSONArray> arrayListener = new Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				
+				try {
+					List<Ad> adList = parseAdList(response);
+					adsListener.onSuccess(adList);
+				} catch (JSONException e) {
+					adsListener.onFailure(e);
+				}
+			}
+		};
+		
+		reqQueue.add(
+				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+	}
+	
+	private static List<Ad> parseAdList(JSONArray array) throws JSONException {
+		List<Ad> adList = new ArrayList<Ad>();
+		
+		JSONObject obj;
+		for (int i = 0; i < array.length(); i++) {
+			obj = array.getJSONObject(i);
+			adList.add(parseAd(obj));
+		}
+		
+		return adList;
+	}
+	
+	private static Ad parseAd(JSONObject obj) throws JSONException {
+		
+		Ad newAd = new Ad();
+		newAd.setId(obj.getLong("id"));
+		newAd.setTitle(obj.getString("title"));
+		newAd.setDescription(obj.getString("description"));
+		newAd.setEmail(obj.getString("email"));
+		newAd.setPhone(obj.getString("phone"));
+		newAd.setImageURLString(obj.getString("imageUrl"));
+		newAd.setCityID(obj.getLong("cityID"));
+		newAd.setCategoryID(obj.getLong("categoryID"));
+		newAd.setDistrictID(obj.getLong("districtID"));
+		
+		int statusNumber = obj.getInt("status");
+		AdStatus status = AdStatus.ACTIVE;
+		switch (statusNumber) {
+			case 1:
+				status = AdStatus.PENDING;
+				break;
+			case 2:
+				status = AdStatus.ACTIVE;
+				break;
+			case 3:
+				status = AdStatus.CLOSED;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid ad status for ad " + newAd.getTitle());
+		}
+		newAd.setStatus(status);
+		
+		int typeNumber = obj.getInt("type");
+		AdType type = AdType.SUPPLY;
+		switch (typeNumber) {
+			case 1:
+				type = AdType.SUPPLY;
+				break;
+			case 2:
+				type = AdType.DEMAND;
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid ad type for ad " + newAd.getTitle());
+		}
+		newAd.setType(type);
+		
+		return newAd;
 	}
 	
 	public void getCategories(final CategoriesListener cl) {
