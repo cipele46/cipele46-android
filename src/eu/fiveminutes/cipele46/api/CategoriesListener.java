@@ -6,5 +6,7 @@ import eu.fiveminutes.cipele46.model.Category;
 
 public interface CategoriesListener {
 
-	void onCategoriesRetrieved(List<Category> categories, Throwable t);
+	void onSuccess(List<Category> categories, Throwable t);
+	
+	void onFailure(Throwable t);
 }
