@@ -17,6 +17,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.SendEnquiryActivity;
+import eu.fiveminutes.cipele46.api.CipeleAPI.UserAdSection;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdStatus;
 import eu.fiveminutes.cipele46.model.AdType;
@@ -38,10 +39,13 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 	private View borderTop;
 	private View borderBottom;
 
+	private String section;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.item = getArguments().getParcelable("adItem");
+		this.section = getArguments().getString("section");
 		setHasOptionsMenu(true);
 	}
 
@@ -71,7 +75,7 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 		} else {
 			awaitingApproval.setVisibility(View.GONE);
 		}
-		if (item.getType() == AdType.DEMAND) {
+		if (item.getType() == AdType.SUPPLY) {
 			borderBottom.setBackgroundColor(getResources().getColor(R.color.blue_text));
 			borderTop.setBackgroundColor(getResources().getColor(R.color.blue_text));
 			title.setTextColor(getResources().getColor(R.color.blue_text));
@@ -121,14 +125,28 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.details, menu);
-		if (!isAdMine()){
+		if (!isAdMine()) {
 			menu.findItem(R.id.details_close).setVisible(false);
 			menu.findItem(R.id.details_delete).setVisible(false);
+			menu.findItem(R.id.details_edit).setVisible(false);
+		} else {
+			if (section.equals(UserAdSection.ACTIVE_ADS)) {
+				menu.findItem(R.id.details_favorites).setVisible(false);
+			} else if (section.equals(UserAdSection.CLOSED_ADS)) {
+				menu.findItem(R.id.details_close).setVisible(false);
+				menu.findItem(R.id.details_edit).setVisible(false);
+				menu.findItem(R.id.details_favorites).setVisible(false);
+			} else if (section.equals(UserAdSection.FAVORITE_ADS)) {
+				menu.findItem(R.id.details_close).setVisible(false);
+				menu.findItem(R.id.details_delete).setVisible(false);
+				menu.findItem(R.id.details_edit).setVisible(false);
+				menu.findItem(R.id.details_favorites).setVisible(false);
+			}
 		}
 	}
-	
-	private boolean isAdMine(){
-		
+
+	private boolean isAdMine() {
+
 		return false;
 	}
 }

@@ -74,11 +74,6 @@ public abstract class UserAdsFragment extends SherlockFragment implements OnItem
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.main, menu);
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_new_add) {
 			Intent i = new Intent(getActivity(), NewAdActivity.class);
@@ -113,6 +108,11 @@ public abstract class UserAdsFragment extends SherlockFragment implements OnItem
 		if (pdf != null) {
 			pdf.dismiss();
 		}
+	}
+
+	protected boolean isAdMine() {
+
+		return false;
 	}
 
 }
