@@ -96,8 +96,9 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 		image.setImageUrl(item.getImageURLString(), ImageCacheManager.getInstance().getImageLoader());
 		title.setText(item.getTitle());
 		description.setText(item.getDescription());
-		category.setText(item.getCategoryID() + "");
-		county.setText(item.getCityID() + "");
+		category.setText(" " + item.getCategoryID() + "");
+		county.setText(" " + item.getCityID() + "");
+		time.setText(" " + "21 dan");
 		call.setText(item.getPhone());
 
 		call.setOnClickListener(this);
