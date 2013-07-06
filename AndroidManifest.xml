@@ -40,8 +40,10 @@
         <activity
             android:name="eu.fiveminutes.cipele46.activity.UserSettingsActivity"
             android:label="@string/title_activity_user_settings"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateVisible"  />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.SendEnquiryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

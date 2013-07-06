@@ -17,6 +17,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <dimen name="leftmargin">5dp</dimen>
 
     <style name="LoginFormContainer">
         <item name="android:layout_width">match_parent</item>

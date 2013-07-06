@@ -48,5 +48,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 
 }

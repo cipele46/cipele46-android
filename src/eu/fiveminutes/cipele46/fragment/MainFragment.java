@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -21,12 +20,14 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.activity.AdDetailsActivity;
 import eu.fiveminutes.cipele46.activity.FilterActivity;
 import eu.fiveminutes.cipele46.activity.NewAdActivity;
 import eu.fiveminutes.cipele46.adapter.AdsAdapter;
 import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.AdType;
 
 public class MainFragment extends SherlockFragment implements OnClickListener, OnItemClickListener {
 	private TextView filterTxt;
@@ -39,12 +40,13 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 		public void onSuccess(List<Ad> ad) {
 			adapter = new AdsAdapter(getActivity(), ad);
 			list.setAdapter(adapter);
+			hideDialog();
 		}
 
 		@Override
 		public void onFailure(Throwable t) {
+			hideDialog();
 			Toast.makeText(getActivity(), R.string.error_get_ads, Toast.LENGTH_LONG).show();
-
 		}
 	};
 
@@ -64,7 +66,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		filterTxt = (TextView) view.findViewById(R.id.ads_filter_txt);
 		filterTxt.setOnClickListener(this);
-		list = (ListView)view.findViewById(R.id.ads_list);
+		list = (ListView) view.findViewById(R.id.ads_list);
 		list.setOnItemClickListener(this);
 		getData();
 	}
@@ -92,13 +94,27 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 	}
 
 	private void getData() {
-		CipeleAPI.get().getAds(adsListener);
+		showDialog();
+		CipeleAPI.get().getAds(AdType.DEMAND,null, null,adsListener);
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		
+	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+		Intent i = new Intent(getActivity(), AdDetailsActivity.class);
+		i.putExtra("adItem", (Ad) adapter.getItem(position));
+		startActivity(i);
+	}
+
+	private void showDialog() {
+		ProgressDialogFragment pdf = new ProgressDialogFragment();
+		pdf.show(getFragmentManager(), "pdf");
+	}
+
+	private void hideDialog() {
+		ProgressDialogFragment pdf = (ProgressDialogFragment) getFragmentManager().findFragmentByTag("pdf");
+		if (pdf != null) {
+			pdf.dismiss();
+		}
 	}
 
 }
