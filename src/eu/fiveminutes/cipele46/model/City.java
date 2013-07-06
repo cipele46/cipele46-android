@@ -4,6 +4,7 @@ public class City {
 
 	private String id;
 	private String name;
+	private String districtId;
 	
 	public String getId() {
 		return id;
@@ -16,6 +17,12 @@ public class City {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getDistrictId() {
+		return districtId;
+	}
+	public void setDistrictId(String districtId) {
+		this.districtId = districtId;
 	}
 	
 	
