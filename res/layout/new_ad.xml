@@ -45,7 +45,7 @@
 	        android:text="@string/new_ad_picture"
 	        android:textAppearance="?android:attr/textAppearanceLarge"/>
 	    <ImageView
-	    android:id="@+id/image"
+	    android:id="@+id/new_image"
 	    android:layout_width="100dp"
 	    android:layout_height="100dp"
 	    android:contentDescription="@string/new_ad_picture"
