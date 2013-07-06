@@ -152,6 +152,8 @@ public class MainFragment extends SherlockFragment implements OnClickListener, O
 			title += getString(R.string.filter_supply);
 		}
 		
+		title += ", " + Filters.getCategoryFilterName(this.getActivity()) + ", " + Filters.getDistrictFilterName(this.getActivity());
+		
 		filterTxt.setText(title);
 	}
 

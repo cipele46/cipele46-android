@@ -334,6 +334,8 @@ public class CipeleAPI {
 					}
 				}
 				
+				listofCategory.add(0, new Category(-1L, "Sve kategorije"));
+				
 				categories = listofCategory;
 				
 				categoriesListener.onSuccess(listofCategory);
@@ -382,7 +384,7 @@ public class CipeleAPI {
 
 						jsonObject = response.getJSONObject(i);
 						District district = new District();
-						district.setId(jsonObject.getString("id"));
+						district.setId(jsonObject.getLong("id"));
 						district.setName(jsonObject.getString("name"));
 						
 						JSONArray cities = jsonObject.getJSONArray("cities");
@@ -404,8 +406,11 @@ public class CipeleAPI {
 						
 						district.setCities(listOfCities);
 						listOfDistricts.add(district);
-						cachedListOfDistricts = listOfDistricts;
+
 					}
+					
+					listOfDistricts.add(0, new District(-1L, "Sve županije"));
+					cachedListOfDistricts = listOfDistricts;
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
 				

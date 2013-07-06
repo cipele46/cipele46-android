@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="shared_preferences_name">cipele46.org.sharedprefs</string>
-    <string name="preference_adtype">cipele46.org.prefs.adtype</string>
-    <string name="preference_district_id">cipele46.org.prefs.districtid</string>
-    <string name="preference_category_id">cipele46.org.prefs.categoryid</string>
-    
+
     <!-- User related preference -->
     <string name="preference_user_name">cipele46.org.prefs.username</string>
     <string name="preference_user_email">cipele46.org.prefs.useremail</string>
     <string name="preference_user_phone">cipele46.org.prefs.userphone</string>
+    
+    <string name="shared_preferences_name">cipele46.org.sharedprefs</string>
+    <string name="preference_adtype">cipele46.org.prefs.adtype</string>
+    
+    <string name="preference_district_id">cipele46.org.prefs.districtid</string>
+    <string name="preference_district_name">cipele46.org.prefs.districtname</string>
+    
+    <string name="preference_category_id">cipele46.org.prefs.categoryid</string>
+    <string name="preference_category_name">cipele46.org.prefs.categoryname</string>
 </resources>

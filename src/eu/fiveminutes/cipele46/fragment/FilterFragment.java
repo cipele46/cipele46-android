@@ -93,10 +93,10 @@ public class FilterFragment extends SherlockFragment implements OnItemSelectedLi
 			long arg3) {
 		
 		if (arg0.getAdapter() instanceof CategoryAdapter) {
-			Filters.setCategoryFilter(getActivity(), arg0.getAdapter().getItemId(arg2));
+			Filters.setCategoryFilter(getActivity(), (Category) arg0.getAdapter().getItem(arg2));
 			Log.d(this.getClass().getSimpleName(), "Category adapter");
 		} else if (arg0.getAdapter() instanceof DistrictAdapter) {
-			Filters.setDistrictFilter(getActivity(), arg0.getAdapter().getItemId(arg2));
+			Filters.setDistrictFilter(getActivity(), (District) arg0.getAdapter().getItem(arg2));
 			Log.d(this.getClass().getSimpleName(), "DistrictAdapter adapter");
 		} else if (arg0.getAdapter() instanceof AdTypeAdapter) {
 			Filters.setAdTypeFilter(getActivity(), AdType.values()[(int)arg0.getAdapter().getItemId(arg2)]);

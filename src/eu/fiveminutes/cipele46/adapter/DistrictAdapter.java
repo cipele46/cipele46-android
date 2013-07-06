@@ -33,7 +33,7 @@ public class DistrictAdapter extends BaseAdapter implements SpinnerAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return districts != null ? Long.parseLong(districts.get(position).getId()) : 0;
+		return districts != null ? districts.get(position).getId() : 0;
 	}
 
 	@Override
