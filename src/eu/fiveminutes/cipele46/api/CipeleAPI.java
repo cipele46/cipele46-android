@@ -22,6 +22,8 @@ import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdStatus;
 import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
+import eu.fiveminutes.cipele46.model.City;
+import eu.fiveminutes.cipele46.model.District;
 
 public class CipeleAPI {
 
@@ -177,7 +179,7 @@ public class CipeleAPI {
 		return newAd;
 	}
 	
-	public void getCategories(final CategoriesListener cl) {
+	public void getCategories(final CategoriesListener categoriesListener) {
 		
 		String url = "http://dev.fiveminutes.eu/cipele/api/categories";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
@@ -188,7 +190,7 @@ public class CipeleAPI {
 				
 				List<Category> listofCategory = Collections.<Category>emptyList();
 				
-				for (int i  =0; i < response.length(); i++) {
+				for (int i = 0; i < response.length(); i++) {
 					
 					if (listofCategory.isEmpty()) {
 						listofCategory = new ArrayList<Category>();
@@ -204,11 +206,11 @@ public class CipeleAPI {
 						listofCategory.add(category);
 						
 					} catch (JSONException e) {
-						e.printStackTrace();
+						categoriesListener.onFailure(e);
 					}
 				}
 				
-				cl.onSuccess(listofCategory);
+				categoriesListener.onSuccess(listofCategory);
 				
 			}
 		}, new ErrorListener() {
@@ -216,7 +218,75 @@ public class CipeleAPI {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				Log.i(TAG, error.getMessage());
-				cl.onFailure(error);
+				categoriesListener.onFailure(error);
+				
+			}
+		});
+		
+		reqQueue.add(jsonArrayRequest);
+		
+	}
+	
+	public void getDistrictWithCities(final DistrictWithCitiesListener districtWithCitiesListener) {
+		
+		String url = "http://www.cipele46.org/regions.json";
+		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				Log.i(TAG, response.toString());
+				
+				List<District> listOfDistricts = Collections.<District>emptyList();
+				
+				try {
+				
+					for (int i = 0; i < response.length(); i++) {
+
+						if (listOfDistricts.isEmpty()) {
+							listOfDistricts = new ArrayList<District>();
+						}
+
+						JSONObject jsonObject;
+
+						jsonObject = response.getJSONObject(i);
+						District district = new District();
+						district.setId(jsonObject.getString("id"));
+						district.setName(jsonObject.getString("name"));
+						
+						JSONArray cities = jsonObject.getJSONArray("cities");
+						List<City> listOfCities = Collections.<City>emptyList();
+						
+						for (int j = 0; j < cities.length(); j++) {
+							
+							if (listOfCities.isEmpty()) {
+								listOfCities = new ArrayList<City>();
+							}
+							
+							JSONObject jsonCity = cities.getJSONObject(j);
+							City city = new City();
+							city.setId(jsonCity.getString("id"));
+							city.setName(jsonCity.getString("name"));
+							city.setDistrictId(jsonCity.getString("region_id"));
+							listOfCities.add(city);
+						}
+						
+						district.setCities(listOfCities);
+						listOfDistricts.add(district);
+					}
+					
+					districtWithCitiesListener.onSuccess(listOfDistricts);
+				
+				} catch (JSONException e) {
+					districtWithCitiesListener.onFailure(e);
+				}
+				
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.i(TAG, error.getMessage());
+				districtWithCitiesListener.onFailure(error);
 				
 			}
 		});
