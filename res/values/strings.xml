@@ -9,7 +9,6 @@
     <string name="filter_ads">Filter oglasa</string>
     <string name="filter_type">Tip oglasa</string>
     <string name="filter_county">Županija</string>
-   
     <string name="filter_category">Kategorija</string>
     <string name="search">Traži</string>
     <string name="new_ad">Novi oglas</string>
@@ -28,14 +27,17 @@
     <string name="please_wait">Molimo pričekajte...</string>
     <string name="enquiry">Upit na oglas</string>
     <string name="send">Pošalji</string>
-     <string name="email">E-mail</string>
-     
+    <string name="email">E-mail</string>
+    <string name="active_ads">Aktivni oglasi</string>
+    <string name="closed_ads">Zatvoreni oglasi</string>
+    <string name="favorite_ads">Favoriti</string>
+    
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
-    <string name="error_screen_id_not_provided">Screen id must be provided</string>
+    <string name="error_screen_id_not_provided">Screen id not provided</string>
     <string name="error_screen_not_defined">Screen not defined</string>
     
-    
+
     <!-- Strings related to user settings -->
     <string name="title_activity_user_settings">Postavke</string>
     <string name="title_activity_change_password">Promjena lozinke</string>
@@ -61,17 +63,14 @@
     <string name="new_ad_title">Naslov</string>
     <string name="new_ad_description">Opis</string>
     <string name="new_ad_picture">Slika</string>
-    
     <string name="new_ad_email">Email</string>
     <string name="new_ad_email_error">Greška za email error!</string>
     <string name="new_ad_email_warning">Neće biti direktno vidljiv drugim korisnicima!</string>
-    
     <string name="new_ad_phone">Telefon</string>
     <string name="new_ad_phone_error">Greška za telefonski broj!</string>
     <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
-
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
-	<string name="filter_city">Grad</string>
+    <string name="filter_city">Grad</string>
 
 </resources>

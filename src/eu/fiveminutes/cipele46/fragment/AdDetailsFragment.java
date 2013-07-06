@@ -72,18 +72,18 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 			awaitingApproval.setVisibility(View.GONE);
 		}
 		if (item.getType() == AdType.DEMAND) {
-			borderBottom.setBackgroundColor(getResources().getColor(R.color.blue_divider));
-			borderTop.setBackgroundColor(getResources().getColor(R.color.blue_divider));
-			title.setTextColor(getResources().getColor(R.color.blue_divider));
+			borderBottom.setBackgroundColor(getResources().getColor(R.color.blue_text));
+			borderTop.setBackgroundColor(getResources().getColor(R.color.blue_text));
+			title.setTextColor(getResources().getColor(R.color.blue_text));
 			category.setCompoundDrawablesWithIntrinsicBounds(R.drawable.category_icon_blue, 0, 0, 0);
 			county.setCompoundDrawablesWithIntrinsicBounds(R.drawable.place_icon_blue, 0, 0, 0);
 			time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.time_icon_blue, 0, 0, 0);
 			call.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_btn_default_holo_light));
 			sendMail.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_btn_default_holo_light));
 		} else {
-			borderBottom.setBackgroundColor(getResources().getColor(R.color.red_divider));
-			borderTop.setBackgroundColor(getResources().getColor(R.color.red_divider));
-			title.setTextColor(getResources().getColor(R.color.red_divider));
+			borderBottom.setBackgroundColor(getResources().getColor(R.color.red_text));
+			borderTop.setBackgroundColor(getResources().getColor(R.color.red_text));
+			title.setTextColor(getResources().getColor(R.color.red_text));
 			category.setCompoundDrawablesWithIntrinsicBounds(R.drawable.category_icon_red, 0, 0, 0);
 			county.setCompoundDrawablesWithIntrinsicBounds(R.drawable.place_icon_red, 0, 0, 0);
 			time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.time_icon_red, 0, 0, 0);
