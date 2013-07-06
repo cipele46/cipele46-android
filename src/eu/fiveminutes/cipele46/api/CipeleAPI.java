@@ -25,6 +25,13 @@ import eu.fiveminutes.cipele46.model.Category;
 
 public class CipeleAPI {
 
+	public enum UserAdSection {
+		ACTIVE_ADS,
+		FAVORITE_ADS,
+		CLOSED_ADS
+	}
+
+	
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
@@ -51,6 +58,39 @@ public class CipeleAPI {
 	 */
 	public void getAds(final AdType type, final Long categoryID, 
 			final Long districtID, final AdsListener adsListener) {
+		
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				adsListener.onFailure(error);
+			}
+		};
+		
+		Listener<JSONArray> arrayListener = new Listener<JSONArray>() {
+
+			@Override
+			public void onResponse(JSONArray response) {
+				
+				try {
+					List<Ad> adList = parseAdList(response);
+					adsListener.onSuccess(adList);
+				} catch (JSONException e) {
+					adsListener.onFailure(e);
+				}
+			}
+		};
+		
+		reqQueue.add(
+				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+	}
+	
+	/**
+	 * 
+	 * @param user ad section, required.
+	 * @param adsListener
+	 */
+	public void getUserAds(UserAdSection userAdSection, final AdsListener adsListener) {
 		
 		ErrorListener errorListener = new ErrorListener() {
 
