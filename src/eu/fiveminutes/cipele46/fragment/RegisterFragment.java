@@ -19,7 +19,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.fiveminutes.cipele46.R;
 
-public class UserSettingsFragment extends SherlockFragment{
+public class RegisterFragment extends SherlockFragment{
 	
 	/**
 	 * A dummy authentication store containing known user names and passwords.
@@ -51,7 +51,7 @@ public class UserSettingsFragment extends SherlockFragment{
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.user_settings, container, false);
+		View v = inflater.inflate(R.layout.login, container, false);
 		return v;
 	}
 	
