@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:drawableLeft="@android:drawable/ic_menu_call"
+                android:drawableLeft="@drawable/ic_menu_call"
                 android:textColor="@color/white" />
 
             <Button
