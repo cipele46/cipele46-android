@@ -309,12 +309,12 @@ public class CipeleAPI {
 		}
 		
 		for (Category cat : categories) {
-			//if (cat.getId().longValue() == categoryID.longValue()) {
-				//return cat.getName();
-			//}
+			if (cat.getId().longValue() == categoryID.longValue()) {
+				return cat.getName();
+			}
 		}
 		
-		return "ne znam";
+		return "err1";
 	}
 	
 	public void getCategories(final CategoriesListener categoriesListener) {
@@ -344,7 +344,7 @@ public class CipeleAPI {
 						
 						jsonObject = response.getJSONObject(i);
 						Category category = new Category();
-						//category.setId(jsonObject.getLong("id"));
+						category.setId(jsonObject.getLong("id"));
 						category.setName(jsonObject.getString("name"));
 						listofCategory.add(category);
 						
@@ -428,7 +428,7 @@ public class CipeleAPI {
 
 					}
 					
-					listOfDistricts.add(0, new District(-1L, "Sve županije"));
+					listOfDistricts.add(0, new District(-1L, "Sve �upanije"));
 					cachedListOfDistricts = listOfDistricts;
 					
 					districtWithCitiesListener.onSuccess(listOfDistricts);
