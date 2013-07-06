@@ -9,7 +9,6 @@
     <string name="filter_ads">Filter oglasa</string>
     <string name="filter_type">Tip oglasa</string>
     <string name="filter_county">Županija</string>
-   
     <string name="filter_category">Kategorija</string>
     <string name="search">Traži</string>
     <string name="new_ad">Novi oglas</string>
@@ -28,26 +27,55 @@
     <string name="please_wait">Molimo pričekajte...</string>
     <string name="enquiry">Upit na oglas</string>
     <string name="send">Pošalji</string>
-     <string name="email">E-mail</string>
+    <string name="email">E-mail</string>
+    <string name="active_ads">Aktivni oglasi</string>
+    <string name="closed_ads">Zatvoreni oglasi</string>
+    <string name="favorite_ads">Favoriti</string>
+    <string name="edit">Uredi</string>
+    
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
+    <string name="error_screen_id_not_provided">Screen id not provided</string>
+    <string name="error_screen_not_defined">Screen not defined</string>
+    <string name="error_no_internet_connection">Internet veza nije dostupna!</string>
+    
 
-        <string name="new_ad_offer">Ponuda</string>
+    <!-- Strings related to user settings -->
+    <string name="title_activity_user_settings">Postavke</string>
+    <string name="title_activity_change_password">Promjena lozinke</string>
+    <string name="title_activity_edit_data">Promjena podataka</string>
+    <string name="title_activity_registration">Registracija</string>
+    <string name="title_activity_password_forgoten">Zaboravljena lozinka</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Lozinka</string>
+    <string name="action_sign_in">Prijavi se</string>
+    <string name="btn_register_title">Registriraj se</string>
+    <string name="btn_forgot_password_title">Zaboravio sam lozinku</string>
+    <string name="btn_fb_login_title">Prijava putem Facebooka</string>
+    <string name="action_sign_in_short">Prijavi se</string>
+    <string name="action_forgot_password">Vrati zaboravljenu lozinku</string>
+    <string name="login_progress_signing_in">Prijava u tijeku...&#8230;</string>
+    <string name="error_invalid_email">Email je netočan</string>
+    <string name="error_invalid_password">Lozinka je prekratka</string>
+    <string name="error_incorrect_password">Lozinka je netočna</string>
+    <string name="error_field_required">Ovo polje je obavezno</string>
+    <string name="logout">Odjava</string>
+
+    <string name="new_ad_offer">Ponuda</string>
     <string name="new_ad_request">Potražnja</string>
     <string name="new_ad_title">Naslov</string>
     <string name="new_ad_description">Opis</string>
     <string name="new_ad_picture">Slika</string>
-    
     <string name="new_ad_email">Email</string>
     <string name="new_ad_email_error">Greška za email error!</string>
     <string name="new_ad_email_warning">Neće biti direktno vidljiv drugim korisnicima!</string>
-    
     <string name="new_ad_phone">Telefon</string>
     <string name="new_ad_phone_error">Greška za telefonski broj!</string>
     <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
-
     <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
     <string name="new_ad_publish">Objavi oglas!</string>
 	<string name="filter_city">Grad</string>
+	<string name="filter_supply">Ponuda</string>
+	<string name="filter_demand">Potražnja</string>
 
 </resources>

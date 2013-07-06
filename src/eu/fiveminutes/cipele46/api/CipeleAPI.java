@@ -1,21 +1,27 @@
 package eu.fiveminutes.cipele46.api;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
@@ -24,6 +30,7 @@ import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 import eu.fiveminutes.cipele46.model.City;
 import eu.fiveminutes.cipele46.model.District;
+import eu.fiveminutes.cipele46.model.User;
 
 public class CipeleAPI {
 
@@ -37,7 +44,11 @@ public class CipeleAPI {
 	private static CipeleAPI cipele;
 	private RequestQueue reqQueue;
 	
+	private User currentUser;
+	
 	private String TAG = this.getClass().getSimpleName();
+	
+	private List<District> cachedListOfDistricts;
 	
 	public void init(Context c) {
 		reqQueue = Volley.newRequestQueue(c);
@@ -48,6 +59,89 @@ public class CipeleAPI {
 			cipele = new CipeleAPI();
 		}
 		return cipele;
+	}
+	
+	
+	public void registerUser(String name, String email, String phone, String password, final UserRegistrationListener url) {
+		
+		
+
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				url.onFailure(error);
+			}
+		};
+	
+		Listener<JSONObject> userListener = new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				System.out.println(response);
+				url.onSuccess();
+				
+			}
+		};
+		
+		JSONObject userObj = new JSONObject();
+		JSONObject requestObj = new JSONObject();
+		
+		try {
+			userObj.put("first_name", "moje ime");
+			userObj.put("last_name", "moje prezime");
+			userObj.put("email", "tes222@email.com");
+			userObj.put("password", "lozinka1");
+			userObj.put("password_confirmation", "lozinka2");
+
+			requestObj.put("user", userObj);
+			
+		} catch (JSONException e) {
+			url.onFailure(e);
+			return;
+		}
+
+		
+		JsonObjectRequest jsonReq = new JsonObjectRequest(Method.POST, "http://cipele46.org/users.json", requestObj, userListener, errorListener);
+		
+		reqQueue.add(jsonReq);
+
+		
+	}
+
+	private static String basicAuthHeaderValue(String username, String password) {
+		String x = username + ":" + password;
+		try {
+			return "Basic " + Base64.encodeToString(x.getBytes("UTF-8"), Base64.DEFAULT);
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
+	}
+	
+	public void loginUser(String email, String password, final UserLoginListener url) {
+
+		ErrorListener errorListener = new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				currentUser = null;
+				url.onFailure(error);
+			}
+		};
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Authorization", basicAuthHeaderValue(email, password));
+		
+		Listener<User> userListener = new Listener<User>() {
+
+			@Override
+			public void onResponse(User user) {
+				currentUser = user;
+				url.onSuccess();
+			}
+		};
+		
+		reqQueue.add(new GsonRequest<User>("http://cipele46.org/users/show.json", User.class, headers, userListener, errorListener));
 	}
 	
 	
@@ -65,6 +159,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				Log.e(TAG, "", error);
 				adsListener.onFailure(error);
 			}
 		};
@@ -78,13 +173,14 @@ public class CipeleAPI {
 					List<Ad> adList = parseAdList(response);
 					adsListener.onSuccess(adList);
 				} catch (JSONException e) {
+					Log.e(TAG, "", e);
 					adsListener.onFailure(e);
 				}
 			}
 		};
 		
 		reqQueue.add(
-				new JsonArrayRequest("http://dev.fiveminutes.eu/cipele/api/ads", arrayListener, errorListener));
+				new JsonArrayRequest("http://cipele46.org/ads.json", arrayListener, errorListener));
 	}
 	
 	/**
@@ -140,10 +236,10 @@ public class CipeleAPI {
 		newAd.setDescription(obj.getString("description"));
 		newAd.setEmail(obj.getString("email"));
 		newAd.setPhone(obj.getString("phone"));
-		newAd.setImageURLString(obj.getString("imageUrl"));
-		newAd.setCityID(obj.getLong("cityID"));
-		newAd.setCategoryID(obj.getLong("categoryID"));
-		newAd.setDistrictID(obj.getLong("districtID"));
+		//newAd.setImageURLString(obj.optString("imageUrl"));
+		newAd.setCityID(obj.getLong("city_id"));
+		newAd.setCategoryID(obj.getLong("category_id"));
+		newAd.setDistrictID(obj.optLong("district_id", -1));
 		
 		int statusNumber = obj.getInt("status");
 		AdStatus status = AdStatus.ACTIVE;
@@ -162,7 +258,7 @@ public class CipeleAPI {
 		}
 		newAd.setStatus(status);
 		
-		int typeNumber = obj.getInt("type");
+		int typeNumber = obj.getInt("ad_type");
 		AdType type = AdType.SUPPLY;
 		switch (typeNumber) {
 			case 1:
@@ -228,6 +324,11 @@ public class CipeleAPI {
 	}
 	
 	public void getDistrictWithCities(final DistrictWithCitiesListener districtWithCitiesListener) {
+		
+		if (cachedListOfDistricts != null) {
+			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
+			return;
+		}
 		
 		String url = "http://www.cipele46.org/regions.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.fragment.SendEnquiryFragment;
@@ -17,9 +18,19 @@ public class SendEnquiryActivity extends SherlockFragmentActivity {
 		sef.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, sef).commit();
 		ActionBar ab = getSupportActionBar();
-		if (ab != null){
+		if (ab != null) {
 			ab.setTitle(R.string.enquiry);
+			ab.setDisplayHomeAsUpEnabled(true);
 		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

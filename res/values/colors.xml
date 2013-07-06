@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#000000</color>
     <color name="gray">#DDDDDD</color>
     <color name="red">#FF0000</color>
-     <color name="white">#FFFFFF</color>
-     <color name="gray_divider">#CECECE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_divider">#CECECE</color>
+    <color name="yellow_background">#FFF1D8</color>
+    
+    <color name="blue_divider">#17C1C7</color>
+    <color name="red_divider">#F4715B</color>
+    
+    <color name="blue_text">#00C1C8</color>
+    <color name="red_text">#F6755A</color>
+
 </resources>

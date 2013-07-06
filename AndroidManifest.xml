@@ -15,12 +15,13 @@
     <application
         android:name="eu.fiveminutes.cipele46.app.CipeleApp"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light" >
         <activity
             android:name="eu.fiveminutes.cipele46.activity.MainActivity"
             android:label="@string/app_name"
+            
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,16 +31,37 @@
         </activity>
         <activity
             android:name="eu.fiveminutes.cipele46.activity.FilterActivity"
+            android:icon="@drawable/action_bar_icon"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
             android:name="eu.fiveminutes.cipele46.activity.NewAdActivity"
+            android:icon="@drawable/action_bar_icon"
             android:screenOrientation="portrait" />
         <activity
             android:name="eu.fiveminutes.cipele46.activity.AdDetailsActivity"
+            android:icon="@drawable/action_bar_icon"
             android:screenOrientation="portrait" />
         <activity
+            android:name="eu.fiveminutes.cipele46.activity.UserSettingsActivity"
+            android:icon="@drawable/action_bar_icon"
+            android:label="@string/title_activity_user_settings"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity
             android:name="eu.fiveminutes.cipele46.activity.SendEnquiryActivity"
+            android:icon="@drawable/action_bar_icon"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.FavoriteAdsActivity"
+            android:label="@string/favorite_ads"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.ActiveAdsActivity"
+            android:label="@string/active_ads"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.ClosedAdsActivity"
+            android:label="@string/closed_ads"
             android:screenOrientation="portrait" />
     </application>
 

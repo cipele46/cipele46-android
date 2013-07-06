@@ -7,11 +7,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.activity.ActiveAdsActivity;
+import eu.fiveminutes.cipele46.activity.ClosedAdsActivity;
+import eu.fiveminutes.cipele46.activity.FavoriteAdsActivity;
 import eu.fiveminutes.cipele46.activity.MainActivity;
+import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
+import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
 
 public class MenuFragment extends SherlockFragment implements OnClickListener {
 
@@ -60,16 +66,14 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 	public void onClick(View v) {
 		if (v == ads && !(getActivity() instanceof MainActivity)) {
 			startActivity(new Intent(getActivity(), MainActivity.class));
-		} else if (v == active_ads) {
-
-		} else if (v == favorite_ads) {
-
-		} else if (v == closed_ads) {
-
-		} else if (v == settings) {
-
+		} else if (v == active_ads && !(getActivity() instanceof ActiveAdsActivity)) {
+			startActivity(new Intent(getActivity(), ActiveAdsActivity.class));
+		} else if (v == favorite_ads && !(getActivity() instanceof FavoriteAdsActivity)) {
+			startActivity(new Intent(getActivity(), FavoriteAdsActivity.class));
+		} else if (v == closed_ads && !(getActivity() instanceof ClosedAdsActivity)) {
+			startActivity(new Intent(getActivity(), ClosedAdsActivity.class));
+		} else if (v == settings && !(getActivity() instanceof UserSettingsActivity)) {
+			startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.LOGIN));
 		}
-
 	}
-
 }
