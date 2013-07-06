@@ -9,7 +9,7 @@
     <string name="filter_ads">Filter oglasa</string>
     <string name="filter_type">Tip oglasa</string>
     <string name="filter_county">Županija</string>
-    <string name="filter_city">Grad</string>
+   
     <string name="filter_category">Kategorija</string>
     <string name="search">Traži</string>
     <string name="new_ad">Novi oglas</string>
@@ -26,24 +26,9 @@
     <string name="add_to_favorites">Dodaj u favorite</string>
     <string name="send_mail">Pošalji upit</string>
     <string name="please_wait">Molimo pričekajte...</string>
-    
-    <string name="new_ad_offer">Ponuda</string>
-    <string name="new_ad_request">Potražnja</string>
-    <string name="new_ad_title">Naslov</string>
-    <string name="new_ad_description">Opis</string>
-    <string name="new_ad_picture">Slika</string>
-    
-    <string name="new_ad_email">Email</string>
-    <string name="new_ad_email_error">Greška za email error!</string>
-    <string name="new_ad_email_warning">Neće biti direktno vidljiv drugim korisnicima!</string>
-    
-    <string name="new_ad_phone">Telefon</string>
-    <string name="new_ad_phone_error">Greška za telefonski broj!</string>
-    <string name="new_ad_phone_warning">Opcionalno, biti će javno prikazan!</string>
-
-    <string name="new_ad_expiration">Oglas će biti aktivan 30 dana!</string>
-    <string name="new_ad_publish">Objavi oglas!</string>
-
+    <string name="enquiry">Upit na oglas</string>
+    <string name="send">Pošalji</string>
+     <string name="email">E-mail</string>
     <!-- Error msgs -->
     <string name="error_get_ads">Neuspjelo dohvaćanje oglasa</string>
 

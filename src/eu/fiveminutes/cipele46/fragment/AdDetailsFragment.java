@@ -16,6 +16,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.android.volley.toolbox.NetworkImageView;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.activity.SendEnquiryActivity;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdStatus;
 import eu.fiveminutes.cipele46.utils.ImageCacheManager;
@@ -81,7 +82,9 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + item.getPhone()));
 			startActivity(intent);
 		}else if (v == sendMail){
-			//start new activity to send request on server
+			Intent i = new Intent(getActivity(), SendEnquiryActivity.class);
+			i.putExtra("adItem", item);
+			startActivity(i);
 		}
 		
 	}

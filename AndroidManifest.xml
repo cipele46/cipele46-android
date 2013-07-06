@@ -37,6 +37,9 @@
         <activity
             android:name="eu.fiveminutes.cipele46.activity.AdDetailsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="eu.fiveminutes.cipele46.activity.SendEnquiryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|center_horizontal"
         android:padding="10dp"
+        android:drawableLeft="@android:drawable/ic_menu_manage"
         android:text="@string/filter" />
 
     <ListView
