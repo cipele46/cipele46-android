@@ -40,37 +40,59 @@
         <LinearLayout
             style="@style/LoginFormContainer"
             android:orientation="vertical" >
+            
+            <EditText
+                android:id="@+id/txtName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ime"
+                android:maxLines="1"
+                android:singleLine="true" />
 
             <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
+                android:id="@+id/txtEmail"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
+            
+            <EditText
+                android:id="@+id/txtPhone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefon"
+                android:maxLines="1"
+                android:singleLine="true" />
 
             <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
+                android:id="@+id/txtPassword"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
+            
+            <EditText
+                android:id="@+id/txtPasswordAgain"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Lozinka ponovo"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
 
             <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_register"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginTop="16dp"
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
-                android:text="@string/action_sign_in" />
+                android:text="Registriraj se" />
         </LinearLayout>
     </ScrollView>
 

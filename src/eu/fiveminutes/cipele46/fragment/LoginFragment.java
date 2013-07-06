@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -93,6 +94,30 @@ public class LoginFragment extends SherlockFragment{
 					startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
 				}
 			});
+		
+		view.findViewById(R.id.btn_fb_login).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Toast.makeText(getActivity(), "Logiram se na fejs", Toast.LENGTH_LONG).show();
+					}
+				});
+		
+		view.findViewById(R.id.btn_register).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.REGISTER));
+					}
+				});
+		
+		view.findViewById(R.id.btn_forgot_password).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.RESET_PASSWORD));
+					}
+				});
 	}
 	
 
