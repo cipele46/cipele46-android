@@ -17,8 +17,8 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ad_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:layout_below="@id/ad_top_border"
             android:layout_weight="0"
             android:adjustViewBounds="true"
@@ -31,7 +31,7 @@
             android:layout_alignTop="@id/ad_image"
             android:layout_below="@id/ad_top_border"
             android:layout_toRightOf="@id/ad_image"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:maxLines="2"
             android:textStyle="bold"
             android:hint="title"
@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/ad_image"
             android:layout_toRightOf="@id/ad_image"
-            android:padding="5dp" >
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp" >
 
             <ImageView
                 android:id="@+id/ad_county_image"
