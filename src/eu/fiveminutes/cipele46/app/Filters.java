@@ -23,7 +23,7 @@ public class Filters {
 		e.putLong(c.getString(R.string.preference_category_id), -1);
 		e.putLong(c.getString(R.string.preference_district_id), -1);
 		e.putString(c.getString(R.string.preference_category_name), "Sve kategorije");
-		e.putString(c.getString(R.string.preference_district_name), "Sve županije");
+		e.putString(c.getString(R.string.preference_district_name), "Sve Å¾upanije");
 		e.commit();		
 	}
 	
