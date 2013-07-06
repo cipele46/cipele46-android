@@ -21,21 +21,12 @@ import com.actionbarsherlock.app.SherlockFragment;
 import eu.fiveminutes.cipele46.R;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
+import eu.fiveminutes.cipele46.api.CipeleAPI;
+import eu.fiveminutes.cipele46.api.UserLoginListener;
+import eu.fiveminutes.cipele46.model.User;
 
 public class LoginFragment extends SherlockFragment{
 	
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
-
-	/**
-	 * The default email to populate the email field with.
-	 */
-	public static final String EXTRA_EMAIL = "com.example.android.authenticatordemo.extra.EMAIL";
-
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -46,8 +37,8 @@ public class LoginFragment extends SherlockFragment{
 	private String mPassword;
 
 	// UI references.
-	private EditText mEmailView;
-	private EditText mPasswordView;
+	private EditText mTxtPassword;
+	private EditText mTxtEmail;
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
@@ -60,27 +51,11 @@ public class LoginFragment extends SherlockFragment{
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		// Set up the login form.
-		mEmail = "tomislav.homan@fiveminutes.eu";//getIntent().getStringExtra(EXTRA_EMAIL);
-		mEmailView = (EditText) view.findViewById(R.id.email);
-		mEmailView.setText(mEmail);
 
-		mPasswordView = (EditText) view.findViewById(R.id.password);
-		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
-						if (id == R.id.login || id == EditorInfo.IME_NULL) {
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
+		mTxtEmail = (EditText) view.findViewById(R.id.txtEmail);
+		mTxtPassword = (EditText) view.findViewById(R.id.txtPassword);
 
 		mLoginFormView = view.findViewById(R.id.login_form);
 		mLoginStatusView = view.findViewById(R.id.login_status);
@@ -90,8 +65,21 @@ public class LoginFragment extends SherlockFragment{
 			new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					attemptLogin();
-					startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+					CipeleAPI.get().loginUser(mTxtEmail.getText().toString(), mTxtPassword.getText().toString(), 
+							new UserLoginListener() {
+								
+								@Override
+								public void onSuccess(User user) {
+									User.setUserAsActive(getActivity(), user);
+									startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+								}
+								
+								@Override
+								public void onFailure(Throwable t) {
+									Toast.makeText(getActivity(), "There was an error during login", Toast.LENGTH_LONG).show();
+								}
+							});
+					
 				}
 			});
 		
@@ -132,35 +120,35 @@ public class LoginFragment extends SherlockFragment{
 		}
 
 		// Reset errors.
-		mEmailView.setError(null);
-		mPasswordView.setError(null);
+		mTxtEmail.setError(null);
+		mTxtPassword.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
-		mPassword = mPasswordView.getText().toString();
+		mEmail = mTxtEmail.getText().toString();
+		mPassword = mTxtPassword.getText().toString();
 
 		boolean cancel = false;
 		View focusView = null;
 
 		// Check for a valid password.
 		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordView.setError(getString(R.string.error_field_required));
-			focusView = mPasswordView;
+			mTxtPassword.setError(getString(R.string.error_field_required));
+			focusView = mTxtPassword;
 			cancel = true;
 		} else if (mPassword.length() < 4) {
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordView;
+			mTxtPassword.setError(getString(R.string.error_invalid_password));
+			focusView = mTxtPassword;
 			cancel = true;
 		}
 
 		// Check for a valid email address.
 		if (TextUtils.isEmpty(mEmail)) {
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
+			mTxtEmail.setError(getString(R.string.error_field_required));
+			focusView = mTxtEmail;
 			cancel = true;
 		} else if (!mEmail.contains("@")) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailView;
+			mTxtEmail.setError(getString(R.string.error_invalid_email));
+			focusView = mTxtEmail;
 			cancel = true;
 		}
 
@@ -235,13 +223,13 @@ public class LoginFragment extends SherlockFragment{
 				return false;
 			}
 
-			for (String credential : DUMMY_CREDENTIALS) {
+			/*for (String credential : DUMMY_CREDENTIALS) {
 				String[] pieces = credential.split(":");
 				if (pieces[0].equals(mEmail)) {
 					// Account exists, return true if the password matches.
 					return pieces[1].equals(mPassword);
 				}
-			}
+			}*/
 
 			// TODO: register the new account here.
 			return true;
@@ -255,9 +243,9 @@ public class LoginFragment extends SherlockFragment{
 			if (success) {
 				getActivity().finish();
 			} else {
-				mPasswordView
+				mTxtPassword
 						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+				mTxtPassword.requestFocus();
 			}
 		}
 
