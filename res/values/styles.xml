@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--
@@ -17,5 +18,11 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     <dimen name="leftmargin">5dp</dimen>
+
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
 
 </resources>
