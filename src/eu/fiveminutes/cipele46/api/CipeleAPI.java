@@ -66,7 +66,7 @@ public class CipeleAPI {
 						newAd.setDescription(obj.getString("description"));
 						newAd.setEmail(obj.getString("email"));
 						newAd.setPhone(obj.getString("phone"));
-						newAd.setImageURLString(obj.getString("imageURL"));
+						newAd.setImageURLString(obj.getString("imageUrl"));
 						newAd.setCityID(obj.getLong("cityID"));
 						newAd.setCategoryID(obj.getLong("categoryID"));
 						newAd.setDistrictID(obj.getLong("districtID"));
