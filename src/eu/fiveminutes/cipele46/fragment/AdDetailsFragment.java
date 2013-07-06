@@ -51,6 +51,7 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 		return v;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		awaitingApproval = (TextView) view.findViewById(R.id.ad_details_awaining_approval);
@@ -77,8 +78,8 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 			category.setCompoundDrawablesWithIntrinsicBounds(R.drawable.category_icon_blue, 0, 0, 0);
 			county.setCompoundDrawablesWithIntrinsicBounds(R.drawable.place_icon_blue, 0, 0, 0);
 			time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.time_icon_blue, 0, 0, 0);
-			call.setBackgroundColor(R.color.blue_divider);
-			sendMail.setBackgroundColor(R.color.blue_divider);
+			call.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_btn_default_holo_light));
+			sendMail.setBackgroundDrawable(getResources().getDrawable(R.drawable.blue_btn_default_holo_light));
 		} else {
 			borderBottom.setBackgroundColor(getResources().getColor(R.color.red_divider));
 			borderTop.setBackgroundColor(getResources().getColor(R.color.red_divider));
@@ -86,8 +87,9 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 			category.setCompoundDrawablesWithIntrinsicBounds(R.drawable.category_icon_red, 0, 0, 0);
 			county.setCompoundDrawablesWithIntrinsicBounds(R.drawable.place_icon_red, 0, 0, 0);
 			time.setCompoundDrawablesWithIntrinsicBounds(R.drawable.time_icon_red, 0, 0, 0);
-			call.setBackgroundColor(R.color.red_divider);
-			sendMail.setBackgroundColor(R.color.red_divider);
+
+			call.setBackgroundDrawable(getResources().getDrawable(R.drawable.red_btn_default_holo_light));
+			sendMail.setBackgroundDrawable(getResources().getDrawable(R.drawable.red_btn_default_holo_light));
 		}
 
 		image.setDefaultImageResId(R.drawable.ic_launcher);

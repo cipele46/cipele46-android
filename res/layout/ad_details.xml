@@ -23,12 +23,12 @@
         <TextView
             android:id="@+id/ad_details_title"
             android:layout_width="match_parent"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="Poklanjam namjestaj koji je jos jako dobar ali nemam kud s njime tralalalala"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/ad_details_top_border"
@@ -89,7 +89,6 @@
             android:padding="5dp"
             android:textColor="@color/black" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -97,17 +96,21 @@
             <Button
                 android:id="@+id/ad_details_call"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
                 android:drawableLeft="@android:drawable/ic_menu_call"
-                android:layout_weight="1"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/ad_details_send_mail"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
                 android:drawableLeft="@drawable/ic_menu_compose"
-                android:text="@string/send_mail" />
+                android:text="@string/send_mail"
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 

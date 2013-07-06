@@ -47,8 +47,8 @@
 
             <ImageView
                 android:id="@+id/ad_county_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@android:drawable/ic_dialog_info" />
 
             <TextView
@@ -62,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/ad_category_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_below="@id/ad_county_image"
                 android:src="@android:drawable/ic_dialog_info" />
 
@@ -78,8 +78,8 @@
 
             <ImageView
                 android:id="@+id/ad_time_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_alignTop="@id/ad_category_txt"
                 android:layout_toRightOf="@id/ad_category_txt"
                 android:paddingLeft="5dp"
