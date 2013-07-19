@@ -33,12 +33,39 @@ import eu.fiveminutes.cipele46.model.User;
 
 public class CipeleAPI {
 
+	private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
+
+	private static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
+	private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
+
+	// JSON keys - alphabetical ordering
+	private static final String AD_TYPE = "ad_type";
+	private static final String CATEGORY_ID = "category_id";
+	private static final String CITY_ID = "city_id";
+	private static final String CITIES = "cities";
+	private static final String DESCRIPTION = "description";
+	private static final String DISTRICT_ID = "district_id";
+	private static final String EMAIL = "email";
+	private static final String FIRST_NAME = "first_name";
+	private static final String ID = "id";
+	private static final String LAST_NAME = "last_name";
+	private static final String NAME = "name";
+	private static final String PASSWORD = "password";
+	private static final String PASSWORD_CONFIRMATION = "password_confirmation";
+	private static final String PHONE = "phone";
+	private static final String REGION_ID = "region_id";
+	private static final String STATUS = "status";
+	private static final String TITLE = "title";
+	private static final String USER = "user";
+
 	public enum UserAdSection {
 		ACTIVE_ADS, FAVORITE_ADS, CLOSED_ADS
 	}
 
 	private static CipeleAPI cipele;
+
 	private RequestQueue reqQueue;
+	private String baseURLString;
 
 	// Cached categories. Live during the app session.
 	private List<Category> categories;
@@ -56,6 +83,10 @@ public class CipeleAPI {
 			cipele = new CipeleAPI();
 		}
 		return cipele;
+	}
+
+	public CipeleAPI() {
+		baseURLString = "http://cipele46.org/";
 	}
 
 	public void registerUser(String firstName, String lastName, String email,
@@ -84,13 +115,13 @@ public class CipeleAPI {
 		JSONObject requestObj = new JSONObject();
 
 		try {
-			userObj.put("first_name", firstName);
-			userObj.put("last_name", lastName);
-			userObj.put("email", email);
-			userObj.put("password", password);
-			userObj.put("password_confirmation", password);
+			userObj.put(FIRST_NAME, firstName);
+			userObj.put(LAST_NAME, lastName);
+			userObj.put(EMAIL, email);
+			userObj.put(PASSWORD, password);
+			userObj.put(PASSWORD_CONFIRMATION, password);
 
-			requestObj.put("user", userObj);
+			requestObj.put(USER, userObj);
 
 		} catch (JSONException e) {
 			url.onFailure(e);
@@ -98,10 +129,10 @@ public class CipeleAPI {
 		}
 
 		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Content-Type", "application/json");
+		headers.put(HTTP_HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON);
 
 		RegistrationRequest jsonReq = new RegistrationRequest(Method.POST,
-				"http://cipele46.org/users.json", requestObj, headers,
+				baseURLString + "users.json", requestObj, headers,
 				userListener, errorListener);
 
 		reqQueue.add(jsonReq);
@@ -131,7 +162,8 @@ public class CipeleAPI {
 		};
 
 		Map<String, String> headers = new HashMap<String, String>();
-		headers.put("Authorization", basicAuthHeaderValue(email, password));
+		headers.put(HTTP_HEADER_AUTHORIZATION,
+				basicAuthHeaderValue(email, password));
 
 		Listener<User> userListener = new Listener<User>() {
 
@@ -142,9 +174,8 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new GsonRequest<User>(
-				"http://cipele46.org/users/show.json", User.class, headers,
-				userListener, errorListener));
+		reqQueue.add(new GsonRequest<User>(baseURLString + "users/show.json",
+				User.class, headers, userListener, errorListener));
 	}
 
 	/**
@@ -184,7 +215,7 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new JsonArrayRequest("http://cipele46.org/ads.json",
+		reqQueue.add(new JsonArrayRequest(baseURLString + "ads.json",
 				arrayListener, errorListener));
 	}
 
@@ -219,7 +250,7 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new JsonArrayRequest("http://cipele46.org/ads.json",
+		reqQueue.add(new JsonArrayRequest(baseURLString + "ads.json",
 				arrayListener, errorListener));
 	}
 
@@ -238,17 +269,17 @@ public class CipeleAPI {
 	private static Ad parseAd(JSONObject obj) throws JSONException {
 
 		Ad newAd = new Ad();
-		newAd.setId(obj.getLong("id"));
-		newAd.setTitle(obj.getString("title"));
-		newAd.setDescription(obj.getString("description"));
-		newAd.setEmail(obj.getString("email"));
-		newAd.setPhone(obj.getString("phone"));
+		newAd.setId(obj.getLong(ID));
+		newAd.setTitle(obj.getString(TITLE));
+		newAd.setDescription(obj.getString(DESCRIPTION));
+		newAd.setEmail(obj.getString(EMAIL));
+		newAd.setPhone(obj.getString(PHONE));
 		// newAd.setImageURLString(obj.optString("imageUrl"));
-		newAd.setCityID(obj.getLong("city_id"));
-		newAd.setCategoryID(obj.getLong("category_id"));
-		newAd.setDistrictID(obj.optLong("district_id", -1));
+		newAd.setCityID(obj.getLong(CITY_ID));
+		newAd.setCategoryID(obj.getLong(CATEGORY_ID));
+		newAd.setDistrictID(obj.optLong(DISTRICT_ID, -1));
 
-		int statusNumber = obj.getInt("status");
+		int statusNumber = obj.getInt(STATUS);
 		AdStatus status = AdStatus.ACTIVE;
 		switch (statusNumber) {
 		case 1:
@@ -266,7 +297,7 @@ public class CipeleAPI {
 		}
 		newAd.setStatus(status);
 
-		int typeNumber = obj.getInt("ad_type");
+		int typeNumber = obj.getInt(AD_TYPE);
 		AdType type = AdType.SUPPLY;
 		switch (typeNumber) {
 		case 1:
@@ -329,7 +360,7 @@ public class CipeleAPI {
 			return;
 		}
 
-		String url = "http://cipele46.org/categories.json";
+		String url = baseURLString + "categories.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
 				new Listener<JSONArray>() {
 
@@ -351,8 +382,8 @@ public class CipeleAPI {
 
 								jsonObject = response.getJSONObject(i);
 								Category category = new Category();
-								category.setId(jsonObject.getLong("id"));
-								category.setName(jsonObject.getString("name"));
+								category.setId(jsonObject.getLong(ID));
+								category.setName(jsonObject.getString(NAME));
 								listofCategory.add(category);
 
 							} catch (JSONException e) {
@@ -391,7 +422,7 @@ public class CipeleAPI {
 			return;
 		}
 
-		String url = "http://www.cipele46.org/regions.json";
+		String url = baseURLString + "regions.json";
 		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
 				new Listener<JSONArray>() {
 
@@ -414,11 +445,11 @@ public class CipeleAPI {
 
 								jsonObject = response.getJSONObject(i);
 								District district = new District();
-								district.setId(jsonObject.getLong("id"));
-								district.setName(jsonObject.getString("name"));
+								district.setId(jsonObject.getLong(ID));
+								district.setName(jsonObject.getString(NAME));
 
 								JSONArray cities = jsonObject
-										.getJSONArray("cities");
+										.getJSONArray(CITIES);
 								List<City> listOfCities = Collections
 										.<City> emptyList();
 
@@ -431,10 +462,10 @@ public class CipeleAPI {
 									JSONObject jsonCity = cities
 											.getJSONObject(j);
 									City city = new City();
-									city.setId(jsonCity.getString("id"));
-									city.setName(jsonCity.getString("name"));
+									city.setId(jsonCity.getString(ID));
+									city.setName(jsonCity.getString(NAME));
 									city.setDistrictId(jsonCity
-											.getString("region_id"));
+											.getString(REGION_ID));
 									listOfCities.add(city);
 								}
 
