@@ -11,6 +11,8 @@ public class User {
 	private String email;
 	private String phone;
 	
+	private String basicAuth;
+	
 	public String getName() {
 		return name;
 	}
@@ -30,6 +32,15 @@ public class User {
 		this.phone = phone;
 	}
 	
+	
+	public String getBasicAuth() {
+		return basicAuth;
+	}
+	
+	public void setBasicAuth(String basicAuth) {
+		this.basicAuth = basicAuth;
+	}
+	
 	public String toString() {
 		return name + ", " + email + ", " + phone;
 	}
@@ -41,6 +52,7 @@ public class User {
 		editor.putString(context.getString(R.string.preference_user_name), user.getName());
 		editor.putString(context.getString(R.string.preference_user_email), user.getEmail());
 		editor.putString(context.getString(R.string.preference_user_phone), user.getPhone());
+		editor.putString(context.getString(R.string.preference_user_basicauth), user.getBasicAuth());
 		editor.commit();	
 	}
 	
@@ -51,6 +63,7 @@ public class User {
 		editor.putString(context.getString(R.string.preference_user_name), "");
 		editor.putString(context.getString(R.string.preference_user_email), "");
 		editor.putString(context.getString(R.string.preference_user_phone), "");
+		editor.putString(context.getString(R.string.preference_user_basicauth), "");
 		editor.commit();	
 	}
 	
@@ -65,6 +78,7 @@ public class User {
 		user.setName(prefs.getString(context.getString(R.string.preference_user_name), ""));
 		user.setEmail(prefs.getString(context.getString(R.string.preference_user_email), ""));
 		user.setPhone(prefs.getString(context.getString(R.string.preference_user_phone), ""));
+		user.setBasicAuth(prefs.getString(context.getString(R.string.preference_user_basicauth), ""));
 		return user;
 	}
 }

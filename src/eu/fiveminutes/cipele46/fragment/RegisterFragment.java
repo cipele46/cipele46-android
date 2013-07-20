@@ -45,7 +45,7 @@ public class RegisterFragment extends SherlockFragment{
 			new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					String password = mTxtPassword.getText().toString();
+					final String password = mTxtPassword.getText().toString();
 					String passwordRepeated = mTxtPasswordRepeated.getText().toString();
 					
 					if(password.equals(passwordRepeated) == false) {
@@ -69,6 +69,7 @@ public class RegisterFragment extends SherlockFragment{
 								
 								@Override
 								public void onSuccess() {
+									user.setBasicAuth(CipeleAPI.basicAuthHeaderValue(user.getEmail(), password));
 									User.setUserAsActive(getActivity(), user);
 									startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
 								}

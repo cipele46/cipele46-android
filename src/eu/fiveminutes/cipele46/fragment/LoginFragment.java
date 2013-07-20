@@ -8,11 +8,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +69,10 @@ public class LoginFragment extends SherlockFragment{
 								
 								@Override
 								public void onSuccess(User user) {
+									user.setBasicAuth(CipeleAPI.basicAuthHeaderValue(mTxtEmail.getText().toString(), 
+											mTxtPassword.getText().toString()));
 									User.setUserAsActive(getActivity(), user);
+									
 									if(getActivity().getCallingActivity() != null) {
 										//Called for result
 										Activity activity = getActivity();

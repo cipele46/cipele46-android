@@ -6,6 +6,8 @@
     <string name="preference_user_name">cipele46.org.prefs.username</string>
     <string name="preference_user_email">cipele46.org.prefs.useremail</string>
     <string name="preference_user_phone">cipele46.org.prefs.userphone</string>
+    <string name="preference_user_basicauth">cipele46.org.prefs.userbasicauth</string>
+    
     
     <string name="shared_preferences_name">cipele46.org.sharedprefs</string>
     <string name="preference_adtype">cipele46.org.prefs.adtype</string>

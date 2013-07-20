@@ -96,7 +96,8 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				Log.e(TAG, "Registration failed", error);
+				String s = new String(error.networkResponse.data);
+				Log.e(TAG, "Registration failed - " + s);
 				url.onFailure(error);
 			}
 		};
@@ -106,6 +107,9 @@ public class CipeleAPI {
 			@Override
 			public void onResponse(JSONObject response) {
 				Log.d(TAG, "Registration succeded" + response);
+				
+				
+				
 				url.onSuccess();
 
 			}
@@ -118,6 +122,7 @@ public class CipeleAPI {
 			userObj.put(FIRST_NAME, firstName);
 			userObj.put(LAST_NAME, lastName);
 			userObj.put(EMAIL, email);
+			userObj.put(PHONE, phone);
 			userObj.put(PASSWORD, password);
 			userObj.put(PASSWORD_CONFIRMATION, password);
 
@@ -139,8 +144,8 @@ public class CipeleAPI {
 
 	}
 
-	private static String basicAuthHeaderValue(String username, String password) {
-		String x = username + ":" + password;
+	public static String basicAuthHeaderValue(String email, String password) {
+		String x = email + ":" + password;
 		try {
 			return "Basic "
 					+ Base64.encodeToString(x.getBytes("UTF-8"), Base64.DEFAULT);
@@ -156,7 +161,8 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-
+				String s = new String(error.networkResponse.data);
+				Log.e(TAG, "Login failed - " + s);
 				url.onFailure(error);
 			}
 		};
