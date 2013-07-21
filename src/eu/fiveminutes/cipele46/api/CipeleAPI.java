@@ -38,7 +38,7 @@ public class CipeleAPI {
 	private static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
 	private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
 
-	// JSON keys - alphabetical ordering
+	// Keys - alphabetical ordering
 	private static final String AD_TYPE = "ad_type";
 	private static final String CATEGORY_ID = "category_id";
 	private static final String CITY_ID = "city_id";
@@ -46,18 +46,23 @@ public class CipeleAPI {
 	private static final String DESCRIPTION = "description";
 	private static final String DISTRICT_ID = "district_id";
 	private static final String EMAIL = "email";
+	private static final String FAVORITES = "favorites";
 	private static final String FIRST_NAME = "first_name";
 	private static final String ID = "id";
 	private static final String LAST_NAME = "last_name";
 	private static final String NAME = "name";
+	private static final String PAGE = "page";
 	private static final String PASSWORD = "password";
 	private static final String PASSWORD_CONFIRMATION = "password_confirmation";
+	private static final String PER_PAGE = "per_page";
 	private static final String PHONE = "phone";
+	private static final String QUERY = "query";
 	private static final String REGION_ID = "region_id";
 	private static final String STATUS = "status";
 	private static final String TITLE = "title";
 	private static final String USER = "user";
-
+	
+	
 	public enum UserAdSection {
 		ACTIVE_ADS, FAVORITE_ADS, CLOSED_ADS
 	}
@@ -231,13 +236,14 @@ public class CipeleAPI {
 	 *            ad section, required.
 	 * @param adsListener
 	 */
-	public void getUserAds(UserAdSection userAdSection,
-			final AdsListener adsListener) {
+	public void getUserAds(UserAdSection userAdSection, int pageNumber, int adsPerPage,
+			User activeUser, final AdsListener adsListener) {
 
 		ErrorListener errorListener = new ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				Log.e(TAG, "", error);
 				adsListener.onFailure(error);
 			}
 		};
@@ -256,8 +262,43 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new JsonArrayRequest(baseURLString + "ads.json",
-				arrayListener, errorListener));
+		StringBuilder sb = new StringBuilder(baseURLString);
+		sb.append("ads?");
+		sb.append(PAGE);
+		sb.append("=");
+		sb.append(pageNumber);
+		sb.append("&");
+		sb.append(PER_PAGE);
+		sb.append("=");
+		sb.append(adsPerPage);
+		sb.append("&");
+		sb.append(USER);
+		sb.append("=1");
+		
+		if (userAdSection == UserAdSection.FAVORITE_ADS) {
+			sb.append("&");
+			sb.append(FAVORITES);
+			sb.append("=1");
+		} else if (userAdSection == UserAdSection.ACTIVE_ADS) {
+			sb.append("&");
+			sb.append(STATUS);
+			sb.append("=2");
+		} else if (userAdSection == UserAdSection.CLOSED_ADS) {
+			sb.append("&");
+			sb.append(STATUS);
+			sb.append("=3");
+		}
+
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put(HTTP_HEADER_AUTHORIZATION, activeUser.getBasicAuth());
+		
+		UserAdsRequest req = new UserAdsRequest(sb.toString(), headers, 
+				arrayListener, errorListener);
+
+		Log.d(TAG, activeUser.getBasicAuth());
+		Log.d(TAG, sb.toString());
+		
+		reqQueue.add(req);
 	}
 
 	private static List<Ad> parseAdList(JSONArray array) throws JSONException {

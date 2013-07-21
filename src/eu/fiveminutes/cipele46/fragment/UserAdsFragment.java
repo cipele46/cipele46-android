@@ -26,6 +26,7 @@ import eu.fiveminutes.cipele46.api.AdsListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.api.CipeleAPI.UserAdSection;
 import eu.fiveminutes.cipele46.model.Ad;
+import eu.fiveminutes.cipele46.model.User;
 import eu.fiveminutes.cipele46.utils.Util;
 
 public abstract class UserAdsFragment extends SherlockFragment implements OnItemClickListener {
@@ -85,7 +86,10 @@ public abstract class UserAdsFragment extends SherlockFragment implements OnItem
 	private void getData() {
 		if (Util.isOnline(getActivity())) {
 			showDialog();
-			CipeleAPI.get().getUserAds(getSection(), adsListener);
+			int pageNumber = 1;
+			int adsPerPage = 20;
+			CipeleAPI.get().getUserAds(getSection(), pageNumber, adsPerPage, 
+					User.getActiveUser(getActivity()), adsListener);
 		} else {
 			Toast.makeText(getActivity(), R.string.error_no_internet_connection, Toast.LENGTH_LONG).show();
 		}
