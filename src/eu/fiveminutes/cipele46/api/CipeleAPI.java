@@ -35,6 +35,7 @@ public class CipeleAPI {
 
 	private static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
 
+	private static final String HTTP_HEADER_ACCEPT = "Accept";
 	private static final String HTTP_HEADER_AUTHORIZATION = "Authorization";
 	private static final String HTTP_HEADER_CONTENT_TYPE = "Content-Type";
 
@@ -172,10 +173,6 @@ public class CipeleAPI {
 			}
 		};
 
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put(HTTP_HEADER_AUTHORIZATION,
-				basicAuthHeaderValue(email, password));
-
 		Listener<User> userListener = new Listener<User>() {
 
 			@Override
@@ -185,10 +182,21 @@ public class CipeleAPI {
 			}
 		};
 
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put(HTTP_HEADER_AUTHORIZATION, basicAuthHeaderValue(email, password));
+		
 		reqQueue.add(new GsonRequest<User>(baseURLString + "users/show.json",
 				User.class, headers, userListener, errorListener));
 	}
 
+	private Map<String, String> getUserRequestHeaders(User u) {
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put(HTTP_HEADER_AUTHORIZATION, u.getBasicAuth());
+		headers.put(HTTP_HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON);
+		headers.put(HTTP_HEADER_ACCEPT, CONTENT_TYPE_APPLICATION_JSON);
+		return headers;
+	}
+	
 	/**
 	 * 
 	 * @param type
@@ -289,15 +297,14 @@ public class CipeleAPI {
 			sb.append("=3");
 		}
 
-		Map<String, String> headers = new HashMap<String, String>();
-		headers.put(HTTP_HEADER_AUTHORIZATION, activeUser.getBasicAuth());
-		
-		UserAdsRequest req = new UserAdsRequest(sb.toString(), headers, 
-				arrayListener, errorListener);
-
-		Log.d(TAG, activeUser.getBasicAuth());
-		Log.d(TAG, sb.toString());
-		
+		UserAdsRequest req = new UserAdsRequest(sb.toString(), 
+				getUserRequestHeaders(activeUser), 
+				arrayListener, 
+				errorListener);
+//
+//		Log.d(TAG, activeUser.getBasicAuth());
+//		Log.d(TAG, sb.toString());
+//		
 		reqQueue.add(req);
 	}
 
