@@ -599,8 +599,10 @@ public class CipeleAPI {
 			adObj.put(CITY_ID, ad.getCityID());
 			adObj.put(TITLE, ad.getTitle());
 			adObj.put(DESCRIPTION, ad.getDescription());
+			adObj.put(EMAIL, ad.getEmail());
 			adObj.put(PHONE, ad.getPhone());
 			adObj.put(IMAGE, imageEncoded);
+			adObj.put(STATUS, 2);
 			adObj.put(AD_TYPE, ad.getType() == AdType.SUPPLY ? 1 : 2);
 			data.put("ad", adObj);
 		} catch (Exception e) {
