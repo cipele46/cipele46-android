@@ -3,6 +3,8 @@
     <string name="shared_preferences_name">cipele46.org.sharedprefs</string>
 
     <!-- User related preference -->
+    <string name="preference_user_first_name">cipele46.org.prefs.userfirstname</string>
+    <string name="preference_user_last_name">cipele46.org.prefs.userlastname</string>
     <string name="preference_user_name">cipele46.org.prefs.username</string>
     <string name="preference_user_email">cipele46.org.prefs.useremail</string>
     <string name="preference_user_phone">cipele46.org.prefs.userphone</string>

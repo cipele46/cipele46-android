@@ -115,6 +115,9 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 			User.deactivateUser(this);
 			//startActivity(UserSettingsActivity.buildIntent(this, UserSettingsScreen.LOGIN));
 			finish();
+		}else if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
 		}
 		
 		return true;

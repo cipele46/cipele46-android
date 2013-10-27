@@ -21,6 +21,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import eu.fiveminutes.cipele46.model.Ad;
@@ -50,6 +51,7 @@ public class CipeleAPI {
 	private static final String FAVORITES = "favorites";
 	private static final String FIRST_NAME = "first_name";
 	private static final String ID = "id";
+	private static final String IMAGE = "image";
 	private static final String LAST_NAME = "last_name";
 	private static final String NAME = "name";
 	private static final String PAGE = "page";
@@ -62,8 +64,29 @@ public class CipeleAPI {
 	private static final String STATUS = "status";
 	private static final String TITLE = "title";
 	private static final String USER = "user";
-	
-	
+	private static final String AD_ID = "ad_id";
+	private static final String AUTHOR_EMAIL = "author_email";
+	private static final String CONTENT = "content";
+
+	// Paths
+
+	// private static final String CATEGORIES = "categories.json";
+	// private static final String REGIONS = "regions.json";
+	// private static final String ADS = "ads.json";
+	// private static final String USERS = "users.json";
+	// private static final String CURRENT_USER = "user/current.json";
+	// private static final String EDIT_AD = "ads/%s";
+	// private static final String TOGGLE_FAVORITES = "favorites/toggle/%s";
+
+	private static final String CATEGORIES = "categories";
+	private static final String REGIONS = "regions";
+	private static final String ADS = "ads";
+	private static final String USERS = "users";
+	private static final String CURRENT_USER = "users/current";
+	private static final String EDIT_AD = "ads/%s";
+	private static final String TOGGLE_FAVORITES = "ads/%s/toggle_favorite ";
+	private static final String AD_ENQUIRY = "ads/%s/reply ";
+
 	public enum UserAdSection {
 		ACTIVE_ADS, FAVORITE_ADS, CLOSED_ADS
 	}
@@ -92,11 +115,10 @@ public class CipeleAPI {
 	}
 
 	public CipeleAPI() {
-		baseURLString = "http://cipele46.org/";
+		baseURLString = "http://staging.cipele46.org/api/";
 	}
 
-	public void registerUser(String firstName, String lastName, String email,
-			String phone, String password, final UserRegistrationListener url) {
+	public void registerUser(String firstName, String lastName, String email, String phone, String password, final UserRegistrationListener url) {
 
 		ErrorListener errorListener = new ErrorListener() {
 
@@ -113,9 +135,7 @@ public class CipeleAPI {
 			@Override
 			public void onResponse(JSONObject response) {
 				Log.d(TAG, "Registration succeded" + response);
-				
-				
-				
+
 				url.onSuccess();
 
 			}
@@ -135,6 +155,7 @@ public class CipeleAPI {
 			requestObj.put(USER, userObj);
 
 		} catch (JSONException e) {
+			e.printStackTrace();
 			url.onFailure(e);
 			return;
 		}
@@ -142,9 +163,7 @@ public class CipeleAPI {
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put(HTTP_HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON);
 
-		RegistrationRequest jsonReq = new RegistrationRequest(Method.POST,
-				baseURLString + "users.json", requestObj, headers,
-				userListener, errorListener);
+		RegistrationRequest jsonReq = new RegistrationRequest(Method.POST, baseURLString + USERS, requestObj, headers, userListener, errorListener);
 
 		reqQueue.add(jsonReq);
 
@@ -153,22 +172,22 @@ public class CipeleAPI {
 	public static String basicAuthHeaderValue(String email, String password) {
 		String x = email + ":" + password;
 		try {
-			return "Basic "
-					+ Base64.encodeToString(x.getBytes("UTF-8"), Base64.DEFAULT);
+			return "Basic " + Base64.encodeToString(x.getBytes("UTF-8"), Base64.DEFAULT);
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 	}
 
-	public void loginUser(String email, String password,
-			final UserLoginListener url) {
+	public void loginUser(String email, String password, final UserLoginListener url) {
 
 		ErrorListener errorListener = new ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				String s = new String(error.networkResponse.data);
-				Log.e(TAG, "Login failed - " + s);
+				if (error.networkResponse != null && error.networkResponse.data != null) {
+					String s = new String(error.networkResponse.data);
+					Log.e(TAG, "Login failed - " + s);
+				}
 				url.onFailure(error);
 			}
 		};
@@ -177,16 +196,15 @@ public class CipeleAPI {
 
 			@Override
 			public void onResponse(User user) {
-
+				user.setName(user.getFirstName() + " " + user.getLastName());
 				url.onSuccess(user);
 			}
 		};
 
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put(HTTP_HEADER_AUTHORIZATION, basicAuthHeaderValue(email, password));
-		
-		reqQueue.add(new GsonRequest<User>(baseURLString + "users/show.json",
-				User.class, headers, userListener, errorListener));
+
+		reqQueue.add(new GsonRequest<User>(baseURLString + CURRENT_USER, User.class, headers, userListener, errorListener));
 	}
 
 	private Map<String, String> getUserRequestHeaders(User u) {
@@ -196,7 +214,7 @@ public class CipeleAPI {
 		headers.put(HTTP_HEADER_ACCEPT, CONTENT_TYPE_APPLICATION_JSON);
 		return headers;
 	}
-	
+
 	/**
 	 * 
 	 * @param type
@@ -207,8 +225,7 @@ public class CipeleAPI {
 	 *            If null, all districts implied.
 	 * @param adsListener
 	 */
-	public void getAds(final AdType type, final Long categoryID,
-			final Long districtID, final AdsListener adsListener) {
+	public void getAds(final AdType type, final Long categoryID, final Long districtID, final AdsListener adsListener) {
 
 		ErrorListener errorListener = new ErrorListener() {
 
@@ -234,8 +251,7 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new JsonArrayRequest(baseURLString + "ads.json",
-				arrayListener, errorListener));
+		reqQueue.add(new JsonArrayRequest(baseURLString + ADS, arrayListener, errorListener));
 	}
 
 	/**
@@ -244,8 +260,7 @@ public class CipeleAPI {
 	 *            ad section, required.
 	 * @param adsListener
 	 */
-	public void getUserAds(UserAdSection userAdSection, int pageNumber, int adsPerPage,
-			User activeUser, final AdsListener adsListener) {
+	public void getUserAds(UserAdSection userAdSection, int pageNumber, int adsPerPage, User activeUser, final AdsListener adsListener) {
 
 		ErrorListener errorListener = new ErrorListener() {
 
@@ -265,6 +280,7 @@ public class CipeleAPI {
 					List<Ad> adList = parseAdList(response);
 					adsListener.onSuccess(adList);
 				} catch (JSONException e) {
+					e.printStackTrace();
 					adsListener.onFailure(e);
 				}
 			}
@@ -279,10 +295,10 @@ public class CipeleAPI {
 		sb.append(PER_PAGE);
 		sb.append("=");
 		sb.append(adsPerPage);
-		sb.append("&");
-		sb.append(USER);
-		sb.append("=1");
-		
+//		sb.append("&");
+//		sb.append(USER);
+//		sb.append("=1");
+
 		if (userAdSection == UserAdSection.FAVORITE_ADS) {
 			sb.append("&");
 			sb.append(FAVORITES);
@@ -297,14 +313,11 @@ public class CipeleAPI {
 			sb.append("=3");
 		}
 
-		UserAdsRequest req = new UserAdsRequest(sb.toString(), 
-				getUserRequestHeaders(activeUser), 
-				arrayListener, 
-				errorListener);
-//
-//		Log.d(TAG, activeUser.getBasicAuth());
-//		Log.d(TAG, sb.toString());
-//		
+		UserAdsRequest req = new UserAdsRequest(sb.toString(), getUserRequestHeaders(activeUser), arrayListener, errorListener);
+		//
+		// Log.d(TAG, activeUser.getBasicAuth());
+		// Log.d(TAG, sb.toString());
+		//
 		reqQueue.add(req);
 	}
 
@@ -329,8 +342,8 @@ public class CipeleAPI {
 		newAd.setEmail(obj.getString(EMAIL));
 		newAd.setPhone(obj.getString(PHONE));
 		// newAd.setImageURLString(obj.optString("imageUrl"));
-		newAd.setCityID(obj.getLong(CITY_ID));
-		newAd.setCategoryID(obj.getLong(CATEGORY_ID));
+		newAd.setCityID(obj.optLong(CITY_ID));
+		newAd.setCategoryID(obj.optLong(CATEGORY_ID));
 		newAd.setDistrictID(obj.optLong(DISTRICT_ID, -1));
 
 		int statusNumber = obj.getInt(STATUS);
@@ -346,8 +359,7 @@ public class CipeleAPI {
 			status = AdStatus.CLOSED;
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid ad status for ad "
-					+ newAd.getTitle());
+			throw new IllegalArgumentException("Invalid ad status for ad " + newAd.getTitle());
 		}
 		newAd.setStatus(status);
 
@@ -361,8 +373,7 @@ public class CipeleAPI {
 			type = AdType.DEMAND;
 			break;
 		default:
-			throw new IllegalArgumentException("Invalid ad type for ad "
-					+ newAd.getTitle());
+			throw new IllegalArgumentException("Invalid ad type for ad " + newAd.getTitle());
 		}
 		newAd.setType(type);
 
@@ -404,7 +415,7 @@ public class CipeleAPI {
 			}
 		}
 
-		return "err1";
+		return "err2";
 	}
 
 	public void getCategories(final CategoriesListener categoriesListener) {
@@ -414,61 +425,58 @@ public class CipeleAPI {
 			return;
 		}
 
-		String url = baseURLString + "categories.json";
-		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
-				new Listener<JSONArray>() {
+		String url = baseURLString + CATEGORIES;
+		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
 
-					@Override
-					public void onResponse(JSONArray response) {
-						Log.i(TAG, response.toString());
+			@Override
+			public void onResponse(JSONArray response) {
+				Log.i(TAG, response.toString());
 
-						List<Category> listofCategory = Collections
-								.<Category> emptyList();
+				List<Category> listofCategory = Collections.<Category> emptyList();
 
-						for (int i = 0; i < response.length(); i++) {
+				for (int i = 0; i < response.length(); i++) {
 
-							if (listofCategory.isEmpty()) {
-								listofCategory = new ArrayList<Category>();
-							}
-
-							JSONObject jsonObject;
-							try {
-
-								jsonObject = response.getJSONObject(i);
-								Category category = new Category();
-								category.setId(jsonObject.getLong(ID));
-								category.setName(jsonObject.getString(NAME));
-								listofCategory.add(category);
-
-							} catch (JSONException e) {
-								categoriesListener.onFailure(e);
-							}
-						}
-
-						listofCategory.add(0, new Category(-1L,
-								"Sve kategorije"));
-
-						categories = listofCategory;
-
-						categoriesListener.onSuccess(listofCategory);
-
+					if (listofCategory.isEmpty()) {
+						listofCategory = new ArrayList<Category>();
 					}
-				}, new ErrorListener() {
 
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Log.i(TAG, error.getMessage());
-						categoriesListener.onFailure(error);
+					JSONObject jsonObject;
+					try {
 
+						jsonObject = response.getJSONObject(i);
+						Category category = new Category();
+						category.setId(jsonObject.getLong(ID));
+						category.setName(jsonObject.getString(NAME));
+						listofCategory.add(category);
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+						categoriesListener.onFailure(e);
 					}
-				});
+				}
+
+				listofCategory.add(0, new Category(-1L, "Sve kategorije"));
+
+				categories = listofCategory;
+
+				categoriesListener.onSuccess(listofCategory);
+
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.i(TAG, "" + error.getMessage());
+				categoriesListener.onFailure(error);
+
+			}
+		});
 
 		reqQueue.add(jsonArrayRequest);
 
 	}
 
-	public void getDistrictWithCities(
-			final DistrictWithCitiesListener districtWithCitiesListener) {
+	public void getDistrictWithCities(final DistrictWithCitiesListener districtWithCitiesListener) {
 
 		if (cachedListOfDistricts != null) {
 			districtWithCitiesListener.onSuccess(cachedListOfDistricts);
@@ -476,82 +484,173 @@ public class CipeleAPI {
 			return;
 		}
 
-		String url = baseURLString + "regions.json";
-		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,
-				new Listener<JSONArray>() {
+		String url = baseURLString + REGIONS;
+		JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Listener<JSONArray>() {
 
-					@Override
-					public void onResponse(JSONArray response) {
-						Log.i(TAG, response.toString());
+			@Override
+			public void onResponse(JSONArray response) {
+				Log.i(TAG, response.toString());
 
-						List<District> listOfDistricts = Collections
-								.<District> emptyList();
+				List<District> listOfDistricts = Collections.<District> emptyList();
 
-						try {
+				try {
 
-							for (int i = 0; i < response.length(); i++) {
+					for (int i = 0; i < response.length(); i++) {
 
-								if (listOfDistricts.isEmpty()) {
-									listOfDistricts = new ArrayList<District>();
-								}
-
-								JSONObject jsonObject;
-
-								jsonObject = response.getJSONObject(i);
-								District district = new District();
-								district.setId(jsonObject.getLong(ID));
-								district.setName(jsonObject.getString(NAME));
-
-								JSONArray cities = jsonObject
-										.getJSONArray(CITIES);
-								List<City> listOfCities = Collections
-										.<City> emptyList();
-
-								for (int j = 0; j < cities.length(); j++) {
-
-									if (listOfCities.isEmpty()) {
-										listOfCities = new ArrayList<City>();
-									}
-
-									JSONObject jsonCity = cities
-											.getJSONObject(j);
-									City city = new City();
-									city.setId(jsonCity.getString(ID));
-									city.setName(jsonCity.getString(NAME));
-									city.setDistrictId(jsonCity
-											.getString(REGION_ID));
-									listOfCities.add(city);
-								}
-
-								district.setCities(listOfCities);
-								listOfDistricts.add(district);
-
-							}
-
-							listOfDistricts.add(0, new District(-1L,
-									"Sve županije"));
-							cachedListOfDistricts = listOfDistricts;
-
-							districtWithCitiesListener
-									.onSuccess(listOfDistricts);
-
-						} catch (JSONException e) {
-							districtWithCitiesListener.onFailure(e);
+						if (listOfDistricts.isEmpty()) {
+							listOfDistricts = new ArrayList<District>();
 						}
 
-					}
-				}, new ErrorListener() {
+						JSONObject jsonObject;
 
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						Log.i(TAG, error.getMessage());
-						districtWithCitiesListener.onFailure(error);
+						jsonObject = response.getJSONObject(i);
+						District district = new District();
+						district.setId(jsonObject.getLong(ID));
+						district.setName(jsonObject.getString(NAME));
+
+						JSONArray cities = jsonObject.getJSONArray(CITIES);
+						List<City> listOfCities = Collections.<City> emptyList();
+
+						for (int j = 0; j < cities.length(); j++) {
+
+							if (listOfCities.isEmpty()) {
+								listOfCities = new ArrayList<City>();
+							}
+
+							JSONObject jsonCity = cities.getJSONObject(j);
+							City city = new City();
+							city.setId(jsonCity.getString(ID));
+							city.setName(jsonCity.getString(NAME));
+							// city.setDistrictId(jsonCity.getString(REGION_ID));
+							listOfCities.add(city);
+						}
+
+						district.setCities(listOfCities);
+						listOfDistricts.add(district);
 
 					}
-				});
+
+					listOfDistricts.add(0, new District(-1L, "Sve županije"));
+					cachedListOfDistricts = listOfDistricts;
+
+					districtWithCitiesListener.onSuccess(listOfDistricts);
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+					districtWithCitiesListener.onFailure(e);
+				}
+
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.i(TAG, "" + error.getMessage());
+				districtWithCitiesListener.onFailure(error);
+
+			}
+		});
 
 		reqQueue.add(jsonArrayRequest);
 
+	}
+
+	public void sendAdEnquiry(long adId, String emailAddress, String message, final RequestCompletedListener adEnquiryListener) {
+		String url = baseURLString + String.format(AD_ENQUIRY, adId);
+		JSONObject data = new JSONObject();
+		try {
+			// data.put(AD_ID, adId);
+			data.put(EMAIL, emailAddress);
+			data.put(CONTENT, message);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		AdEnquiryRequest req = new AdEnquiryRequest(Method.POST, url, data, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				adEnquiryListener.onCompleted(200);
+
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if (error.networkResponse != null && error.networkResponse.data != null) {
+					String s = new String(error.networkResponse.data);
+					Log.e("failed", s);
+				}
+				adEnquiryListener.onCompleted(400);
+			}
+		});
+		reqQueue.add(req);
+	}
+
+	public void createNewAd(Ad ad, String imageEncoded, User user) {
+		String url = baseURLString + ADS;
+		JSONObject data = new JSONObject();
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put(HTTP_HEADER_AUTHORIZATION, user.getBasicAuth());
+		
+		try {
+			JSONObject adObj = new JSONObject();
+			adObj.put(CATEGORY_ID, ad.getCategoryID());
+			adObj.put(CITY_ID, ad.getCityID());
+			adObj.put(TITLE, ad.getTitle());
+			adObj.put(DESCRIPTION, ad.getDescription());
+			adObj.put(PHONE, ad.getPhone());
+			adObj.put(IMAGE, imageEncoded);
+			adObj.put(AD_TYPE, ad.getType() == AdType.SUPPLY ? 1 : 2);
+			data.put("ad", adObj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		NewAdRequest req = new NewAdRequest(Method.POST, url, data, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				Log.e("aa", response.toString());
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.e("aa", "" + error.getMessage());
+			}
+		}, headers);
+		 reqQueue.add(req);
+	}
+
+	public void editUser(User user) {
+
+	}
+	
+	public void toggleFavoriteAd(long adId, User user){
+		String url = baseURLString + String.format(TOGGLE_FAVORITES, adId);
+		
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put(HTTP_HEADER_AUTHORIZATION, user.getBasicAuth());
+
+		
+		ToggleFavoriteAdRequest req = new ToggleFavoriteAdRequest(Method.PUT, url, null, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				Log.e("aaa", response.toString());
+				
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if (error.networkResponse != null && error.networkResponse.data != null){
+					String s = new String(error.networkResponse.data);
+					Log.e("aaa",s);
+				}
+			}
+		}, headers);
+		reqQueue.add(req);
 	}
 
 }

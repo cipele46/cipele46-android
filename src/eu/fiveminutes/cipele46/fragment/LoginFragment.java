@@ -24,8 +24,8 @@ import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.api.UserLoginListener;
 import eu.fiveminutes.cipele46.model.User;
 
-public class LoginFragment extends SherlockFragment{
-	
+public class LoginFragment extends SherlockFragment {
+
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -41,17 +41,18 @@ public class LoginFragment extends SherlockFragment{
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.login, container, false);
 		return v;
 	}
 	
+	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		
 
 		mTxtEmail = (EditText) view.findViewById(R.id.txtEmail);
 		mTxtPassword = (EditText) view.findViewById(R.id.txtPassword);
@@ -60,65 +61,64 @@ public class LoginFragment extends SherlockFragment{
 		mLoginStatusView = view.findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) view.findViewById(R.id.login_status_message);
 
-		view.findViewById(R.id.btn_login).setOnClickListener(
-			new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					CipeleAPI.get().loginUser(mTxtEmail.getText().toString(), mTxtPassword.getText().toString(), 
-							new UserLoginListener() {
-								
-								@Override
-								public void onSuccess(User user) {
-									user.setBasicAuth(CipeleAPI.basicAuthHeaderValue(mTxtEmail.getText().toString(), 
-											mTxtPassword.getText().toString()));
-									User.setUserAsActive(getActivity(), user);
-									
-									if(getActivity().getCallingActivity() != null) {
-										//Called for result
-										Activity activity = getActivity();
-										activity.setResult(Activity.RESULT_OK);
-										activity.finish();
-										
-									} else {
-										startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));	
-									}
-									
-								}
-								
-								@Override
-								public void onFailure(Throwable t) {
-									Toast.makeText(getActivity(), "There was an error during login", Toast.LENGTH_LONG).show();
-								}
-							});
-					
-				}
-			});
-		
-		view.findViewById(R.id.btn_fb_login).setOnClickListener(
-				new View.OnClickListener() {
+		view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				CipeleAPI.get().loginUser(mTxtEmail.getText().toString(), mTxtPassword.getText().toString(), new UserLoginListener() {
+
 					@Override
-					public void onClick(View view) {
-						Toast.makeText(getActivity(), "Logiram se na fejs", Toast.LENGTH_LONG).show();
+					public void onSuccess(User user) {
+						user.setBasicAuth(CipeleAPI.basicAuthHeaderValue(mTxtEmail.getText().toString(), mTxtPassword.getText().toString()));
+						User.setUserAsActive(getActivity(), user);
+
+						if (getActivity().getCallingActivity() != null) {
+							// Called for result
+							Activity activity = getActivity();
+							activity.setResult(Activity.RESULT_OK);
+							activity.finish();
+
+						} else {
+							startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+						}
+
+					}
+
+					@Override
+					public void onFailure(Throwable t) {
+						Toast.makeText(getActivity(), "There was an error during login", Toast.LENGTH_LONG).show();
 					}
 				});
-		
-		view.findViewById(R.id.btn_register).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.REGISTER));
-					}
-				});
-		
-		view.findViewById(R.id.btn_forgot_password).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.RESET_PASSWORD));
-					}
-				});
+
+			}
+		});
+
+		view.findViewById(R.id.btn_fb_login).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Toast.makeText(getActivity(), "Logiram se na fejs", Toast.LENGTH_LONG).show();
+			}
+		});
+
+		view.findViewById(R.id.btn_register).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.REGISTER));
+			}
+		});
+
+		view.findViewById(R.id.btn_forgot_password).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.RESET_PASSWORD));
+			}
+		});
+		setDummyData();
 	}
 	
+	private void setDummyData(){
+		mTxtEmail.setText("pero@cipele46.org");
+		mTxtPassword.setText("secret");
+	}
 
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
@@ -186,30 +186,23 @@ public class LoginFragment extends SherlockFragment{
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-			int shortAnimTime = getResources().getInteger(
-					android.R.integer.config_shortAnimTime);
+			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
-						}
-					});
+			mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
+				}
+			});
 
 			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
-					.setListener(new AnimatorListenerAdapter() {
-						@Override
-						public void onAnimationEnd(Animator animation) {
-							mLoginFormView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
-						}
-					});
+			mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+				@Override
+				public void onAnimationEnd(Animator animation) {
+					mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+				}
+			});
 		} else {
 			// The ViewPropertyAnimator APIs are not available, so simply show
 			// and hide the relevant UI components.
@@ -234,13 +227,12 @@ public class LoginFragment extends SherlockFragment{
 				return false;
 			}
 
-			/*for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}*/
+			/*
+			 * for (String credential : DUMMY_CREDENTIALS) { String[] pieces =
+			 * credential.split(":"); if (pieces[0].equals(mEmail)) { // Account
+			 * exists, return true if the password matches. return
+			 * pieces[1].equals(mPassword); } }
+			 */
 
 			// TODO: register the new account here.
 			return true;
@@ -254,8 +246,7 @@ public class LoginFragment extends SherlockFragment{
 			if (success) {
 				getActivity().finish();
 			} else {
-				mTxtPassword
-						.setError(getString(R.string.error_incorrect_password));
+				mTxtPassword.setError(getString(R.string.error_incorrect_password));
 				mTxtPassword.requestFocus();
 			}
 		}
@@ -265,5 +256,5 @@ public class LoginFragment extends SherlockFragment{
 			mAuthTask = null;
 			showProgress(false);
 		}
-	}	
+	}
 }

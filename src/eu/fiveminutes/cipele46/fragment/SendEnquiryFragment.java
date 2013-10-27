@@ -14,6 +14,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.api.RequestCompletedListener;
+import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.model.Ad;
 
 public class SendEnquiryFragment extends SherlockFragment {
@@ -23,6 +25,8 @@ public class SendEnquiryFragment extends SherlockFragment {
 	private TextView title;
 	private EditText email;
 	private EditText text;
+	
+	private RequestCompletedListener adEnquiryListener;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,10 +58,25 @@ public class SendEnquiryFragment extends SherlockFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.send_enquiry) {
-			Toast.makeText(getActivity(), "Sent!", Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getActivity(), "Sent!", Toast.LENGTH_SHORT).show();
+			sendAdEnquiry();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void sendAdEnquiry(){
+		long adId = item.getId();
+		String emailAddress = email.getText().toString();
+		String message = text.getText().toString();
+		adEnquiryListener = new RequestCompletedListener() {
+			
+			@Override
+			public void onCompleted(int code) {
+				Toast.makeText(getActivity(), "" + code, Toast.LENGTH_LONG).show();
+			}
+		};
+		CipeleAPI.get().sendAdEnquiry(adId, emailAddress, message, adEnquiryListener);
 	}
 
 }

@@ -148,6 +148,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener,
 
 								@Override
 								public void onFailure(Throwable t) {
+									hideDialog();
 									Toast.makeText(getActivity(),
 											R.string.error_get_dist,
 											Toast.LENGTH_LONG).show();
@@ -157,6 +158,7 @@ public class MainFragment extends SherlockFragment implements OnClickListener,
 
 				@Override
 				public void onFailure(Throwable t) {
+					hideDialog();
 					Toast.makeText(getActivity(), R.string.error_get_cat,
 							Toast.LENGTH_LONG).show();
 				}

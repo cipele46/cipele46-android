@@ -6,18 +6,19 @@ import java.util.List;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -29,10 +30,13 @@ import eu.fiveminutes.cipele46.adapter.DistrictAdapter;
 import eu.fiveminutes.cipele46.api.CategoriesListener;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
 import eu.fiveminutes.cipele46.api.DistrictWithCitiesListener;
+import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdType;
 import eu.fiveminutes.cipele46.model.Category;
 import eu.fiveminutes.cipele46.model.City;
 import eu.fiveminutes.cipele46.model.District;
+import eu.fiveminutes.cipele46.model.User;
+import eu.fiveminutes.cipele46.utils.Util;
 
 public class NewAdFragment extends SherlockFragment implements OnItemSelectedListener {
 
@@ -44,6 +48,8 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 	private TextView phoneError;
 	private EditText email;
 	private EditText phone;
+	private EditText title;
+	private EditText description;
 
 	private Spinner citySpinner;
 	private Spinner categorySpinner;
@@ -58,6 +64,10 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 	private CityAdapter cityAdapter;
 	private DistrictAdapter districtAdapter;
 	private CategoryAdapter categoryAdapter;
+
+	private Bitmap currentImage;
+
+	private Ad currentAd;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,6 +91,8 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 		phoneError = (TextView) view.findViewById(R.id.phone_error);
 		phone = (EditText) view.findViewById(R.id.phone);
 		email = (EditText) view.findViewById(R.id.email);
+		title = (EditText) view.findViewById(R.id.Title);
+		description = (EditText) view.findViewById(R.id.Description);
 		citySpinner = (Spinner) view.findViewById(R.id.filter_city);
 		districtSpinner = (Spinner) view.findViewById(R.id.filter_county);
 		categorySpinner = (Spinner) view.findViewById(R.id.filter_category);
@@ -102,7 +114,7 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 			@Override
 			public void onClick(View v) {
 				if (isEmailValid(email.getText()) && isPhoneValid(phone.getText())) {
-					// try to create object
+					sendNewAdRequest();
 				}
 			}
 
@@ -127,12 +139,14 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 				}
 			}
 		});
+		setDummyData();
 		getData();
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAMERA_REQUEST && resultCode == getActivity().RESULT_OK) {
 			Bitmap photo = (Bitmap) data.getExtras().get("data");
+			currentImage = photo;
 			imageView.setImageBitmap(getResizedBitmap(photo, MAX_WIDTH));
 		}
 	}
@@ -216,4 +230,30 @@ public class NewAdFragment extends SherlockFragment implements OnItemSelectedLis
 
 	}
 
+	private Ad buildAd() {
+		currentAd = new Ad();
+		currentAd.setType(activeAdType);
+		currentAd.setEmail(email.getText().toString());
+		currentAd.setPhone(phone.getText().toString());
+		currentAd.setCityID(Long.valueOf(activeCity.getId()));
+		currentAd.setDistrictID(activeDistrict.getId());
+		currentAd.setTitle(title.getText() != null ? title.getText().toString() : "");
+		currentAd.setDescription(description.getText() != null ? description.getText().toString() : "");
+		currentAd.setCategoryID(activeCategory.getId());
+		return currentAd;
+	}
+
+	private void sendNewAdRequest() {
+		buildAd();
+		User u = User.getActiveUser(getActivity());
+		String imageEncoded = currentImage != null ? Util.encodeImageBase64(currentImage) : null;
+		CipeleAPI.get().createNewAd(currentAd, imageEncoded, u);
+	}
+	
+	private void setDummyData(){
+		email.setText("tn@tn.com");
+		phone.setText("0917959628");
+		title.setText("proba");
+		description.setText("proba");
+	}
 }

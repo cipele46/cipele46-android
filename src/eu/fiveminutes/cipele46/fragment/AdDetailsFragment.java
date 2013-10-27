@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.android.volley.toolbox.NetworkImageView;
 
 import eu.fiveminutes.cipele46.R;
@@ -22,6 +23,7 @@ import eu.fiveminutes.cipele46.api.CipeleAPI.UserAdSection;
 import eu.fiveminutes.cipele46.model.Ad;
 import eu.fiveminutes.cipele46.model.AdStatus;
 import eu.fiveminutes.cipele46.model.AdType;
+import eu.fiveminutes.cipele46.model.User;
 import eu.fiveminutes.cipele46.utils.ImageCacheManager;
 
 public class AdDetailsFragment extends SherlockFragment implements OnClickListener {
@@ -144,6 +146,19 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 				menu.findItem(R.id.details_favorites).setVisible(false);
 			}
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.details_favorites){
+			toggleFavorite();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void toggleFavorite(){
+		CipeleAPI.get().toggleFavoriteAd(item.getId(), User.getActiveUser(getActivity()));
 	}
 
 	private boolean isAdMine() {
