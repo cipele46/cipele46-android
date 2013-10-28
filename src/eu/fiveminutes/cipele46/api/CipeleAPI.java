@@ -242,6 +242,7 @@ public class CipeleAPI {
 			public void onResponse(JSONArray response) {
 
 				try {
+					Log.v(TAG, response.toString());
 					List<Ad> adList = parseAdList(response);
 					adsListener.onSuccess(adList);
 				} catch (JSONException e) {
@@ -251,7 +252,30 @@ public class CipeleAPI {
 			}
 		};
 
-		reqQueue.add(new JsonArrayRequest(baseURLString + ADS, arrayListener, errorListener));
+		StringBuilder sb = new StringBuilder(baseURLString);
+		sb.append("ads?");
+		
+		if (categoryID != -1) {
+			sb.append(CATEGORY_ID);
+			sb.append("=");
+			sb.append(categoryID);
+			sb.append("&");
+		}
+		
+		if (districtID != -1) {
+			sb.append(DISTRICT_ID);
+			sb.append("=");
+			sb.append(districtID);
+			sb.append("&");
+		}
+
+		sb.append(AD_TYPE);
+		sb.append("=");
+		sb.append(type == AdType.SUPPLY ? 1 : 2);
+		
+		Log.v(TAG, sb.toString());
+		
+		reqQueue.add(new JsonArrayRequest(sb.toString(), arrayListener, errorListener));
 	}
 
 	/**
