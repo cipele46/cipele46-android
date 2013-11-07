@@ -126,7 +126,14 @@ public class CipeleAPI {
 			public void onErrorResponse(VolleyError error) {
 				String s = new String(error.networkResponse.data);
 				Log.e(TAG, "Registration failed - " + s);
-				url.onFailure(error);
+				try {
+					JSONObject responseObj = new JSONObject(s);
+					JSONObject errorObj = responseObj.getJSONObject("error");
+					url.onFailure(errorObj.getString("message"));
+				} catch (JSONException e) {
+					e.printStackTrace();
+					url.onFailure("");
+				}
 			}
 		};
 
@@ -156,7 +163,7 @@ public class CipeleAPI {
 
 		} catch (JSONException e) {
 			e.printStackTrace();
-			url.onFailure(e);
+			url.onFailure(null);
 			return;
 		}
 

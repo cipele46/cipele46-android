@@ -75,8 +75,12 @@ public class RegisterFragment extends SherlockFragment{
 								}
 								
 								@Override
-								public void onFailure(Throwable t) {
-									Toast.makeText(getActivity(), "There was an error during registration", Toast.LENGTH_LONG).show();
+								public void onFailure(String failureReason) {
+									if (failureReason == null) {
+										failureReason = getString(R.string.error_registration_failed);
+									}
+									
+									Toast.makeText(getActivity(), failureReason, Toast.LENGTH_LONG).show();
 								}
 							});
 				}

@@ -4,5 +4,5 @@ public interface UserRegistrationListener {
 
 	void onSuccess();
 	
-	void onFailure(Throwable t);
+	void onFailure(String failureReason);
 }
