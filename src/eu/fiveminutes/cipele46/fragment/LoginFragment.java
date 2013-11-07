@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.activity.ActiveAdsActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity;
 import eu.fiveminutes.cipele46.activity.UserSettingsActivity.UserSettingsScreen;
 import eu.fiveminutes.cipele46.api.CipeleAPI;
@@ -61,9 +65,15 @@ public class LoginFragment extends SherlockFragment {
 		mLoginStatusView = view.findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) view.findViewById(R.id.login_status_message);
 
+		final InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+			      Context.INPUT_METHOD_SERVICE);
+		
 		view.findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+
+				imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
 				CipeleAPI.get().loginUser(mTxtEmail.getText().toString(), mTxtPassword.getText().toString(), new UserLoginListener() {
 
 					@Override
@@ -78,7 +88,7 @@ public class LoginFragment extends SherlockFragment {
 							activity.finish();
 
 						} else {
-							startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+							startActivity(new Intent(getActivity(), ActiveAdsActivity.class));
 						}
 
 					}
