@@ -38,17 +38,17 @@ public class ResetPasswordFragment extends SherlockFragment{
 		return v;
 	}
 	
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-
-		view.findViewById(R.id.btn_reset_password).setOnClickListener(
-			new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					//Reset password
-					getSherlockActivity().finish();
-				}
-			});
-	}
+//	@Override
+//	public void onViewCreated(View view, Bundle savedInstanceState) {
+//		super.onViewCreated(view, savedInstanceState);
+//
+//		view.findViewById(R.id.btn_reset_password).setOnClickListener(
+//			new View.OnClickListener() {
+//				@Override
+//				public void onClick(View view) {
+//					//Reset password
+//					getSherlockActivity().finish();
+//				}
+//			});
+//	}
 }

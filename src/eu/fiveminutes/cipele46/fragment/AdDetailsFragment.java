@@ -63,7 +63,7 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		awaitingApproval = (TextView) view.findViewById(R.id.ad_details_awaining_approval);
 		title = (TextView) view.findViewById(R.id.ad_details_title);
-		description = (TextView) view.findViewById(R.id.ad_details_description);
+		description = (TextView) view.findViewById(R.id.password_reset_via_web_info);
 		category = (TextView) view.findViewById(R.id.ad_details_category);
 		county = (TextView) view.findViewById(R.id.ad_details_county);
 		time = (TextView) view.findViewById(R.id.ad_details_time);

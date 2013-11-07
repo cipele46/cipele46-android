@@ -63,7 +63,9 @@
     <string name="error_incorrect_password">Lozinka je netočna</string>
     <string name="error_field_required">Ovo polje je obavezno</string>
     <string name="logout">Odjava</string>
-
+    <string name="password_reset_via_web">Obnovu lozinke moguće je obaviti putem web stranice www.cipele46.org</string>
+	<string name="cipele_web_url">http://www.cipele46.org</string>
+   
     <string name="new_ad_offer">Poklanjamo</string>
     <string name="new_ad_request">Trebamo</string>
     <string name="new_ad_title">Naslov</string>

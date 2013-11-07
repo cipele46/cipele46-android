@@ -81,7 +81,7 @@
             android:scaleType="fitCenter" />
 
         <TextView
-            android:id="@+id/ad_details_description"
+            android:id="@+id/password_reset_via_web_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
