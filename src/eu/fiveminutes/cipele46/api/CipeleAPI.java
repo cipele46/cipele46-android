@@ -171,7 +171,7 @@ public class CipeleAPI {
 		headers.put(HTTP_HEADER_CONTENT_TYPE, CONTENT_TYPE_APPLICATION_JSON);
 
 		RegistrationRequest jsonReq = new RegistrationRequest(Method.POST, baseURLString + USERS, requestObj, headers, userListener, errorListener);
-
+		
 		reqQueue.add(jsonReq);
 
 	}
@@ -191,10 +191,7 @@ public class CipeleAPI {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if (error.networkResponse != null && error.networkResponse.data != null) {
-					String s = new String(error.networkResponse.data);
-					Log.e(TAG, "Login failed - " + s);
-				}
+				Log.e(TAG, new String(error.networkResponse.data), error);
 				url.onFailure(error);
 			}
 		};
@@ -203,11 +200,15 @@ public class CipeleAPI {
 
 			@Override
 			public void onResponse(User user) {
+				Log.v(TAG, "User login successfull.");
+				
 				user.setName(user.getFirstName() + " " + user.getLastName());
 				url.onSuccess(user);
 			}
 		};
 
+		Log.v(TAG, "Login user " + email);
+		
 		Map<String, String> headers = new HashMap<String, String>();
 		headers.put(HTTP_HEADER_AUTHORIZATION, basicAuthHeaderValue(email, password));
 

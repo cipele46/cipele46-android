@@ -41,6 +41,7 @@
     <string name="error_screen_not_defined">Screen not defined</string>
     <string name="error_no_internet_connection">Internet veza nije dostupna!</string>
     <string name="error_registration_failed">Registracija nije uspjela!</string>
+	<string name="error_login_failed">Prijava nije uspjela!</string>
 
     <!-- Strings related to user settings -->
     <string name="title_activity_user_settings">Postavke</string>

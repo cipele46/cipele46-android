@@ -85,7 +85,7 @@ public class LoginFragment extends SherlockFragment {
 
 					@Override
 					public void onFailure(Throwable t) {
-						Toast.makeText(getActivity(), "There was an error during login", Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity(), getText(R.string.error_login_failed), Toast.LENGTH_LONG).show();
 					}
 				});
 
