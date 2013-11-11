@@ -13,8 +13,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import eu.fiveminutes.cipele46.R;
+import eu.fiveminutes.cipele46.fragment.MenuFragment.OnMenuItemSelectedListener;
 
-public abstract class MenuActivity extends SherlockFragmentActivity {
+public abstract class MenuActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener {
 
 	public static final int MENU_ADS = 0;
 	public static final int MENU_ACTIVE_ADS = 1;
@@ -38,7 +39,7 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		} else {
 			supportActionBar.setHomeButtonEnabled(true);
 			supportActionBar.setDisplayHomeAsUpEnabled(true);
-			 supportActionBar.setIcon(R.drawable.action_bar_icon);
+			supportActionBar.setIcon(R.drawable.action_bar_icon);
 		}
 	}
 
@@ -55,4 +56,8 @@ public abstract class MenuActivity extends SherlockFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onMenuItemSelected(int itemId) {
+		mDrawerLayout.closeDrawer(Gravity.START);
+	}
 }

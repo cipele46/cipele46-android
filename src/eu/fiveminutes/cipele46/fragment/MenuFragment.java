@@ -73,8 +73,12 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		User currentUser = User.getActiveUser(getActivity());
-		if (v == ads && !(getActivity() instanceof MainActivity)) {
-			startActivity(new Intent(getActivity(), MainActivity.class));
+		if (v == ads) {
+			if (!(getActivity() instanceof MainActivity)) { 
+				startActivity(new Intent(getActivity(), MainActivity.class));
+			} else {
+				getActivity().getSupportFragmentManager().popBackStackImmediate();
+			}
 		} else if (v == active_ads && !(getActivity() instanceof ActiveAdsActivity)) {
 			if(currentUser == null) {
 				startActivityForResult(
@@ -82,7 +86,7 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 						UserSettingsActivity.REQUEST_LOGIN);
 				
 			} else {
-				startActivity(new Intent(getActivity(), ActiveAdsActivity.class));
+				startActivity(new Intent(getActivity(), ActiveAdsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
 			}
 		} else if (v == favorite_ads && !(getActivity() instanceof FavoriteAdsActivity)) {
 			if(currentUser == null) {
@@ -104,6 +108,10 @@ public class MenuFragment extends SherlockFragment implements OnClickListener {
 			}
 		} else if (v == settings && !(getActivity() instanceof UserSettingsActivity)) {
 			startActivity(UserSettingsActivity.buildIntent(getActivity(), UserSettingsScreen.USER_DETAILS));
+		}
+		
+		if (this.menuListener != null) {
+			this.menuListener.onMenuItemSelected(-1);
 		}
 	}
 }

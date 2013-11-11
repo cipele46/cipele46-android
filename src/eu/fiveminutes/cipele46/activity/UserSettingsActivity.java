@@ -179,6 +179,7 @@ public class UserSettingsActivity extends SherlockFragmentActivity {
 	public static Intent buildIntent(Context context, UserSettingsScreen screen) {
 		Intent intent = new Intent(context, UserSettingsActivity.class);
 		intent.putExtra(SCREEN_ID_EXTRA, screen.getScreenId());
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return intent;
 	}
 }
