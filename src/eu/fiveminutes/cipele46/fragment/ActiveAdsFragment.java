@@ -16,7 +16,8 @@ public class ActiveAdsFragment extends UserAdsFragment{
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.details, menu);
-	
-	}
+        menu.findItem(R.id.details_favorites).setVisible(false);
+
+    }
 
 }
