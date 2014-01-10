@@ -2,6 +2,8 @@ package com.actionbarsherlock.internal;
 
 
 
+import org.junit.Test;
+
 import static com.actionbarsherlock.internal.ActionBarSherlockCompat.cleanActivityName;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
