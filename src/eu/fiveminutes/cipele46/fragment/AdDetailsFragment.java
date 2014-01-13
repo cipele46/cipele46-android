@@ -128,6 +128,10 @@ public class AdDetailsFragment extends SherlockFragment implements OnClickListen
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.details, menu);
+
+        if (User.getActiveUser(getActivity().getApplicationContext()) == null)
+            menu.findItem(R.id.details_favorites).setVisible(false);
+
 		if (!isAdMine()) {
 			menu.findItem(R.id.details_close).setVisible(false);
 			menu.findItem(R.id.details_delete).setVisible(false);
